@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "removeComments": false,
+        "declaration": true,
+        "sourceMap": false,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true
+    },
+    "include": [
+        "../../index.ts",
+        "../../src/**/*"
+    ]
+}

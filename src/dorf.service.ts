@@ -4,7 +4,7 @@ import { Injectable, Optional } from "@angular/core";
  * Base for DorfModule configuration.
  * All those parameters should be defined once and used in forRoot method from the DorfModule.
  */
-interface IDorfService {
+export interface IDorfService {
     /**
      * CSS class for a whole form.
      */

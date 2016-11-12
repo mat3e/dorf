@@ -1,2 +1,16 @@
+/*
+!config
+!examples
+!src
+!tests
+
+!index.ts
+!package.json
+!README.md
+!.gitignore
+!.npmignore
+
 /**/*.js
 /**/*.js.map
+/**/*.d.ts
+!config/**/*.js

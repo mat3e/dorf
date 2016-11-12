@@ -1,7 +1,7 @@
 import { ValueProvider } from "@angular/core";
 
-import { DorfModule } from "../dorf.module";
-import { DorfConfigService } from "../dorf.service";
+import { DorfModule } from "../src/dorf.module";
+import { DorfConfigService } from "../src/dorf.service";
 
 describe("DorfModule", () => {
     it("supports parametrized DorfConfigService in forRoot method", () => {

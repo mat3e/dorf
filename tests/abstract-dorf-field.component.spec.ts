@@ -1,9 +1,9 @@
 import { Validators } from "@angular/forms";
 
-import { DorfInputDefinition, DorfInputMetadata } from "../dorf-input.component";
-import { DorfSelectDefinition, DorfSelectMetadata } from "../dorf-select.component";
+import { DorfInputDefinition, DorfInputMetadata } from "../src/dorf-input.component";
+import { DorfSelectDefinition, DorfSelectMetadata } from "../src/dorf-select.component";
 
-import { DorfFieldDefinition, DorfFieldMetadata, AbstractDorfFieldComponent } from "../abstract-dorf-field.component";
+import { DorfFieldDefinition, DorfFieldMetadata, AbstractDorfFieldComponent } from "../src/abstract-dorf-field.component";
 
 describe("DorfFieldDefinition", () => {
     it("should have a default value for validator property", () => {

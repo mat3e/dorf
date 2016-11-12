@@ -1,4 +1,4 @@
-import { DorfInputDefinition, DorfInputMetadata } from "../dorf-input.component";
+import { DorfInputDefinition, DorfInputMetadata } from "../src/dorf-input.component";
 
 describe("DorfInputDefinition", () => {
     it("should have default values for type and tag properties", () => {

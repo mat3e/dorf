@@ -1,0 +1,11 @@
+/*
+!src
+
+!index.js
+!index.d.ts
+!package.json
+!README.md
+!.npmignore
+
+/**/*.ts
+!/**/*.d.ts

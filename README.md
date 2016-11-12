@@ -37,7 +37,7 @@ This library is about taking _Reactive Forms_ to the next level by coupling them
         return this.model;
     }
     ```
-and `getFieldDefinitions` method for returning _propertyName-fieldDefinition_ map for your object:
+    and `getFieldDefinitions` method for returning _propertyName-fieldDefinition_ map for your object:
     ```typescript
     protected getFieldDefinitions(): PropertiesToDorfDefinitionsMap<ExampleModel> {
         return {

@@ -1,5 +1,5 @@
-import { DorfService } from "../dorf.service";
-import { DorfConfigService } from "../dorf.service";
+import { DorfService } from "../src/dorf.service";
+import { DorfConfigService } from "../src/dorf.service";
 
 describe("DorfService", () => {
     it("should have default values for isButtonVisible and isDisabled", () => {

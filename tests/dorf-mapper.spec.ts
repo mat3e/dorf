@@ -1,10 +1,10 @@
-import { Validators } from '@angular/forms';
+import { Validators } from "@angular/forms";
 
-import { DorfDomainObject } from "../abstract-dorf.model";
-import { DorfInputDefinition, DorfInputMetadata } from "../dorf-input.component";
-import { OptionType, DorfSelectDefinition, DorfSelectMetadata } from "../dorf-select.component";
+import { DorfDomainObject } from "../src/abstract-dorf.model";
+import { DorfInputDefinition, DorfInputMetadata } from "../src/dorf-input.component";
+import { OptionType, DorfSelectDefinition, DorfSelectMetadata } from "../src/dorf-select.component";
 
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../dorf-mapper";
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../src/dorf-mapper";
 
 describe("DorfMapper", () => {
 
