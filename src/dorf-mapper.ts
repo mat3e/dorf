@@ -26,7 +26,8 @@ export class DorfMapper {
         for (let key in fieldDefinitions) {
 
             let definition = fieldDefinitions[key];
-            let metaOptions = this.getMetadataOptions(key, domainObject); metaOptions.order = order;
+            let metaOptions = this.getMetadataOptions(key, domainObject); 
+            metaOptions.order = order;
 
             fields.push(new this.tagToMetadataMap[definition.tag](definition, metaOptions));
             ++order;

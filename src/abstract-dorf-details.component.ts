@@ -1,4 +1,4 @@
-import { OnInit } from "@angular/core";
+import { OnInit, OnChanges } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 
 import { DorfService } from "./dorf.service";
@@ -9,7 +9,7 @@ import { PropertiesToDorfDefinitionsMap, DorfMapper } from "./dorf-mapper";
  * Should be used with details.view.html to create domain object details Component.
  * It should be extended for each Domain Object.
  */
-export abstract class AbstractDorfDetailsComponent<T> implements OnInit {
+export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChanges {
 
     private _form: FormGroup;
     private _fieldsMetadata: DorfFieldMetadata<any>[];
@@ -52,6 +52,14 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit {
     }
 
     /**
+     * Domain Object should be an input property, so each change should rebuild form.
+     */
+    ngOnChanges() {
+        this.initMetaForAllFields();
+        this.initFormGroup();
+    }
+
+    /**
      * Returns FieldMetadata for all the form fields.
      */
     get fieldsMetadata() {
@@ -74,7 +82,9 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit {
 
         this._fieldsMetadata.forEach((meta) => {
             let formControl = meta.formControl;
-            if (this.config.isDisabled) formControl.disable();
+            if (this.config.isDisabled) {
+                formControl.disable();
+            }
 
             group[meta.key] = formControl;
         });

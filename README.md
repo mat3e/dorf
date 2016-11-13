@@ -7,7 +7,7 @@ Angular 2 gives a great support for creating [Reactive Forms](https://angular.io
 This library is about taking _Reactive Forms_ to the next level by coupling them with _Domain Objects_.
 
 ### Want to create a form field for object's property?
-1. Create  `DorfFieldDefinition` which contains info about a label, validators and more (e.g. type of the input field).
+1. Create  `DorfFieldDefinition` which contains info about a label, validators and more for each Domain Object's property you want to expose.
     ```typescript
     get nameDefinition(): DorfInputDefinition<string> {
         return {
@@ -21,7 +21,7 @@ This library is about taking _Reactive Forms_ to the next level by coupling them
 2. Create _Component_ which extends `AbstractDorfDetailsComponent` and uses a template similar to _dorf-details.view.html_ from the library (or even directly _dorf-details.view.html_).
     ```typescript
     @Component({
-        templateUrl: "../../dorf/dorf-details.view.html"
+        templateUrl: "../../node_modules/dorf/src/dorf-details.view.html"
     })
     export class ExampleComponent extends AbstractDorfDetailsComponent<ExampleModel> implements OnInit { 
 	    /* ... */
@@ -49,6 +49,6 @@ This library is about taking _Reactive Forms_ to the next level by coupling them
     }
     ```
 
-4. Call `super.ngOnInit();` inside your Component's `ngOnInit` method.
+4. Define `onSubmit` method and ways of communication as you need.
 
 5. You are done! Enjoy your _Reactive Form_.
