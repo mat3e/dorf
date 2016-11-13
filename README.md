@@ -1,9 +1,10 @@
 ## Domain Object Reactive Forms
+
+### [wiki](https://github.com/mat3e/dorf/wiki)
+
 Angular 2 gives a great support for creating [Reactive Forms](https://angular.io/docs/ts/latest/cookbook/dynamic-form.html), which are sometimes called also _Dynamic_ or _Model-driven Forms_.
 
 This library is about taking _Reactive Forms_ to the next level by coupling them with _Domain Objects_.
-
-### Explore the library using its [wiki](https://github.com/mat3e/dorf/wiki)
 
 ### Want to create a form field for object's property?
 1. Create  `DorfFieldDefinition` which contains info about a label, validators and more (e.g. type of the input field).
