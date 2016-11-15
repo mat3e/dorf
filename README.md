@@ -24,7 +24,7 @@ Example | Summary
     }
     ```
 
-2. Create _Component_ which extends `AbstractDorfDetailsComponent` and uses a template similar to _dorf-details.view.html_ from the library (or even _dorf-details.view.html_ itself).
+2. Create _Component_ which extends `AbstractDorfDetailsComponent` and uses a template similar to `dorf-details.view.html` from the library (or even `dorf-details.view.html` itself).
     ```typescript
     @Component({
         templateUrl: "../../node_modules/dorf/src/dorf-details.view.html"
@@ -43,7 +43,7 @@ Example | Summary
     @Input() domainObject: ExampleModel
     ```
 
-    and `ieldDefinitions` for returning _propertyName-fieldDefinition_ map for your object:
+    and `fieldDefinitions` for returning _propertyName-fieldDefinition_ map for your object:
     
     ```typescript
     protected get fieldDefinitions(): PropertiesToDorfDefinitionsMap<ExampleModel> {
