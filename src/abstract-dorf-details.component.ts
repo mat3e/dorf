@@ -10,24 +10,16 @@ import { PropertiesToDorfDefinitionsMap, DorfMapper } from "./dorf-mapper";
  * It should be extended for each Domain Object.
  */
 export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChanges {
+    // @Input
+    abstract domainObject: T;
 
     private _form: FormGroup;
     private _fieldsMetadata: DorfFieldMetadata<any>[];
 
     /**
-     * Method for submitting the form. It should operate on this.form.value.
+     * DomainObject-specific map.
      */
-    abstract onSubmit(): void;
-
-    /**
-     * This Component is about exposing details for object returned by this method.
-     */
-    protected abstract getDomainObject(): T;
-
-    /**
-     * DomainObject should return this map.
-     */
-    protected abstract getFieldDefinitions(): PropertiesToDorfDefinitionsMap<T>;
+    protected abstract fieldDefinitions: PropertiesToDorfDefinitionsMap<T>;
 
     /**
      * General form validator, which should check, e.g. business context of the form.
@@ -74,7 +66,7 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChang
     }
 
     private initMetaForAllFields() {
-        this._fieldsMetadata = this.mapper.mapObjectWithDefinitionsToFieldsMetadata(this.getDomainObject(), this.getFieldDefinitions()).sort((a, b) => a.order - b.order);
+        this._fieldsMetadata = this.mapper.mapObjectWithDefinitionsToFieldsMetadata(this.domainObject, this.fieldDefinitions).sort((a, b) => a.order - b.order);
     }
 
     private initFormGroup() {

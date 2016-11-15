@@ -5,7 +5,7 @@ import { IPerson, Person } from "./person/model";
     selector: "my-app",
     template: `
     <h2>Person in form: {{activeIndex >= 0 ? activePerson.fullname : "new person"}}</h2>
-    <person-details [person]="activePerson" (createUpdate)=onCreateUpdate($event)></person-details>
+    <person-details [domainObject]="activePerson" (createUpdate)=onCreateUpdate($event)></person-details>
     <hr/>
     <table class="pure-table pure-table-striped">
     <tbody>

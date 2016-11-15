@@ -3,10 +3,11 @@
     let helpers = require("../helpers");
 
     module.exports = {
-        entry: { "index": "./index.ts" },
+        entry: {
+            "index": "./index.ts"
+        },
 
         output: {
-            path: helpers.root("lib"),
             filename: "[name].js",
             pathinfo: true,
             publicPath: "/"
@@ -27,8 +28,7 @@
         },
 
         plugins: [
-            new webpack.NoErrorsPlugin(),
-            new webpack.optimize.UglifyJsPlugin()
+            new webpack.NoErrorsPlugin()
         ]
     };
 })(this);

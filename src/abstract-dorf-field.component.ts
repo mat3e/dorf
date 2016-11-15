@@ -1,5 +1,7 @@
-import { Input } from "@angular/core";
+import { Input, OnInit, OnChanges } from "@angular/core";
 import { FormGroup, FormControl, Validators, ValidatorFn } from "@angular/forms";
+
+export type DorfTag = "input" | "radio" | "select";
 
 /**
  * Base Definition. Absolute minimum - all optional properties.
@@ -14,6 +16,11 @@ export interface IDorfFieldDefinition {
      * Value checker.
      */
     validator?: ValidatorFn | ValidatorFn[];
+
+    /**
+     * Message which should be displayed when validation returns errors.
+     */
+    errorMessage?: string;
 
     /**
      * Indicates if the field should be presented on the list.
@@ -51,20 +58,26 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition {
 
     private _label: string;
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
+    private _errorMessage: string;
     private _isListField = false;
 
     constructor(options?: IDorfFieldDefinition) {
         if (options) {
-            this._label = options.label;
-            this._validator = options.validator || this._validator;
-            this._isListField = options.isListField;
+            // generic way of assigning properties; used for library extensions
+            for (let prop in options) {
+                this[`_${prop}`] = options[prop];
+            }
+
+            // _validator shouldn't be undefined (which may be caused by the previous loop)
+            this._validator = this._validator || Validators.nullValidator;
         }
     }
 
-    abstract get tag(): string;
+    abstract get tag(): DorfTag;
 
     get label() { return this._label; }
     get validator() { return this._validator; }
+    get errorMessage() { return this._errorMessage }
     get isListField() { return this._isListField; }
 }
 
@@ -109,7 +122,7 @@ export abstract class DorfFieldMetadata<T> extends DorfFieldDefinition<T> implem
 /**
  * Base for each Dorf field.
  */
-export abstract class AbstractDorfFieldComponent<T> implements IDorfFieldDefinition {
+export abstract class AbstractDorfFieldComponent<T> implements IDorfFieldDefinition, OnInit, OnChanges {
 
     @Input()
     metadata: DorfFieldMetadata<T>;
@@ -117,6 +130,25 @@ export abstract class AbstractDorfFieldComponent<T> implements IDorfFieldDefinit
     @Input()
     parentForm: FormGroup;
 
+    private _ctrl: FormControl;
+
+    ngOnInit() {
+        this.initCtrl();
+    }
+
+    ngOnChanges() {
+        this.initCtrl();
+    }
+
     get key() { return this.metadata.key; }
     get label() { return this.metadata.label; }
+    get errorMessage() { return this.metadata.errorMessage; }
+
+    get invalid() {
+        return this._ctrl.touched && this._ctrl.dirty && !this._ctrl.valid;
+    }
+
+    private initCtrl() {
+        this._ctrl = this.parentForm.controls[this.key] as FormControl;
+    }
 }

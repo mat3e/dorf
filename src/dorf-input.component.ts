@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 
 import { DorfService } from "./dorf.service";
 import {
+    DorfTag,
     IDorfFieldDefinition,
     IDorfFieldMetadata,
     DorfFieldDefinition,
@@ -33,7 +34,7 @@ export class DorfInputDefinition<T> extends DorfFieldDefinition<T> implements ID
         }
     }
 
-    get tag() { return "input"; }
+    get tag() { return "input" as DorfTag; }
 
     get type() { return this._type; }
 }

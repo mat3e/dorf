@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 
 import { DorfService } from "./dorf.service";
 import {
+    DorfTag,
     IDorfFieldDefinition,
     IDorfFieldMetadata,
     DorfFieldDefinition,
@@ -52,7 +53,7 @@ export class DorfSelectDefinition<T> extends DorfFieldDefinition<T> implements I
         }
     }
 
-    get tag() { return "select"; }
+    get tag() { return "select" as DorfTag; }
 
     get multiple() { return this._multiple; }
     get optionsToSelect() { return this._optionsToSelect; }

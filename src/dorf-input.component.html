@@ -1,7 +1,5 @@
 <div [formGroup]="parentForm" [ngClass]="config.groupingClass">
 	<label *ngIf="label" [attr.for]="key" [ngClass]="config.labelClass">{{label}}</label>
-	<input [id]="key" [type]="type" [formControlName]="key" [ngClass]="config.fieldClass"/>
-	<!-- TODO: errors support
-	<div [ngClass]="config.errorClass" *ngIf="invalid">{{label}} is wrong!!!</div>
-    -->
+	<input [id]="key" [type]="type" [formControlName]="key" [ngClass]="config.fieldClass" />
+	<div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
 </div>

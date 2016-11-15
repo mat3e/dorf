@@ -15,25 +15,22 @@ import { IPerson, Person } from "./model";
     templateUrl: "../../node_modules/dorf/src/dorf-details.view.html"
 })
 export class PersonDetailComponent extends AbstractDorfDetailsComponent<Person> {
-    @Input() person: Person;
+    @Input() domainObject: Person;
     @Output() createUpdate = new EventEmitter<IPerson>();
+
+    // @Override
+    protected get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
+        return Person.fieldDefinitions;
+    }
 
     constructor(config: DorfService) {
         super(config);
     }
 
-    // @Override
     onSubmit() {
-        this.createUpdate.emit(this.form.value);
-    }
-
-    // @Override
-    protected getDomainObject(): Person {
-        return this.person;
-    }
-
-    // @Override
-    protected getFieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
-        return Person.fieldDefinitions;
+        let result = this.form.value as IPerson;
+        
+        console.log(result);
+        this.createUpdate.emit(result);
     }
 }

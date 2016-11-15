@@ -3,6 +3,7 @@ import { Validators } from "@angular/forms";
 import {
     DorfDomainObject,
     IDorfInputDefinition,
+    DorfRadioDefinition,
     DorfInputDefinition,
     DorfSelectDefinition,
     PropertiesToDorfDefinitionsMap
@@ -15,7 +16,8 @@ import {
 export interface IPerson {
     name: string;
     surname: string;
-    birthDate: number;
+    gender: string;
+    age: number;
     cardCode: number;
     favColor: string;
 }
@@ -38,10 +40,10 @@ export class Person extends DorfDomainObject implements IPerson {
     /* 
     Example properties.
      */
-
     name: string;
     surname: string;
-    birthDate: number;
+    gender: string;
+    age: number;
     cardCode: number;
     favColor: string;
 
@@ -61,7 +63,8 @@ export class Person extends DorfDomainObject implements IPerson {
         if (base) {
             this.name = base.name;
             this.surname = base.surname;
-            this.birthDate = base.birthDate;
+            this.gender = base.gender;
+            this.age = base.age;
             this.cardCode = base.cardCode;
             this.favColor = base.favColor;
         }
@@ -72,7 +75,8 @@ export class Person extends DorfDomainObject implements IPerson {
         return {
             "name": this.nameDef,
             "surname": this.surnameDef,
-            "birthDate": this.birthDateDef,
+            "gender": this.genderDef,
+            "age": this.ageDef,
             "cardCode": this.cardCodeDef,
             "favColor": this.favColorDef
         };
@@ -82,12 +86,12 @@ export class Person extends DorfDomainObject implements IPerson {
     Example definitions. 
     It's more readable to store them in getters.
      */
-
     private get nameDef(): DorfInputDefinition<string> {
         return new DorfInputDefinition({
             label: "Name",
             type: "text",
-            validator: Validators.required
+            validator: Validators.required,
+            errorMessage: "Name is required"
         });
     }
 
@@ -95,15 +99,30 @@ export class Person extends DorfDomainObject implements IPerson {
         return new DorfInputDefinition({
             label: "Surname",
             type: "text",
-            validator: Validators.required
+            validator: Validators.required,
+            errorMessage: "Surname is required"
         });
     }
 
-    private get birthDateDef(): DorfInputDefinition<Date> {
+    private get genderDef(): DorfRadioDefinition<string> {
+        return new DorfRadioDefinition({
+            label: "Gender",
+            optionsToSelect: [{
+                key: "m",
+                value: "male"
+            }, {
+                key: "f",
+                value: "female"
+            }],
+            validator: Validators.required,
+            errorMessage: "Gender is required"
+        });
+    }
+
+    private get ageDef(): DorfInputDefinition<number> {
         return new DorfInputDefinition({
-            label: "Date of birth",
-            type: "date",
-            validator: Validators.required
+            label: "Age",
+            type: "number"
         });
     }
 
@@ -111,7 +130,8 @@ export class Person extends DorfDomainObject implements IPerson {
         return new DorfInputDefinition({
             label: "Credit card PIN",
             type: "password",
-            validator: Validators.pattern("[0-9]{4}")
+            validator: Validators.pattern("[0-9]{4}"),
+            errorMessage: "PIN should contain just 4 digits"
         });
     }
 

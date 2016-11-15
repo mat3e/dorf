@@ -6,7 +6,5 @@
 	<select *ngIf="multiple" [id]="key" [formControlName]="key" [ngClass]="config.fieldClass" multiple>
         <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
     </select>
-	<!-- TODO: errors support
-	<div [ngClass]="config.errorClass" *ngIf="invalid">{{label}} is wrong!!!</div>
-    -->
+	<div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
 </div>

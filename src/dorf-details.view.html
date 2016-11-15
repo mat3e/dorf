@@ -1,9 +1,10 @@
 <form (ngSubmit)="config.isButtonVisible && onSubmit()" [ngClass]="config?.formClass">
 
 	<fieldset>
-		<div *ngFor="let fieldMeta of fieldsMetadata">
-			<dorf-input *ngIf="fieldMeta.tag === 'input'" [metadata]="fieldMeta" [parentForm]="form"></dorf-input>
-			<dorf-select *ngIf="fieldMeta.tag === 'select'" [metadata]="fieldMeta" [parentForm]="form"></dorf-select>
+		<div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
+			<dorf-input *ngSwitchCase="'input'" [metadata]="fieldMeta" [parentForm]="form"></dorf-input>
+			<dorf-select *ngSwitchCase="'select'" [metadata]="fieldMeta" [parentForm]="form"></dorf-select>
+			<dorf-radio *ngSwitchCase="'radio'" [metadata]="fieldMeta" [parentForm]="form"></dorf-radio>
 		</div>
 	</fieldset>
 	<div>

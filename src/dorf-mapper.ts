@@ -1,6 +1,8 @@
 import { DorfInputMetadata } from "./dorf-input.component";
+import { DorfRadioMetadata } from "./dorf-radio.component";
 import { DorfSelectMetadata } from "./dorf-select.component";
 import { 
+    DorfTag,
     IDorfFieldMetadata, 
     DorfFieldDefinition, 
     DorfFieldMetadata 
@@ -43,10 +45,12 @@ export class DorfMapper {
         };
     }
 
+    // consider putting it in the DorfService and things from there to definitions
     protected get tagToMetadataMap(): { [tag: string]: any } {
         return {
             // FIXME: type => enum
             "input": DorfInputMetadata,
+            "radio": DorfRadioMetadata,
             "select": DorfSelectMetadata
         }
     }

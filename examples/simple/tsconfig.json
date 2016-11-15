@@ -8,10 +8,7 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "typeRoots": [
-      "./node_modules/@types/"
-    ]
+    "suppressImplicitAnyIndexErrors": true
   },
   "compileOnSave": true,
   "exclude": [

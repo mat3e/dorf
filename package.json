@@ -10,7 +10,9 @@
   "scripts": {
     "patch": "npm run build && npm test && npm version patch",
     "test": "karma start config/karma/conf.js",
-    "build": "tsc"
+    "build": "tsc",
+    "build-all": "npm run build && npm run simple-example",
+    "simple-example": "copyfiles -f ./src/*.js ./src/*.html ./src/*.d.ts ./examples/simple/node_modules/dorf/src"
   },
   "repository": {
     "type": "git",
@@ -30,18 +32,12 @@
     "@angular/compiler": "~2.1.2",
     "@angular/core": "~2.1.2",
     "@angular/forms": "~2.1.2",
-    "@angular/http": "~2.1.2",
-    "@angular/platform-browser": "~2.1.2",
-    "@angular/platform-browser-dynamic": "~2.1.2",
-    "@angular/router": "~3.1.2",
-    "core-js": "^2.4.1",
-    "reflect-metadata": "^0.1.3",
-    "rxjs": "5.0.0-beta.12",
-    "zone.js": "^0.6.23",
     "@types/core-js": "^0.9.34",
     "@types/node": "^6.0.45",
     "@types/jasmine": "^2.5.35",
     "angular2-template-loader": "^0.4.0",
+    "copyfiles": "1.0.0",
+    "core-js": "^2.4.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
@@ -54,11 +50,14 @@
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
     "raw-loader": "^0.5.1",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.12",
     "style-loader": "^0.13.1",
     "ts-loader": "^1.0.0",
     "typescript": "^2.0.9",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
-    "webpack-merge": "^0.14.0"
+    "webpack-merge": "^0.14.0",
+    "zone.js": "^0.6.23"
   }
 }

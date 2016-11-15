@@ -1,0 +1,8 @@
+<div [formGroup]="parentForm" [ngClass]="config.groupingClass">
+	<label *ngIf="label" [ngClass]="config.labelClass">{{label}}</label>
+    <label *ngFor="let opt of optionsToSelect" [ngClass]="config.fieldClass">
+        <input type="radio" [value]="opt.key" [id]="key" [name]="key" [formControlName]="key">
+        {{opt.value}}
+    </label>
+	<div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
+</div>

@@ -3,6 +3,7 @@ import { NgModule, ModuleWithProviders } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { DorfInputComponent } from "./dorf-input.component";
+import { DorfRadioComponent } from "./dorf-radio.component";
 import { DorfSelectComponent } from "./dorf-select.component";
 
 import { DorfService, DorfConfigService } from "./dorf.service";
@@ -17,6 +18,7 @@ export * from "./abstract-dorf-field.component";
 export * from "./abstract-dorf-details.component";
 
 export { IDorfInputDefinition, DorfInputDefinition, DorfInputMetadata } from "./dorf-input.component";
+export { IDorfRadioDefinition, DorfRadioDefinition, DorfRadioMetadata } from "./dorf-radio.component";
 export { IDorfSelectDefinition, DorfSelectDefinition, DorfSelectMetadata } from "./dorf-select.component";
 
 /**
@@ -25,8 +27,14 @@ export { IDorfSelectDefinition, DorfSelectDefinition, DorfSelectMetadata } from 
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule],
     providers: [DorfService],
-    declarations: [DorfInputComponent, DorfSelectComponent],
-    exports: [FormsModule, ReactiveFormsModule, DorfInputComponent, DorfSelectComponent]
+    declarations: [DorfInputComponent, DorfRadioComponent, DorfSelectComponent],
+    exports: [
+        FormsModule,
+        ReactiveFormsModule,
+        DorfInputComponent,
+        DorfRadioComponent,
+        DorfSelectComponent
+    ]
 })
 export class DorfModule {
     // TODO: add another module which would use HTML templates provided by user
