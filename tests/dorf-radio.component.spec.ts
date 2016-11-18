@@ -1,5 +1,5 @@
-import { OptionType } from "../src/dorf-select.component";
-import { DorfRadioDefinition, DorfRadioMetadata } from "../src/dorf-radio.component";
+import { OptionType } from "../src/fields/abstract-dorf-choose.component";
+import { DorfRadioDefinition, DorfRadioMetadata } from "../src/fields/dorf-radio.component";
 
 describe("DorfRadioDefinition", () => {
     it("should have default values for options and tag properties", () => {

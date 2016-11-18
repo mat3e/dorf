@@ -34,7 +34,7 @@ export class Person extends DorfDomainObject implements IPerson {
      * so it's more meaningful to have it as a static property/function.
      */
     static get fieldDefinitions() {
-        return new this().getFieldDefinitions();
+        return new this().fieldDefinitions;
     }
 
     /* 
@@ -71,7 +71,7 @@ export class Person extends DorfDomainObject implements IPerson {
     }
 
     // @Override
-    getFieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
+    get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
         return {
             "name": this.nameDef,
             "surname": this.surnameDef,

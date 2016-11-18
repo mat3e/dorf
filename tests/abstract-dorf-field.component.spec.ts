@@ -1,9 +1,9 @@
 import { Validators } from "@angular/forms";
 
-import { DorfInputDefinition, DorfInputMetadata } from "../src/dorf-input.component";
-import { DorfSelectDefinition, DorfSelectMetadata } from "../src/dorf-select.component";
+import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
+import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
 
-import { DorfFieldDefinition, DorfFieldMetadata, AbstractDorfFieldComponent } from "../src/abstract-dorf-field.component";
+import { DorfFieldDefinition, DorfFieldMetadata } from "../src/fields/abstract-dorf-field.component";
 
 describe("DorfFieldDefinition", () => {
     it("should have a default value for validator property", () => {
@@ -24,8 +24,8 @@ describe("DorfFieldMetadata", () => {
         let def2 = new DorfSelectDefinition();
 
         // WHEN
-        let meta1: DorfFieldMetadata<any> = new DorfInputMetadata(def1);
-        let meta2: DorfFieldMetadata<any> = new DorfSelectMetadata(def2);
+        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1);
+        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2);
 
         // THEN
         expect(meta1.tag).toEqual("input");
@@ -38,13 +38,11 @@ describe("DorfFieldMetadata", () => {
         let def2 = new DorfSelectDefinition();
 
         // WHEN
-        let meta1: DorfFieldMetadata<any> = new DorfInputMetadata(def1, { key: "aaa", order: 2 });
-        let meta2: DorfFieldMetadata<any> = new DorfSelectMetadata(def2, { key: "bbb", order: 1 });
+        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1, { key: "aaa", value: null });
+        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2, { key: "bbb" });
 
         // THEN
         expect(meta1.key).toEqual("aaa");
-        expect(meta1.order).toEqual(2);
         expect(meta2.key).toEqual("bbb");
-        expect(meta2.order).toEqual(1);
     });
 });

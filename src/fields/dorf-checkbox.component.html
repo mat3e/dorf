@@ -1,0 +1,7 @@
+<div [formGroup]="parentForm" [ngClass]="config.groupingClass">
+	<label *ngIf="label" [attr.for]="key" [ngClass]="config.labelClass">{{label}}</label>
+	<input #view [id]="key" [ngClass]="config.fieldClass" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox"
+	/>
+	<input [name]="key" [formControlName]="key" type="hidden" />
+	<div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
+</div>

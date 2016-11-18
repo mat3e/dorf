@@ -1,20 +1,17 @@
-import { OnInit, OnChanges } from "@angular/core";
+import { OnChanges } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 
-import { DorfService } from "./dorf.service";
-import { DorfFieldMetadata } from "./abstract-dorf-field.component";
+import { DorfConfigService } from "./dorf-config.service";
+import { DorfFieldDefinition, DorfFieldMetadata } from "./fields/abstract-dorf-field.component";
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "./dorf-mapper";
 
 /**
  * Should be used with details.view.html to create domain object details Component.
  * It should be extended for each Domain Object.
  */
-export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChanges {
+export abstract class AbstractDorfDetailsComponent<T> implements OnChanges {
     // @Input
     abstract domainObject: T;
-
-    private _form: FormGroup;
-    private _fieldsMetadata: DorfFieldMetadata<any>[];
 
     /**
      * DomainObject-specific map.
@@ -29,19 +26,14 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChang
         return Validators.nullValidator;
     }
 
+    private _form: FormGroup;
+    private _fieldsMetadata: DorfFieldMetadata<any, DorfFieldDefinition<any>>[];
+
     /**
      * DorfService should be injected in the subtype's constructor and passed here
      * in order to providing CSS classes to HTNL template.
      */
-    constructor(public config: DorfService, private mapper: DorfMapper = new DorfMapper()) { }
-
-    /**
-     * Mapping from Domain Object and its PropertiesToDorfDefinitionsMap to form.
-     */
-    ngOnInit() {
-        this.initMetaForAllFields();
-        this.initFormGroup();
-    }
+    constructor(public config: DorfConfigService, private _mapper: DorfMapper = new DorfMapper(config)) { }
 
     /**
      * Domain Object should be an input property, so each change should rebuild form.
@@ -66,7 +58,7 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChang
     }
 
     private initMetaForAllFields() {
-        this._fieldsMetadata = this.mapper.mapObjectWithDefinitionsToFieldsMetadata(this.domainObject, this.fieldDefinitions).sort((a, b) => a.order - b.order);
+        this._fieldsMetadata = this._mapper.mapObjectWithDefinitionsToFieldsMetadata(this.domainObject, this.fieldDefinitions);
     }
 
     private initFormGroup() {
@@ -74,6 +66,7 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnInit, OnChang
 
         this._fieldsMetadata.forEach((meta) => {
             let formControl = meta.formControl;
+
             if (this.config.isDisabled) {
                 formControl.disable();
             }

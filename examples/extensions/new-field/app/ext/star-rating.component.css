@@ -1,0 +1,16 @@
+.rating .fa.fa-star {
+    color: black;
+}
+
+.rating .fa.fa-star.active {
+    color: #DCAA00;
+}
+
+.rating:hover .fa.fa-star {
+    cursor: pointer;
+    color: #DCAA00;
+}
+
+.rating .fa.fa-star:hover~.fa.fa-star {
+    color: black;
+}

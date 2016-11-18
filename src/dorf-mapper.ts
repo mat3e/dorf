@@ -1,18 +1,23 @@
-import { DorfInputMetadata } from "./dorf-input.component";
-import { DorfRadioMetadata } from "./dorf-radio.component";
-import { DorfSelectMetadata } from "./dorf-select.component";
-import { 
+import { DorfConfigService } from "./dorf-config.service";
+
+import {
     DorfTag,
-    IDorfFieldMetadata, 
-    DorfFieldDefinition, 
-    DorfFieldMetadata 
-} from "./abstract-dorf-field.component";
+    IDorfFieldDefinition,
+    DorfFieldDefinition,
+    IDorfFieldMetadata,
+    DorfFieldMetadata
+} from "./fields/abstract-dorf-field.component";
+
+import { DorfInputDefinition, DorfInputMetadata } from "./fields/dorf-input.component";
+import { DorfRadioDefinition, DorfRadioMetadata } from "./fields/dorf-radio.component";
+import { DorfSelectDefinition, DorfSelectMetadata } from "./fields/dorf-select.component";
+import { DorfCheckboxDefinition, DorfCheckboxMetadata } from "./fields/dorf-checkbox.component";
 
 /**
  * The most important thing, which should be defined for each domain object.
  */
 export interface PropertiesToDorfDefinitionsMap<T> {
-    [propertyName: string]: DorfFieldDefinition<any>
+    [propertyName: string]: IDorfFieldDefinition<any>
 }
 
 /**
@@ -20,19 +25,44 @@ export interface PropertiesToDorfDefinitionsMap<T> {
  * Mapper goes through predefined map and create metadata needed for form fields.
  */
 export class DorfMapper {
-    mapObjectWithDefinitionsToFieldsMetadata<T>(domainObject: T, fieldDefinitions: PropertiesToDorfDefinitionsMap<T>): DorfFieldMetadata<any>[] {
+    /*
+    it depends on components and components depend on the service, that's why we have this here
+    without `any` there are problems with calling a constructor
+    */
+    private _fields: DorfTag<typeof DorfFieldDefinition, any>[] = [{
+        tag: DorfTag.CHECKBOX,
+        definition: DorfCheckboxDefinition,
+        metadata: DorfCheckboxMetadata
+    }, {
+        tag: DorfTag.INPUT,
+        definition: DorfInputDefinition,
+        metadata: DorfInputMetadata
+    }, {
+        tag: DorfTag.RADIO,
+        definition: DorfRadioDefinition,
+        metadata: DorfRadioMetadata
+    }, {
+        tag: DorfTag.SELECT,
+        definition: DorfSelectDefinition,
+        metadata: DorfSelectMetadata
+    }];
 
-        let fields: DorfFieldMetadata<any>[] = [];
-        let order = 1;
+    constructor(private _config: DorfConfigService) {
+        this._fields = this._fields.concat(this._config.additionalMetadataKinds);
+    }
+
+    mapObjectWithDefinitionsToFieldsMetadata<T>(domainObject: T, fieldDefinitions: PropertiesToDorfDefinitionsMap<T>): DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
+
+        let fields: DorfFieldMetadata<any, DorfFieldDefinition<any>>[] = [];
 
         for (let key in fieldDefinitions) {
 
             let definition = fieldDefinitions[key];
-            let metaOptions = this.getMetadataOptions(key, domainObject); 
-            metaOptions.order = order;
+            let metaOptions = this.getMetadataOptions(key, domainObject);
 
-            fields.push(new this.tagToMetadataMap[definition.tag](definition, metaOptions));
-            ++order;
+            let metadata = new (this.getMetadataForTag(definition.tag))(definition, metaOptions);
+
+            fields.push(metadata);
         }
 
         return fields;
@@ -41,17 +71,17 @@ export class DorfMapper {
     protected getMetadataOptions<T>(propertyName: string, obj: T): IDorfFieldMetadata<any> {
         return {
             key: propertyName,
-            value: obj[propertyName]
+            value: obj[propertyName],
+            setDomainObjValue: (val: T) => { obj[propertyName] = val; }
         };
     }
 
-    // consider putting it in the DorfService and things from there to definitions
-    protected get tagToMetadataMap(): { [tag: string]: any } {
-        return {
-            // FIXME: type => enum
-            "input": DorfInputMetadata,
-            "radio": DorfRadioMetadata,
-            "select": DorfSelectMetadata
+    protected getMetadataForTag(tag: string) {
+        for (let i = 0; i < this._fields.length; ++i) {
+            let currField = this._fields[i];
+            if (currField.tag === tag) {
+                return currField.metadata;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-import { OptionType, DorfSelectDefinition, DorfSelectMetadata } from "../src/dorf-select.component";
+import { OptionType } from "../src/fields/abstract-dorf-choose.component";
+import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
 
 describe("DorfSelectDefinition", () => {
     it("should have default values for multiple, select and tag properties", () => {

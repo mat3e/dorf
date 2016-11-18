@@ -1,8 +1,11 @@
 import { Validators } from "@angular/forms";
 
+import { DorfConfigService } from "../src/dorf-config.service";
+
 import { DorfDomainObject } from "../src/abstract-dorf.model";
-import { DorfInputDefinition, DorfInputMetadata } from "../src/dorf-input.component";
-import { OptionType, DorfSelectDefinition, DorfSelectMetadata } from "../src/dorf-select.component";
+import { OptionType } from "../src/fields/abstract-dorf-choose.component";
+import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
+import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
 
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../src/dorf-mapper";
 
@@ -18,7 +21,7 @@ describe("DorfMapper", () => {
         /**
          * Keys from the result have to reflect property names 1:1.
          */
-        getFieldDefinitions(): PropertiesToDorfDefinitionsMap<DorfDomainObject> {
+        get fieldDefinitions(): PropertiesToDorfDefinitionsMap<DorfDomainObject> {
             return {
                 "id": this.idDef,
                 "_job": this.jobDef
@@ -51,11 +54,11 @@ describe("DorfMapper", () => {
 
     it("maps from domain object and its definitions to fields metadata", () => {
         // GIVEN
-        let mapper = new DorfMapper();
+        let mapper = new DorfMapper(new DorfConfigService());
         let testObj = new TestDomainObject();
 
         // WHEN
-        let result = mapper.mapObjectWithDefinitionsToFieldsMetadata(testObj, testObj.getFieldDefinitions());
+        let result = mapper.mapObjectWithDefinitionsToFieldsMetadata(testObj, testObj.fieldDefinitions);
 
         // THEN
         expect(result.length).toEqual(2);

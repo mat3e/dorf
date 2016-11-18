@@ -11,8 +11,12 @@
     "patch": "npm run build && npm test && npm version patch",
     "test": "karma start config/karma/conf.js",
     "build": "tsc",
-    "build-all": "npm run build && npm run simple-example",
-    "simple-example": "copyfiles -f ./src/*.js ./src/*.html ./src/*.d.ts ./examples/simple/node_modules/dorf/src"
+    "build-all": "npm run build && npm run build-examples",
+    "build-examples": "npm run simple-example && npm run field-example && npm run extras-example && npm run definition-example",
+    "simple-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/simple/node_modules/dorf/",
+    "field-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/new-field/node_modules/dorf/",
+    "extras-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/definition-extras/node_modules/dorf/",
+    "definition-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/different-definition/node_modules/dorf/"
   },
   "repository": {
     "type": "git",
@@ -35,6 +39,7 @@
     "@types/core-js": "^0.9.34",
     "@types/node": "^6.0.45",
     "@types/jasmine": "^2.5.35",
+    "@types/selenium-webdriver": "^2.53.33",
     "angular2-template-loader": "^0.4.0",
     "copyfiles": "1.0.0",
     "core-js": "^2.4.1",
