@@ -188,7 +188,7 @@ export class Person extends DorfDomainObject implements IPerson {
             mapping: {
                 trueValue: "yes",
                 falseValue: "no"
-            }
+            },
             extras: {
                 order: 0
             }

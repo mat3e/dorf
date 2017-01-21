@@ -52,9 +52,9 @@ export class DorfRadioMetadata<T> extends DorfChooseMetadata<T, DorfRadioDefinit
  * Radio input field which consumes DorfRadioMetadata for rendering.
  */
 @Component({
-    moduleId: module.id,
+    moduleId: `${module.id}`,
     selector: "dorf-radio",
-    templateUrl: "dorf-radio.component.html"
+    templateUrl: "./dorf-radio.component.html"
 })
 export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetadata<T>> implements IDorfRadioDefinition<T> {
 

@@ -68,9 +68,9 @@ export class DorfSelectMetadata<T> extends DorfChooseMetadata<T, DorfSelectDefin
  * Select input field which consumes DorfSelectMetadata for rendering.
  */
 @Component({
-    moduleId: module.id,
+    moduleId: `${module.id}`,
     selector: "dorf-select",
-    templateUrl: "dorf-select.component.html"
+    templateUrl: "./dorf-select.component.html"
 })
 export class DorfSelectComponent<T> extends DorfChooseComponent<T, DorfSelectMetadata<T>> implements IDorfSelectDefinition<T> {
 

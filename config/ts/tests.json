@@ -8,6 +8,7 @@
     "removeComments": true,
     "declaration": true,
     "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": true
   }
 }

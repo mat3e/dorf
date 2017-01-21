@@ -1,6 +1,9 @@
 <div [formGroup]="parentForm" [ngClass]="config.groupingClass">
 	<label *ngIf="label" [attr.for]="key" [ngClass]="config.labelClass">{{label}}</label>
-	<input [id]="key" [name]="key" [type]="type" [formControlName]="key" [ngClass]="config.fieldClass" [placeholder]="placeholder"
-	/>
+	<span [ngSwitch]="type">
+		<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="config.fieldClass" type="range" [placeholder]="placeholder" />
+		<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="config.fieldClass" type="number" [placeholder]="placeholder" />
+		<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControlName]="key" [ngClass]="config.fieldClass" [placeholder]="placeholder" />
+	</span>
 	<div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
 </div>

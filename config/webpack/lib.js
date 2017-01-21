@@ -1,6 +1,5 @@
 (function (global) {
     let webpack = require("webpack");
-    let helpers = require("../helpers");
 
     module.exports = {
         entry: {

@@ -60,7 +60,10 @@ export class DorfCheckboxMetadata<T> extends DorfFieldMetadata<T, DorfCheckboxDe
 
     constructor(definition = new DorfCheckboxDefinition<T>(), options?: IDorfFieldMetadata<T>) {
         super(definition, options);
-        this._valueBeforeMapping = options.value;
+
+        if (options) {
+            this._valueBeforeMapping = options.value;
+        }
     }
 
     get mapping() { return this.definition.mapping }
@@ -72,12 +75,15 @@ export class DorfCheckboxMetadata<T> extends DorfFieldMetadata<T, DorfCheckboxDe
  * Checkbox input field which consumes DorfCheckboxMetadata for rendering.
  */
 @Component({
-    moduleId: module.id,
+    moduleId: `${module.id}`,
     selector: "dorf-checkbox",
-    templateUrl: "dorf-checkbox.component.html"
+    templateUrl: "./dorf-checkbox.component.html"
 })
 export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, DorfCheckboxMetadata<T>> implements IDorfCheckboxDefinition<T>, OnChanges {
 
+    /**
+     * True/false value which is seen by the end user.
+     */
     checkboxValue: boolean;
 
     constructor(config: DorfConfigService) {

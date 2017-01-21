@@ -90,6 +90,7 @@ export class Person extends DorfDomainObject implements IPerson {
         return new DorfInputDefinition({
             label: "Name",
             type: "text",
+            updateModelOnChange: true,
             validator: Validators.required,
             errorMessage: "Name is required"
         });

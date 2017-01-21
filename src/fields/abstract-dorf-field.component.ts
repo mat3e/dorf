@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn } from "@angular/forms"
 import { DorfConfigService } from "../dorf-config.service";
 
 /**
- * Possible tags for DORF.
+ * Possible tags for DORF. Base ones.
  */
 export class DorfTag<D extends typeof DorfFieldDefinition, M extends typeof DorfFieldMetadata> {
     static get INPUT() { return "input"; }
@@ -94,8 +94,6 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
     private _beforeFormControl: (value: T, validator: ValidatorFn | ValidatorFn[]) => void;
     private _updateModelOnChange: boolean;
 
-    [propertyName: string]: any;
-
     constructor(options?: IDorfFieldDefinition<T>) {
         if (options) {
             this._label = options.label;
@@ -166,7 +164,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
 
         if (this.updateModelOnChange) {
             ctrl.valueChanges.subscribe(() => {
-                this._setDomainObjValue(this._value);
+                this._setDomainObjValue(ctrl.value);
             });
         }
 

@@ -58,9 +58,9 @@ export class DorfInputMetadata<T> extends DorfFieldMetadata<T, DorfInputDefiniti
  * Input field which supports DorfSelectMetadata for rendering.
  */
 @Component({
-    moduleId: module.id,
+    moduleId: `${module.id}`,
     selector: "dorf-input",
-    templateUrl: "dorf-input.component.html"
+    templateUrl: "./dorf-input.component.html"
 })
 export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInputMetadata<T>> implements IDorfInputDefinition<T> {
 

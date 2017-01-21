@@ -16,6 +16,7 @@ describe("DorfService", () => {
         expect(service.INPUT).toEqual("input");
         expect(service.RADIO).toEqual("radio");
         expect(service.SELECT).toEqual("select");
+        expect(service.CHECKBOX).toEqual("checkbox");
     });
 
     it("should get values from the provided config", () => {

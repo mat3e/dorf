@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, OnChanges, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { PropertiesToDorfDefinitionsMap, AbstractDorfDetailsComponent, DorfConfigService } from "dorf";
 
 import { IPerson, Person } from "./model";

@@ -7,7 +7,6 @@ export type Modifier = "NotNull" | "Hidden";
 
 /**
  * Totally different FieldDefinition, which comes from the server.
- * We are extending {@link IDorfFieldDefinition IDorfFieldDefinition} just for making compiler happy.
  */
 export interface IBackendDefinition<T> {
     label?: string;

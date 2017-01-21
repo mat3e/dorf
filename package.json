@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "0.9.4",
+  "version": "1.0.0",
   "description": "Domain Object Reactive Forms for Angular 2 and TypeScript",
   "keywords": [
     "angular2",
@@ -16,7 +16,8 @@
     "simple-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/simple/node_modules/dorf/",
     "field-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/new-field/node_modules/dorf/",
     "extras-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/definition-extras/node_modules/dorf/",
-    "definition-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/different-definition/node_modules/dorf/"
+    "definition-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/different-definition/node_modules/dorf/",
+    "build-webpack": "webpack --progress --profile --bail --config config/webpack/lib.js"
   },
   "repository": {
     "type": "git",

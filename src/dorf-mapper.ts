@@ -26,7 +26,7 @@ export interface PropertiesToDorfDefinitionsMap<T> {
  */
 export class DorfMapper {
     /*
-    it depends on components and components depend on the service, that's why we have this here
+    it depends on field components and components depend on the service, that's why we have this here;
     without `any` there are problems with calling a constructor
     */
     private _fields: DorfTag<typeof DorfFieldDefinition, any>[] = [{

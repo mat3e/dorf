@@ -12,6 +12,7 @@
         "suppressImplicitAnyIndexErrors": true
     },
     "include": [
+        "../../src/**/*",
         "../../index.ts"
     ]
 }
