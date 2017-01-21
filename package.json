@@ -4,8 +4,18 @@
   "description": "Domain Object Reactive Forms for Angular 2 and TypeScript",
   "keywords": [
     "angular2",
+    "typescript",
+    "ts",
     "reactive",
-    "form"
+    "dynamic",
+    "model-driven",
+    "form",
+    "forms",
+    "html",
+    "domain",
+    "object",
+    "decorators",
+    "annotations"
   ],
   "scripts": {
     "patch": "npm run build && npm test && npm version patch",
