@@ -5,9 +5,9 @@ import { DorfFieldMetadata } from "../src/fields/abstract-dorf-field.component";
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../src/dorf-mapper";
 import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
 
-import { AbstractDorfDetailsComponent } from "../src/abstract-dorf-details.component";
+import { AbstractDorfFormComponent } from "../src/abstract-dorf-form.component";
 
-describe("AbstractDorfDetailsComponent", () => {
+describe("AbstractDorfFormComponent", () => {
 
     class TestSpies {
         formControls: jasmine.Spy[];
@@ -68,9 +68,9 @@ describe("AbstractDorfDetailsComponent", () => {
     })
 
     /**
-     * AbstractDorfDetailsComponent has to be extended somehow.
+     * AbstractDorfFormComponent has to be extended somehow.
      */
-    class TestDetailComponent extends AbstractDorfDetailsComponent<TestDomainObject> {
+    class TestDetailComponent extends AbstractDorfFormComponent<TestDomainObject> {
         // @Override
         domainObject: TestDomainObject;
 

@@ -9,7 +9,7 @@ import { PropertiesToDorfDefinitionsMap, DorfMapper } from "./dorf-mapper";
  * Should be used with details.view.html to create domain object details Component.
  * It should be extended for each Domain Object.
  */
-export abstract class AbstractDorfDetailsComponent<T> implements OnChanges {
+export abstract class AbstractDorfFormComponent<T> implements OnChanges {
     // @Input
     abstract domainObject: T;
 
@@ -31,7 +31,7 @@ export abstract class AbstractDorfDetailsComponent<T> implements OnChanges {
 
     /**
      * DorfService should be injected in the subtype's constructor and passed here
-     * in order to providing CSS classes to HTNL template.
+     * in order to providing CSS classes to HTML template.
      */
     constructor(public config: DorfConfigService, private _mapper: DorfMapper = new DorfMapper(config)) { }
 

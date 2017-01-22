@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ComponentDecorator } from "@angular/core";
 import { IPerson, Person } from "./person/model";
 
 @Component({

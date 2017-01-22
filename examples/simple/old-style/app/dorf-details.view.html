@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" [ngClass]="config.formClass">
+<form [ngClass]="config.formClass">
 
 	<fieldset>
 		<div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
@@ -9,7 +9,7 @@
 		</div>
 	</fieldset>
 	<div>
-		<button *ngIf="config.isButtonVisible" type="submit" [disabled]="!form || !form.valid">Save</button>
+		<button *ngIf="config.isButtonVisible" (click)="onSubmit()" [disabled]="!form || !form.valid">Save</button>
 	</div>
 
 </form>

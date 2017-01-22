@@ -83,5 +83,7 @@ export class DorfMapper {
                 return currField.metadata;
             }
         }
+
+        throw new Error(`Unknown DORF tag: ${tag}`);
     }
 }

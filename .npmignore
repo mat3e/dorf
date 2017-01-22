@@ -1,11 +1,12 @@
-./*
+*
+
 !src
 
-!index.js
+!.npmignore
 !index.d.ts
+!index.js
 !package.json
 !README.md
-!.npmignore
 
 /**/*.ts
 !/**/*.d.ts

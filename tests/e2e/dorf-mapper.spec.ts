@@ -6,6 +6,7 @@ import { DorfDomainObject } from "../../src/abstract-dorf.model";
 import { OptionType } from "../../src/fields/abstract-dorf-choose.component";
 import { DorfInputDefinition, DorfInputMetadata } from "../../src/fields/dorf-input.component";
 import { DorfSelectDefinition, DorfSelectMetadata } from "../../src/fields/dorf-select.component";
+import { DorfFieldDefinition } from "../../src/fields/abstract-dorf-field.component";
 
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../../src/dorf-mapper";
 
@@ -75,5 +76,21 @@ describe("DorfMapper", () => {
         expect((jobMeta as DorfSelectMetadata<number>).optionsToSelect.length).toEqual(2);
         expect(jobMeta.formControl.value).toEqual(2);
         expect(jobMeta.label).toEqual("Job");
+    });
+
+    it("throws error when unknown definition provided", () => {
+        // GIVEN
+        let mapper = new DorfMapper(new DorfConfigService());
+        let unknownDef = {
+            tag: "unknown"
+        } as DorfFieldDefinition<any>;
+        let map = {
+            test: unknownDef
+        }
+
+        // WHEN + THEN
+        expect(() => {
+            mapper.mapObjectWithDefinitionsToFieldsMetadata({}, map);
+        }).toThrowError(`Unknown DORF tag: ${unknownDef.tag}`);
     });
 });

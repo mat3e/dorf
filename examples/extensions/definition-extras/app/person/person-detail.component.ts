@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { PropertiesToDorfDefinitionsMap, AbstractDorfDetailsComponent, DorfConfigService } from "dorf";
+import { PropertiesToDorfDefinitionsMap, AbstractDorfFormComponent, DorfConfigService } from "dorf";
 
 import { CustomMapper } from "../ext/custom-mapper"
 
@@ -16,7 +16,7 @@ import { IPerson, Person } from "./model";
     selector: "person-details",
     templateUrl: "../dorf-details.view.html"
 })
-export class PersonDetailComponent extends AbstractDorfDetailsComponent<Person> {
+export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
     @Input() domainObject: Person;
     @Output() createUpdate = new EventEmitter<IPerson>();
 

@@ -13,11 +13,14 @@ import { DorfCheckboxComponent } from "./fields/dorf-checkbox.component";
 /**
  * Typescript files which should be exported.
  */
+export * from "./decorators/dorf-form.decorator";
+export * from "./decorators/dorf-object.decorator";
+
 export * from "./dorf-mapper";
 export * from "./abstract-dorf.model";
 export * from "./fields/abstract-dorf-field.component";
 export * from "./fields/abstract-dorf-choose.component";
-export * from "./abstract-dorf-details.component";
+export * from "./abstract-dorf-form.component";
 
 export * from "./dorf-config.service";
 

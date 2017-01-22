@@ -192,6 +192,6 @@ export class Person extends DorfDomainObject implements IPerson {
             extras: {
                 order: 0
             }
-        })
+        });
     }
 }
