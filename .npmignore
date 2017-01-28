@@ -1,5 +1,9 @@
 *
-examples
+.git/**/*
+.vscode/**/*
+config/**/*
+examples/**/*
+node_modules/**/*
 
 !src
 
@@ -10,5 +14,6 @@ examples
 !README.md
 
 /**/*.ts
-!/**/*.d.ts
-!/**/*.js
+!src/**/*.d.ts
+!src/**/*.js
+!src/**/*.html
