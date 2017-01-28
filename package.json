@@ -1,7 +1,7 @@
 {
   "name": "dorf",
-  "version": "2.0.0-beta.0",
-  "description": "Domain Object Reactive Forms for Angular 2 and TypeScript",
+  "version": "2.0.0-beta.1",
+  "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "angular",
     "angular2",
