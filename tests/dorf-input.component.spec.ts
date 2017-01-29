@@ -1,3 +1,4 @@
+import { DorfTag } from "../src/fields/base/abstract-dorf-field.component";
 import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
 
 describe("DorfInputDefinition", () => {
@@ -6,7 +7,7 @@ describe("DorfInputDefinition", () => {
         let inputDef = new DorfInputDefinition();
 
         // THEN
-        expect(inputDef.tag).toEqual("input");
+        expect(inputDef.tag).toEqual(DorfTag.INPUT);
         expect(inputDef.type).toEqual("text");
     });
 });
@@ -20,7 +21,7 @@ describe("DorfInputMetadata", () => {
         let inputMeta = new DorfInputMetadata<Date>(inputDef);
 
         // THEN
-        expect(inputMeta.tag).toEqual("input");
+        expect(inputMeta.tag).toEqual(DorfTag.INPUT);
         expect(inputDef.type).toEqual("date");
     });
 });

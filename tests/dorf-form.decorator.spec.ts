@@ -30,6 +30,6 @@ describe("DorfForm", () => {
         expect((result as any).form).toBeUndefined();
         expect((result as any).fieldsMetadata).toBeUndefined();
 
-        expect((result as any).ngOnChanges).toThrowError("DorfForm has to contain DorfObject annotated as @DorfObjectInputWrapper()");
+        expect((result as any).ngOnChanges).toThrowError("DorfForm has to contain DorfObject annotated as @DorfObjectInput()");
     });
 });

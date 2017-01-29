@@ -4,8 +4,8 @@ import { DebugElement } from "@angular/core";
 
 import { ReactiveFormsModule, FormGroup, FormControl } from "@angular/forms";
 
-import { IDorfService, DorfConfigService } from "../../src/dorf-config.service";
-import { OptionType } from "../../src/fields/abstract-dorf-choose.component";
+import { DorfConfigService } from "../../src/dorf-config.service";
+import { OptionType } from "../../src/fields/base/abstract-dorf-choose.component";
 import { DorfSelectDefinition, DorfSelectMetadata, DorfSelectComponent } from "../../src/fields/dorf-select.component";
 
 describe("DorfSelectComponent", () => {
@@ -34,9 +34,9 @@ describe("DorfSelectComponent", () => {
     let htmlElem: HTMLSelectElement;
 
     beforeEach(async(() => {
-        let dorfConfigServiceStub: IDorfService = {
-            fieldClass: "sut"
-        };
+        let dorfConfigServiceStub = new DorfConfigService({
+            css: { select: { field: "sut" } }
+        });
 
         TestBed.configureTestingModule({
             imports: [ReactiveFormsModule],

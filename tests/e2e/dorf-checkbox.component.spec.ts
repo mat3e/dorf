@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angula
 
 import { newEvent } from "../util/events";
 
-import { IDorfService, DorfConfigService } from "../../src/dorf-config.service";
+import { DorfConfigService } from "../../src/dorf-config.service";
 import {
     ICheckboxMapping,
     DorfCheckboxDefinition,
@@ -30,9 +30,9 @@ describe("DorfCheckboxComponent", () => {
     let htmlElem: HTMLInputElement;
 
     beforeEach(async(() => {
-        let dorfConfigServiceStub: IDorfService = {
-            fieldClass: "sut"
-        };
+        let dorfConfigServiceStub = new DorfConfigService({
+            css: { checkbox: { field: "sut" } }
+        });
 
         TestBed.configureTestingModule({
             imports: [ReactiveFormsModule],

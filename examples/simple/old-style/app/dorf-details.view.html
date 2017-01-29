@@ -1,6 +1,6 @@
-<form [ngClass]="config.formClass">
+<form (ngSubmit)="onSubmit()" [ngClass]="config.css.general.form">
 
-	<fieldset>
+	<fieldset [ngClass]="config.css.general.fieldset">
 		<div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
 			<dorf-input *ngSwitchCase="config.INPUT" [metadata]="fieldMeta" [parentForm]="form"></dorf-input>
 			<dorf-radio *ngSwitchCase="config.RADIO" [metadata]="fieldMeta" [parentForm]="form"></dorf-radio>
@@ -9,7 +9,7 @@
 		</div>
 	</fieldset>
 	<div>
-		<button *ngIf="config.isButtonVisible" (click)="onSubmit()" [disabled]="!form || !form.valid">Save</button>
+		<button *ngIf="config.isButtonVisible" type="submit" [disabled]="!form || !form.valid">Save</button>
 	</div>
 
 </form>

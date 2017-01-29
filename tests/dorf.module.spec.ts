@@ -7,7 +7,7 @@ describe("DorfModule", () => {
     it("supports parametrized DorfConfigService in forRoot method", () => {
         // GIVEN
         let opts = new DorfSupportingService({
-            fieldClass: "test"
+            css: { general: { form: "test" } }
         });
 
         // WHEN

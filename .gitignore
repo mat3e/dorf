@@ -11,6 +11,8 @@
 !package.json
 !README.md
 
+/**/*npm-debug.log*
+
 /**/*.js
 /**/*.js.map
 /**/*.d.ts

@@ -3,12 +3,12 @@ import { Validators } from "@angular/forms";
 
 import { DorfConfigService } from "../../src/dorf-config.service";
 
-import { DorfDomainObject } from "../../src/abstract-dorf.model"
+import { DorfDomainObject } from "../../src/base/abstract-dorf.model"
 import { PropertiesToDorfDefinitionsMap } from "../../src/dorf-mapper";
 import { DorfInputDefinition } from "../../src/fields/dorf-input.component";
 
 import { DorfObject, DorfInput } from "../../src/decorators/dorf-object.decorator";
-import { IDorfForm, DorfForm, DorfObjectInputWrapper } from "../../src/decorators/dorf-form.decorator";
+import { IDorfForm, DorfForm, DorfObjectInput } from "../../src/decorators/dorf-form.decorator";
 
 /**
  * Plain old DorfDomainObject.
@@ -88,7 +88,7 @@ export class Person2 {
     selector: "person1-details"
 })
 export class Person1DetailComponent implements IDorfForm {
-    @DorfObjectInputWrapper() domainObject: Person1;
+    @DorfObjectInput() domainObject: Person1;
 
     constructor(public config: DorfConfigService) { }
 }
@@ -101,7 +101,7 @@ export class Person1DetailComponent implements IDorfForm {
     selector: "person2-details"
 })
 export class Person2DetailComponent implements IDorfForm {
-    @DorfObjectInputWrapper() domainObject: Person2;
+    @DorfObjectInput() domainObject: Person2;
 
     constructor(public config: DorfConfigService) { }
 }

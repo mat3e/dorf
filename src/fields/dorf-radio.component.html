@@ -1,8 +1,8 @@
-<div [formGroup]="parentForm" [ngClass]="config.groupingClass">
-    <label *ngIf="label" [ngClass]="config.labelClass">{{label}}</label>
-    <label *ngFor="let opt of optionsToSelect; let idx = index" [ngClass]="config.fieldClass">
+<div [formGroup]="parentForm" [ngClass]="css.group || config.css.radio.group || config.css.general.group">
+    <label *ngIf="label" [ngClass]="css.label || config.css.radio.label || config.css.general.label">{{label}}</label>
+    <label *ngFor="let opt of optionsToSelect; let idx = index" [ngClass]="css.field || config.css.radio.field || config.css.general.field">
         <input type="radio" [value]="opt.key" id="{{key}}-{{idx}}" [name]="key" [formControlName]="key">
         {{opt.value}}
     </label>
-    <div [ngClass]="config.errorClass" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
+    <div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.css.radio.error || config.css.general.error">{{errorMessage}}</div>
 </div>

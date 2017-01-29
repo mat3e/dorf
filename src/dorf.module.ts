@@ -17,10 +17,10 @@ export * from "./decorators/dorf-form.decorator";
 export * from "./decorators/dorf-object.decorator";
 
 export * from "./dorf-mapper";
-export * from "./abstract-dorf.model";
-export * from "./fields/abstract-dorf-field.component";
-export * from "./fields/abstract-dorf-choose.component";
-export * from "./abstract-dorf-form.component";
+export * from "./base/abstract-dorf.model";
+export * from "./fields/base/abstract-dorf-field.component";
+export * from "./fields/base/abstract-dorf-choose.component";
+export * from "./base/abstract-dorf-form.component";
 
 export * from "./dorf-config.service";
 

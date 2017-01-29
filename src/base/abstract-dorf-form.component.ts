@@ -1,9 +1,9 @@
 import { OnChanges } from "@angular/core";
 import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
 
-import { DorfConfigService } from "./dorf-config.service";
-import { DorfFieldDefinition, DorfFieldMetadata } from "./fields/abstract-dorf-field.component";
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from "./dorf-mapper";
+import { DorfConfigService } from "../dorf-config.service";
+import { DorfFieldDefinition, DorfFieldMetadata } from "../fields/base/abstract-dorf-field.component";
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../dorf-mapper";
 
 /**
  * Should be used with details.view.html to create domain object details Component.

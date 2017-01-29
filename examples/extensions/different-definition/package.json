@@ -4,7 +4,7 @@
   "description": "Dorf library simple example",
   "scripts": {
     "start": "npm run prepare && tsc && concurrently \"tsc -w\" \"lite-server\" ",
-    "prepare": "copyfiles -f ./node_modules/dorf/src/dorf-details.view.html app/"
+    "prepare": "copyfiles -f ./node_modules/dorf/src/base/dorf-details.view.html app/"
   },
   "author": "Mateusz Chrzonstowski",
   "license": "MIT",

@@ -1,4 +1,5 @@
-import { OptionType } from "../src/fields/abstract-dorf-choose.component";
+import { DorfTag } from "../src/fields/base/abstract-dorf-field.component";
+import { OptionType } from "../src/fields/base/abstract-dorf-choose.component";
 import { DorfRadioDefinition, DorfRadioMetadata } from "../src/fields/dorf-radio.component";
 
 describe("DorfRadioDefinition", () => {
@@ -7,7 +8,7 @@ describe("DorfRadioDefinition", () => {
         let radioDef = new DorfRadioDefinition();
 
         // THEN
-        expect(radioDef.tag).toEqual("radio");
+        expect(radioDef.tag).toEqual(DorfTag.RADIO);
         expect(radioDef.optionsToSelect).toEqual([]);
     });
 });
@@ -22,7 +23,7 @@ describe("DorfRadioMetadata", () => {
         let radioMeta = new DorfRadioMetadata<number>(radioDef);
 
         // THEN
-        expect(radioMeta.tag).toEqual("radio");
+        expect(radioMeta.tag).toEqual(DorfTag.RADIO);
         expect(radioMeta.optionsToSelect).toEqual(opts);
     });
 });

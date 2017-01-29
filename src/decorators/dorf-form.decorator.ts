@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms"
 import { DorfConfigService } from "./../dorf-config.service";
 import { DorfMapper, PropertiesToDorfDefinitionsMap } from "../dorf-mapper";
 
-import { DorfFieldDefinition, DorfFieldMetadata } from "../fields/abstract-dorf-field.component";
+import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "../fields/base/abstract-dorf-field.component";
 
 /**
  * @whatItDoes Optional interface for reminding about a 'config' property which is needed in a class marked as @DorfForm().
@@ -25,7 +25,7 @@ import { DorfFieldDefinition, DorfFieldMetadata } from "../fields/abstract-dorf-
  * @DorfForm()
  * @Component({selector: "test-domain-object-form"})
  * class TestDomainObjectForm implements IDorfForm { 
- *   @DorfObjectInputWrapper()
+ *   @DorfObjectInput()
  *   private domainObject: Person;
  * 
  *   @Output() 
@@ -58,7 +58,7 @@ export interface IDorfForm {
  * 
  * @howToUse
  *
- * One field should be decorated with @DorfObjectInputWrapper() within @DorfForm().
+ * One field should be decorated with @DorfObjectInput() within @DorfForm().
  *
  * ### Example
  *
@@ -66,7 +66,7 @@ export interface IDorfForm {
  * @DorfForm()
  * @Component({selector: "test-domain-object-form"})
  * class TestDomainObjectForm implements IDorfForm {
- *   @DorfObjectInputWrapper()
+ *   @DorfObjectInput()
  *   private domainObject: Person;
  * 
  *   constructor(public config: DorfConfigService)
@@ -76,7 +76,7 @@ export interface IDorfForm {
  * @stable
  * @Annotation
  */
-export function DorfObjectInputWrapper() {
+export function DorfObjectInput() {
     return function (targetProto: any, propName: string) {
         Input()(targetProto, propName);
         // formComponent.dorfDomainObjectInForm will store the property name of a domain object
@@ -150,13 +150,13 @@ export function DorfForm() {
             });
             if (noTemplateExists && components[0]) {
                 components[0].template = `
-                <form (ngSubmit)="onSubmit()" [ngClass]="config.formClass">
-                    <fieldset>
+                <form (ngSubmit)="onSubmit()" [ngClass]="config.css.general.form">
+                    <fieldset [ngClass]="config.css.general.fieldset">
                         <div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
-                            <dorf-input *ngSwitchCase="config.INPUT" [metadata]="fieldMeta" [parentForm]="form"></dorf-input>
-                            <dorf-radio *ngSwitchCase="config.RADIO" [metadata]="fieldMeta" [parentForm]="form"></dorf-radio>
-                            <dorf-select *ngSwitchCase="config.SELECT" [metadata]="fieldMeta" [parentForm]="form"></dorf-select>
-                            <dorf-checkbox *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta" [parentForm]="form"></dorf-checkbox>
+                            <${DorfTag.INPUT} *ngSwitchCase="config.INPUT" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.INPUT}>
+                            <${DorfTag.RADIO} *ngSwitchCase="config.RADIO" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.RADIO}>
+                            <${DorfTag.SELECT} *ngSwitchCase="config.SELECT" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.SELECT}>
+                            <${DorfTag.CHECKBOX} *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.CHECKBOX}>
                         </div>
                     </fieldset>
                     <div>
@@ -193,8 +193,8 @@ function initMetaForAllFields(dorfForm: ExtendedDorfForm) {
 };
 
 function throwNoObject() {
-    console.info("@DorfObjectInputWrapper() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()");
-    throw new Error("DorfForm has to contain DorfObject annotated as @DorfObjectInputWrapper()");
+    console.info("@DorfObjectInput() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()");
+    throw new Error("DorfForm has to contain DorfObject annotated as @DorfObjectInput()");
 }
 
 function initFormGroup(dorfForm: ExtendedDorfForm) {

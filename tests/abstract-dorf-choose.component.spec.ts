@@ -1,4 +1,4 @@
-import { OptionType, DorfChooseDefinition, DorfChooseMetadata } from "../src/fields/abstract-dorf-choose.component";
+import { OptionType, DorfChooseDefinition, DorfChooseMetadata } from "../src/fields/base/abstract-dorf-choose.component";
 import { DorfRadioDefinition, DorfRadioMetadata } from "../src/fields/dorf-radio.component";
 import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
 

@@ -2,11 +2,11 @@ import { Validators } from "@angular/forms";
 
 import { DorfConfigService } from "../../src/dorf-config.service";
 
-import { DorfDomainObject } from "../../src/abstract-dorf.model";
-import { OptionType } from "../../src/fields/abstract-dorf-choose.component";
+import { DorfDomainObject } from "../../src/base/abstract-dorf.model";
+import { OptionType } from "../../src/fields/base/abstract-dorf-choose.component";
 import { DorfInputDefinition, DorfInputMetadata } from "../../src/fields/dorf-input.component";
 import { DorfSelectDefinition, DorfSelectMetadata } from "../../src/fields/dorf-select.component";
-import { DorfFieldDefinition } from "../../src/fields/abstract-dorf-field.component";
+import { DorfFieldDefinition } from "../../src/fields/base/abstract-dorf-field.component";
 
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../../src/dorf-mapper";
 

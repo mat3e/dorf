@@ -4,8 +4,8 @@ import { DebugElement } from "@angular/core";
 
 import { ReactiveFormsModule, FormGroup, FormControl } from "@angular/forms";
 
-import { IDorfService, DorfConfigService } from "../../src/dorf-config.service";
-import { OptionType } from "../../src/fields/abstract-dorf-choose.component";
+import { DorfConfigService } from "../../src/dorf-config.service";
+import { OptionType } from "../../src/fields/base/abstract-dorf-choose.component";
 import { DorfRadioDefinition, DorfRadioMetadata, DorfRadioComponent } from "../../src/fields/dorf-radio.component";
 
 describe("DorfRadioComponent", () => {
@@ -31,9 +31,9 @@ describe("DorfRadioComponent", () => {
     let fixture: ComponentFixture<DorfRadioComponent<string>>;
 
     beforeEach(async(() => {
-        let dorfConfigServiceStub: IDorfService = {
-            fieldClass: "sut"
-        };
+        let dorfConfigServiceStub = new DorfConfigService({
+            css: { radio: { field: "sut" } }
+        });
 
         TestBed.configureTestingModule({
             imports: [ReactiveFormsModule],

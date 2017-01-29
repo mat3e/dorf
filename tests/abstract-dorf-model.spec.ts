@@ -1,6 +1,6 @@
 import { PropertiesToDorfDefinitionsMap } from "../src/dorf-mapper";
 
-import { DorfDomainObject } from "../src/abstract-dorf.model";
+import { DorfDomainObject } from "../src/base/abstract-dorf.model";
 
 describe("DorfDomainObject", () => {
     class Test extends DorfDomainObject {

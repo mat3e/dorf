@@ -31,7 +31,7 @@ describe("DorfForm", () => {
 
     beforeEach(async(() => {
         let dorfConfigService = new DorfConfigService({
-            formClass: "sut"
+            css: { general: { form: "sut" } }
         });
 
         TestBed.configureTestingModule({
@@ -83,7 +83,7 @@ describe("DorfForm", () => {
             expect(SUT1[(SUT1 as any).dorfObjectInForm]).toBe(SUT1.domainObject);
 
             expect(SUT1.config).toBeDefined()
-            expect(SUT1.config.formClass).toEqual("sut");
+            expect(SUT1.config.css.general.form).toEqual("sut");
 
             expect((SUT1 as any).mapper).toBeDefined();
             expect((SUT1 as any).mapper instanceof DorfMapper).toBeTruthy();
@@ -120,7 +120,7 @@ describe("DorfForm", () => {
             expect(SUT2[(SUT2 as any).dorfObjectInForm]).toBe(SUT2.domainObject);
 
             expect(SUT2.config).toBeDefined()
-            expect(SUT2.config.formClass).toEqual("sut");
+            expect(SUT2.config.css.general.form).toEqual("sut");
 
             expect((SUT2 as any).mapper).toBeDefined();
             expect((SUT2 as any).mapper instanceof DorfMapper).toBeTruthy();

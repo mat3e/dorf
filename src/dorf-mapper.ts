@@ -6,7 +6,7 @@ import {
     DorfFieldDefinition,
     IDorfFieldMetadata,
     DorfFieldMetadata
-} from "./fields/abstract-dorf-field.component";
+} from "./fields/base/abstract-dorf-field.component";
 
 import { DorfInputDefinition, DorfInputMetadata } from "./fields/dorf-input.component";
 import { DorfRadioDefinition, DorfRadioMetadata } from "./fields/dorf-radio.component";

@@ -1,4 +1,5 @@
-import { OptionType } from "../src/fields/abstract-dorf-choose.component";
+import { DorfTag } from "../src/fields/base/abstract-dorf-field.component";
+import { OptionType } from "../src/fields/base/abstract-dorf-choose.component";
 import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
 
 describe("DorfSelectDefinition", () => {
@@ -7,7 +8,7 @@ describe("DorfSelectDefinition", () => {
         let selectDef = new DorfSelectDefinition();
 
         // THEN
-        expect(selectDef.tag).toEqual("select");
+        expect(selectDef.tag).toEqual(DorfTag.SELECT);
         expect(selectDef.multiple).toBeFalsy();
         expect(selectDef.optionsToSelect).toEqual([]);
     });
@@ -23,7 +24,7 @@ describe("DorfSelectMetadata", () => {
         let selectMeta = new DorfSelectMetadata<number>(selectDef);
 
         // THEN
-        expect(selectMeta.tag).toEqual("select");
+        expect(selectMeta.tag).toEqual(DorfTag.SELECT);
         expect(selectMeta.multiple).toBeTruthy();
         expect(selectMeta.optionsToSelect).toEqual(opts);
     });

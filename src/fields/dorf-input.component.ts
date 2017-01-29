@@ -8,7 +8,7 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./abstract-dorf-field.component";
+} from "./base/abstract-dorf-field.component";
 
 export type InputType = "color" | "date" | "datetime" | "datetime-local" | "email" | "file" | "hidden" | "image" | "month" | "number" | "password" | "range" | "search" | "tel" | "text" | "time" | "url" | "week";
 

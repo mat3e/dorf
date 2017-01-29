@@ -9,7 +9,7 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./abstract-dorf-field.component";
+} from "./base/abstract-dorf-field.component";
 
 /**
  * Values for true and false from Checkbox.

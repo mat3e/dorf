@@ -33,16 +33,15 @@ This library is about taking them to the next level by coupling with _Domain Obj
     }
     ```
 
-2. Create a _Component_ form which implements `IDorfForm` and uses some annotations. E.g. you should pass the above object as an annotated (`@DorfObjectInputWrapper()`) property.
+2. Create a _Component_ form which implements `IDorfForm` and uses some annotations. E.g. you should pass the above object as an annotated (`@DorfObjectInput()`) property.
     ```typescript
     @DorfForm() // must be above the Component annotation!
     @Component({
-        moduleId: module.id,
         selector: "person-details"
-        // no template or templateUrl = default one from DORF
+        // no template or templateUrl = default one from DORF (!)
     })
     export class PersonDetailComponent implements IDorfForm {
-        @DorfObjectInputWrapper() domainObject: Person; // has Angular's @Input() behavior as well!
+        @DorfObjectInput() domainObject: Person; // has Angular's @Input() behavior as well (!)
 
         constructor(public config: DorfConfigService) { }
 
@@ -60,6 +59,14 @@ The aim of this library is to speed up boring things like a creation of the ordi
 Future plans include:
 
  - More examples (many of them already in the repository), more online examples, more tests and a nicer documentation
- - CSS closer to the field definitions (e.g. a possibility to have a different class for `select` and for the `input`)
+ - More definition options - debounce, etc.
  - Material Design (either testing with [a css library](http://materializecss.com/getting-started.html) or connecting with [an official Angular's library](https://material.angular.io/))
- - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary things (and `isListField` is already presented in the `field definition` ;))
+ - Changeable HTML templates [v3]
+ - Nested groups [v3]
+ - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
+
+### List of the online examples
+ - Simple example: [v1](http://embed.plnkr.co/5I5eKSuxcWnWbYjKQeTF/), [v2](http://embed.plnkr.co/6H2jto/)
+ - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
+ - New field example: [v2](http://embed.plnkr.co/q4EEDa/)
+ - Bootstrap example: [v2](http://embed.plnkr.co/K1IVvZ/)

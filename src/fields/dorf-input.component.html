@@ -1,9 +1,9 @@
-<div [formGroup]="parentForm" [ngClass]="config.groupingClass">
-	<label *ngIf="label" [attr.for]="key" [ngClass]="config.labelClass">{{label}}</label>
+<div [formGroup]="parentForm" [ngClass]="css.group || config.css.input.group || config.css.general.group">
+	<label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.css.input.label || config.css.general.label">{{label}}</label>
 	<span [ngSwitch]="type">
-		<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="config.fieldClass" type="range" />
-		<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="config.fieldClass" type="number" />
-		<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControlName]="key" [ngClass]="config.fieldClass" />
+		<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="css.field || config.css.input.field || config.css.general.field" type="range" />
+		<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControlName]="key" [ngClass]="css.field || config.css.input.field || config.css.general.field" type="number" />
+		<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControlName]="key" [ngClass]="css.field || config.css.input.field || config.css.general.field" />
 	</span>
-	<div *ngIf="invalid && errorMessage" [ngClass]="config.errorClass">{{errorMessage}}</div>
+	<div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.css.input.error || config.css.general.error">{{errorMessage}}</div>
 </div>

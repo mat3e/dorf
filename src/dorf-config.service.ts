@@ -1,6 +1,7 @@
 import { Injectable, Optional } from "@angular/core";
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "./fields/abstract-dorf-field.component";
+import { IDorfServiceCss, DorfServiceCss } from "./base/dorf-css-classes.model"
+import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "./fields/base/abstract-dorf-field.component";
 
 /**
  * Base for DorfModule configuration.
@@ -13,29 +14,9 @@ export interface IDorfService {
     additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 
     /**
-     * CSS class for a whole form.
+     * General and field-default CSS classes.
      */
-    formClass?: string;
-
-    /**
-     * CSS class for a div, which contain field, label and error message.
-     */
-    groupingClass?: string;
-
-    /**
-     * CSS class for a DorfField label.
-     */
-    labelClass?: string;
-
-    /**
-     * CSS for a DorfField in general.
-     */
-    fieldClass?: string;
-
-    /**
-     * CSS for a DorfField-related error.
-     */
-    errorClass?: string;
+    css?: IDorfServiceCss;
 }
 
 /**
@@ -43,22 +24,12 @@ export interface IDorfService {
  */
 export class DorfSupportingService implements IDorfService {
     additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
-
-    formClass?: string;
-    groupingClass?: string;
-
-    labelClass?: string;
-    fieldClass?: string;
-    errorClass?: string;
+    css?: IDorfServiceCss;
 
     constructor(options: IDorfService) {
         if (options) {
-            this.formClass = options.formClass;
-            this.groupingClass = options.groupingClass;
-            this.labelClass = options.labelClass;
-            this.fieldClass = options.fieldClass;
-            this.errorClass = options.errorClass;
             this.additionalMetadataKinds = options.additionalMetadataKinds;
+            this.css = options.css;
         }
     }
 }
@@ -70,14 +41,7 @@ export class DorfSupportingService implements IDorfService {
 @Injectable()
 export class DorfConfigService implements IDorfService {
     additionalMetadataKinds: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [];
-
-    // TODO: consider putting disabled and classes inside FieldDefinition 
-    formClass: string;
-    groupingClass: string;
-
-    labelClass: string;
-    fieldClass: string;
-    errorClass: string;
+    css: IDorfServiceCss = new DorfServiceCss();
 
     isDisabled = false;
     isButtonVisible = true;
@@ -101,13 +65,7 @@ export class DorfConfigService implements IDorfService {
     constructor( @Optional() config?: DorfSupportingService) {
         if (config) {
             this.additionalMetadataKinds = config.additionalMetadataKinds || this.additionalMetadataKinds;
-
-            this.formClass = config.formClass;
-            this.groupingClass = config.groupingClass;
-
-            this.labelClass = config.labelClass;
-            this.fieldClass = config.fieldClass;
-            this.errorClass = config.errorClass;
+            this.css = config.css ? new DorfServiceCss(config.css) : this.css;
         }
     }
 }

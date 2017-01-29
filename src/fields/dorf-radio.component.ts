@@ -9,14 +9,14 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./abstract-dorf-field.component";
+} from "./base/abstract-dorf-field.component";
 
 import {
     IDorfChooseDefinition,
     DorfChooseDefinition,
     DorfChooseMetadata,
     DorfChooseComponent
-} from "./abstract-dorf-choose.component";
+} from "./base/abstract-dorf-choose.component";
 
 /**
  * Each new component specifies its own definition interface.

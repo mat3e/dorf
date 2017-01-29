@@ -1,4 +1,4 @@
-import { DorfConfigService } from "../dorf-config.service";
+import { DorfConfigService } from "../../dorf-config.service";
 import {
     IDorfFieldDefinition,
     IDorfFieldMetadata,

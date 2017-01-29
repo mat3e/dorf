@@ -1,16 +1,17 @@
 import { Input } from "@angular/core";
-import { FormGroup, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } from "@angular/forms";
 
-import { DorfConfigService } from "../dorf-config.service";
+import { IDorfFieldCssClasses, DorfFieldCssClasses } from "../../base/dorf-css-classes.model";
+import { DorfConfigService } from "../../dorf-config.service";
 
 /**
  * Possible tags for DORF. Base ones.
  */
 export class DorfTag<D extends typeof DorfFieldDefinition, M extends typeof DorfFieldMetadata> {
-    static get INPUT() { return "input"; }
-    static get RADIO() { return "radio"; }
-    static get SELECT() { return "select"; }
-    static get CHECKBOX() { return "checkbox"; }
+    static get INPUT() { return "dorf-input"; }
+    static get RADIO() { return "dorf-radio"; }
+    static get SELECT() { return "dorf-select"; }
+    static get CHECKBOX() { return "dorf-checkbox"; }
 
     tag: string;
     definition: D;
@@ -32,6 +33,11 @@ export interface IDorfFieldDefinition<T> {
     validator?: ValidatorFn | ValidatorFn[];
 
     /**
+     * Asynchronous value checker.
+     */
+    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
+
+    /**
      * Message which should be displayed when validation returns errors.
      */
     errorMessage?: string;
@@ -40,6 +46,11 @@ export interface IDorfFieldDefinition<T> {
      * Indicates if the field should be presented on the list.
      */
     isListField?: boolean;
+
+    /**
+     * CSS classes which should be assigned to this field.
+     */
+    css?: IDorfFieldCssClasses;
 
     /**
      * Additional properties which can be defined on the fly.
@@ -88,18 +99,21 @@ export interface IDorfFieldMetadata<T> {
 export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> {
     private _label: string;
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
+    private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
     private _errorMessage: string;
     private _isListField = false;
+    private _css: IDorfFieldCssClasses = new DorfFieldCssClasses()
     private _extras: { [propertyName: string]: any };
-    private _beforeFormControl: (value: T, validator: ValidatorFn | ValidatorFn[]) => void;
     private _updateModelOnChange: boolean;
 
     constructor(options?: IDorfFieldDefinition<T>) {
         if (options) {
             this._label = options.label;
             this._validator = options.validator || this._validator;
+            this._asyncValidator = options.asyncValidator || this._asyncValidator;
             this._errorMessage = options.errorMessage;
-            this._isListField = options.isListField;
+            this._isListField = options.isListField || this._isListField;
+            this._css = options.css ? new DorfFieldCssClasses(options.css) : this._css;
             this._extras = options.extras;
             this._updateModelOnChange = options.updateModelOnChange;
         }
@@ -109,8 +123,10 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
 
     get label() { return this._label; }
     get validator() { return this._validator; }
-    get errorMessage() { return this._errorMessage }
+    get asyncValidator() { return this._asyncValidator; }
+    get errorMessage() { return this._errorMessage; }
     get isListField() { return this._isListField; }
+    get css() { return this._css; }
     get extras() { return this._extras; }
     get updateModelOnChange() { return this._updateModelOnChange; }
 }
@@ -146,9 +162,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
     }
 
     get tag() { return this.definition.tag; }
-
     get key() { return this._key; }
-
     get formControl() {
         if (!this._ctrl) {
             this._ctrl = this.extractFormControl();
@@ -160,7 +174,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
      * Function for extracting FormControl (value and validators) from FieldMetadata.
      */
     protected extractFormControl() {
-        let ctrl = new FormControl(this._value, this.validator);
+        let ctrl = new FormControl(this._value, this.validator, this.asyncValidator);
 
         if (this.updateModelOnChange) {
             ctrl.valueChanges.subscribe(() => {
@@ -185,6 +199,8 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     @Input()
     parentForm: FormGroup;
     constructor(public config: DorfConfigService) { }
+
+    get css() { return this.metadata.css; }
 
     get key() { return this.metadata.key; }
     get label() { return this.metadata.label; }

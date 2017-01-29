@@ -1,4 +1,4 @@
-import { PropertiesToDorfDefinitionsMap } from "./dorf-mapper";
+import { PropertiesToDorfDefinitionsMap } from "../dorf-mapper";
 
 /**
  * Domain Object should contain data about field definitions.

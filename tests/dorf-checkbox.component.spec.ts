@@ -1,3 +1,4 @@
+import { DorfTag } from "../src/fields/base/abstract-dorf-field.component";
 import { ICheckboxMapping, DorfCheckboxDefinition, DorfCheckboxMetadata } from "../src/fields/dorf-checkbox.component";
 
 describe("DorfCheckboxDefinition", () => {
@@ -6,7 +7,7 @@ describe("DorfCheckboxDefinition", () => {
         let def = new DorfCheckboxDefinition();
 
         // THEN
-        expect(def.tag).toEqual("checkbox");
+        expect(def.tag).toEqual(DorfTag.CHECKBOX);
         expect(def.mapping).toBeUndefined();
     });
 });
@@ -26,7 +27,7 @@ describe("DorfCheckboxMetadata", () => {
         let meta = new DorfCheckboxMetadata<number>(def);
 
         // THEN
-        expect(meta.tag).toEqual("checkbox");
+        expect(meta.tag).toEqual(DorfTag.CHECKBOX);
         expect(meta.mapping).toEqual(mapping);
     });
 });

@@ -1,11 +1,11 @@
 import { FormControl } from "@angular/forms";
 
 import { DorfConfigService } from "../src/dorf-config.service";
-import { DorfFieldMetadata } from "../src/fields/abstract-dorf-field.component";
+import { DorfFieldMetadata } from "../src/fields/base/abstract-dorf-field.component";
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../src/dorf-mapper";
 import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
 
-import { AbstractDorfFormComponent } from "../src/abstract-dorf-form.component";
+import { AbstractDorfFormComponent } from "../src/base/abstract-dorf-form.component";
 
 describe("AbstractDorfFormComponent", () => {
 

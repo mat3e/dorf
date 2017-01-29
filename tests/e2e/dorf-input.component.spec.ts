@@ -6,7 +6,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angula
 
 import { newEvent } from "../util/events";
 
-import { IDorfService, DorfConfigService } from "../../src/dorf-config.service";
+import { DorfConfigService } from "../../src/dorf-config.service";
 import { InputType, DorfInputDefinition, DorfInputMetadata, DorfInputComponent } from "../../src/fields/dorf-input.component";
 
 describe("DorfInputComponent", () => {
@@ -28,10 +28,14 @@ describe("DorfInputComponent", () => {
     let htmlElem: HTMLInputElement;
 
     beforeEach(async(() => {
-        let dorfConfigServiceStub: IDorfService = {
-            fieldClass: "sut",
-            errorClass: "error"
-        };
+        let dorfConfigServiceStub = new DorfConfigService({
+            css: {
+                input: {
+                    field: "sut",
+                    error: "error"
+                }
+            }
+        });
 
         TestBed.configureTestingModule({
             imports: [ReactiveFormsModule],

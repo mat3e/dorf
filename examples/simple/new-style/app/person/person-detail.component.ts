@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from "@angular/core";
-import { DorfConfigService, IDorfForm, DorfObjectInputWrapper, DorfForm } from "dorf";
+import { DorfConfigService, IDorfForm, DorfObjectInput, DorfForm } from "dorf";
 
 import { IPerson, Person } from "./model";
 
@@ -15,7 +15,7 @@ import { IPerson, Person } from "./model";
     selector: "person-details"
 })
 export class PersonDetailComponent implements IDorfForm {
-    @DorfObjectInputWrapper() domainObject: Person;
+    @DorfObjectInput() domainObject: Person;
     @Output() createUpdate = new EventEmitter<IPerson>();
 
     constructor(public config: DorfConfigService) { }
