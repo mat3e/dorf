@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } fro
 import { IDorfFieldCssClasses, DorfFieldCssClasses } from "../../base/dorf-css-classes.model";
 import { DorfConfigService } from "../../dorf-config.service";
 
+// TODO: generic mechanism for creating extensions of the base classes. As in Angular's makeDecorator
 /**
  * Possible tags for DORF. Base ones.
  */

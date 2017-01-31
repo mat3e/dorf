@@ -1,7 +1,8 @@
 <div [formGroup]="parentForm" [ngClass]="css.group || config.css.checkbox.group || config.css.general.group">
-	<label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.css.checkbox.label || config.css.general.label">{{label}}</label>
-	<input #view [id]="key" [ngClass]="css.field || config.css.checkbox.field || config.css.general.field" (change)="setValue(view.checked)"
-		[checked]="checkboxValue" type="checkbox" />
+	<label [attr.for]="key" [ngClass]="css.label || config.css.checkbox.label || config.css.general.label">
+		<input #view [id]="key" [ngClass]="css.field || config.css.checkbox.field || config.css.general.field" 
+		(change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" />{{label}}
+	</label>
 	<input [name]="key" [formControlName]="key" type="hidden" />
 	<div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.css.checkbox.error || config.css.general.error">{{errorMessage}}</div>
 </div>
