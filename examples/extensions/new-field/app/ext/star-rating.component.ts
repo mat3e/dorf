@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 import {
     DorfConfigService,
@@ -8,7 +8,7 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "dorf";
+} from 'dorf';
 
 export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
     max: number;
@@ -16,7 +16,7 @@ export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
 
 export class StarRatingDefinition<T> extends DorfFieldDefinition<T> implements IStarRatingDefinition<T> {
     static get TAG() {
-        return "star-rating";
+        return 'star-rating';
     }
 
     private _max = 5;
@@ -45,8 +45,8 @@ export class StarRatingMetadata<T> extends DorfFieldMetadata<T, StarRatingDefini
 @Component({
     moduleId: module.id,
     selector: StarRatingDefinition.TAG,
-    styleUrls: ["star-rating.component.css"],
-    templateUrl: "star-rating.component.html"
+    styleUrls: ['star-rating.component.css'],
+    templateUrl: 'star-rating.component.html'
 })
 export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRatingMetadata<T>> implements IStarRatingDefinition<T> {
 

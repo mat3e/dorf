@@ -1,41 +1,73 @@
 /**
- * Possible CSS classes which can be defined at different levels.
+ * @whatItDoes Represents typical things around a DORF field, which may have CSS classes defined.
+ *
+ * @howToUse
+ * E.g. during adding [DORF module]{@link DorfModule}.
+ *
+ * ### Example
+ *
+ * ```
+ * DorfModule.forRoot({
+ *   css: {
+ *     general: {
+ *       group: "form-group",
+ *       error: "error-message",
+ *       label: "control-label",
+ *       field: "form-control"
+ *     },
+ *     checkbox: {
+ *       field: "no-class",
+ *       label: "checkbox-inline"
+ *     },
+ *     radio: {
+ *       field: "radio-inline"
+ *     }
+ *   }
+ * })
+ * ```
+ *
+ * @description
+ * There are different levels where CSS classes from this interface may be applied.
  * <ul>
  *  <li>General, {@link DorfConfigService Service} level - applicable only if no other styles defined</li>
- *  <li>General, field level on the {@link DorfConfigService Service}</li>
+ *  <li>General, field level on the {@link DorfConfigService Service} - overrides the above classes</li>
  *  <li>Definition level - applicable for the future component, the highest priority</li>
  * </ul>
+ *
+ * @stable
  */
 export class IDorfFieldCssClasses {
     /**
-     * Class at the div, which contains field, label and error.
+     * Classes at the grouping div, which contains field, label and error.
      */
     group?: string;
 
     /**
-     * Class for a label.
+     * Classes for a label.
      */
     label?: string;
 
     /**
-     * Class for the field.
+     * Classes for the field.
      */
     field?: string;
 
     /**
-     * Class for the error, below the field.
+     * Classes for the error, below the field.
      */
     error?: string;
 }
 
 /**
- * Implementation of {@link IDorfFieldCssClasses} for fast creation.
+ * @whatItDoes Implementation of {@link IDorfFieldCssClasses} for fast creation with an empty values.
+ *
+ * @stable
  */
 export class DorfFieldCssClasses implements IDorfFieldCssClasses {
-    group = "";
-    label = "";
-    field = "";
-    error = "";
+    group: string = '';
+    label: string = '';
+    field: string = '';
+    error: string = '';
 
     constructor(options?: IDorfFieldCssClasses) {
         if (options) {
@@ -48,22 +80,80 @@ export class DorfFieldCssClasses implements IDorfFieldCssClasses {
 }
 
 /**
- * Form and fieldset classes are defined just once, inside form.
+ * @whatItDoes Extends {@link IDorfFieldCssClasses} to provide fields for the form and the fieldset.
+ *
+ * @howToUse
+ * Form and fieldset classes are defined just once, during adding [DORF module]{@link DorfModule}.
+ *
+ * ### Example
+ *
+ * ```
+ * DorfModule.forRoot({
+ *   css: {
+ *     general: {
+ *       form: "form-inline",
+ *       fieldset: "red-border",
+ *       group: "form-group",
+ *       error: "error-message",
+ *       label: "control-label",
+ *       field: "form-control"
+ *     },
+ *     checkbox: {
+ *       field: "no-class",
+ *       label: "checkbox-inline"
+ *     },
+ *     radio: {
+ *       field: "radio-inline"
+ *     }
+ *   }
+ * })
+ * ```
+ *
+ * @stable
  */
 export interface IDorfGeneralCssClasses extends IDorfFieldCssClasses {
     /**
-     * CSS class for a whole form.
+     * CSS classes for a whole form.
      */
     form?: string;
 
     /**
-     * CSS class for a fieldset around all the form fields.
+     * CSS classes for a fieldset around all the form fields.
      */
     fieldset?: string;
 }
 
 /**
- * Contract for declaring CSS options inside {@link DorfConfigService}.
+ * @whatItDoes Contract for declaring CSS inside {@link DorfConfigService}.
+ *
+ * @howToUse
+ * During adding [DORF module]{@link DorfModule}.
+ *
+ * ### Example
+ *
+ * ```
+ * DorfModule.forRoot({
+ *   css: {
+ *     general: {
+ *       form: "form-inline",
+ *       fieldset: "red-border",
+ *       group: "form-group",
+ *       error: "error-message",
+ *       label: "control-label",
+ *       field: "form-control"
+ *     },
+ *     checkbox: {
+ *       field: "no-class",
+ *       label: "checkbox-inline"
+ *     },
+ *     radio: {
+ *       field: "radio-inline"
+ *     }
+ *   }
+ * })
+ * ```
+ *
+ * @stable
  */
 export interface IDorfServiceCss {
     general?: IDorfGeneralCssClasses;
@@ -74,10 +164,12 @@ export interface IDorfServiceCss {
 }
 
 /**
- * Implementation of {@link IDorfServiceCss} for fast creation.
+ * @whatItDoes Implementation of {@link IDorfServiceCss} for fast creation.
+ *
+ * @stable
  */
 export class DorfServiceCss implements IDorfServiceCss {
-    general = this.createGeneralCss();
+    general: IDorfGeneralCssClasses = this.createGeneralCss();
     input: IDorfFieldCssClasses = new DorfFieldCssClasses();
     radio: IDorfFieldCssClasses = new DorfFieldCssClasses();
     select: IDorfFieldCssClasses = new DorfFieldCssClasses();
@@ -95,8 +187,8 @@ export class DorfServiceCss implements IDorfServiceCss {
 
     private createGeneralCss(options?: IDorfGeneralCssClasses) {
         let result = new DorfFieldCssClasses(options) as IDorfGeneralCssClasses;
-        result.form = "";
-        result.fieldset = "";
+        result.form = '';
+        result.fieldset = '';
         if (options) {
             result.form = options.form;
             result.fieldset = options.fieldset;

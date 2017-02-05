@@ -1,26 +1,55 @@
-import { Input } from "@angular/core";
-import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } from "@angular/forms";
+import { Input } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
-import { IDorfFieldCssClasses, DorfFieldCssClasses } from "../../base/dorf-css-classes.model";
-import { DorfConfigService } from "../../dorf-config.service";
+import { IDorfFieldCssClasses, DorfFieldCssClasses } from '../../base/dorf-css-classes.model';
+import { DorfConfigService } from '../../dorf-config.service';
 
-// TODO: generic mechanism for creating extensions of the base classes. As in Angular's makeDecorator
 /**
- * Possible tags for DORF. Base ones.
+ * @whatItDoes Represents a field in a [mapper]{@link DorfMapper}-friendly form. Stores all default DORF tags.
+ *
+ * @stable
  */
 export class DorfTag<D extends typeof DorfFieldDefinition, M extends typeof DorfFieldMetadata> {
-    static get INPUT() { return "dorf-input"; }
-    static get RADIO() { return "dorf-radio"; }
-    static get SELECT() { return "dorf-select"; }
-    static get CHECKBOX() { return "dorf-checkbox"; }
+    static get INPUT() { return 'dorf-input'; }
+    static get RADIO() { return 'dorf-radio'; }
+    static get SELECT() { return 'dorf-select'; }
+    static get CHECKBOX() { return 'dorf-checkbox'; }
 
     tag: string;
+    // TODO: do we need this?
     definition: D;
     metadata: M;
+
+    /** @internal */
+    // TODO: generic mechanism for creating DorfTags. Static function as in Angular's makeDecorator
+    // tslint:disable-next-line:max-line-length
+    static createNewTag(tagName: string, options: IDorfFieldDefinition<any>): DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata> {
+        return {
+            tag: tagName,
+            definition: null,
+            metadata: null
+        };
+    }
 }
 
 /**
- * Base Definition. Absolute minimum - all optional properties.
+ * @whatItDoes Basic definition type.
+ *
+ * @howToUse
+ * Each custom field should be built starting from the extension of this interface.
+ *
+ * ### Example
+ *
+ * ```
+ * export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
+ *   max: number;
+ * }
+ * ```
+ *
+ * @description
+ * Specifies all the fields available in definitoin.
+ *
+ * @stable
  */
 export interface IDorfFieldDefinition<T> {
     /**
@@ -49,30 +78,29 @@ export interface IDorfFieldDefinition<T> {
     isListField?: boolean;
 
     /**
-     * CSS classes which should be assigned to this field.
+     * [CSS classes]{@link IDorfFieldCssClasses} which should be assigned to this field.
      */
     css?: IDorfFieldCssClasses;
 
     /**
      * Additional properties which can be defined on the fly.
-     * Each property from this object would be presented directly on FieldDefinition and FieldMetadata. 
-     * Accessing them should be programmed separately, in DorfMapper extension, by using [] access.
+     * Each property from this object would be presented directly on [field metadata]{@link DorfFieldMetadata}.
+     * Accessing them should be implemented separately, e.g. in [DorfMapper extension]{@link DorfMapper}.
      */
     extras?: { [propertyName: string]: any };
 
     /**
-     * Tag is to be defined inside {@link DorfFieldDefinition} and used in {@link DorfFieldMetadata}.
-     */
-    tag?: string;
-
-    /**
-     * Indicates if we want to immediately update a corresponding value in DomainObject.
+     * Indicates if we want to immediately update a corresponding value in object.
+     * Behavior is similar to `NgModel`'s one.
      */
     updateModelOnChange?: boolean;
 }
 
 /**
- * Things existing in Metadata, which don't exist in Definition.
+ * @whatItDoes Defines things existing in metadata, which don't exist directly in the definition.
+ * Internal stuff, used especially in  {@link DorfMapper}.
+ *
+ * @stable
  */
 export interface IDorfFieldMetadata<T> {
     /**
@@ -86,16 +114,23 @@ export interface IDorfFieldMetadata<T> {
     value?: T;
 
     /**
-     * Method to be defined in Mapper, which helps setting a value in DomainObject.
+     * Method to be defined by [mapper]{@link DorfMapper}, which helps setting a value in domain object.
+     * It is activated when `updateModelOnChange` is set to true in [definition]{@link DorfFieldDefinition}.
      */
     setDomainObjValue?: (val: T) => void;
 }
 
 /**
- * Additional information for fields from the Domain Object.
- * E.g. what label should be presented in the form, what is the validation rule, etc.
+ * @whatItDoes Basic class for all the definitions.
  *
- * Having definition and Domain Object, DorfMapper is able to create Metadata, which is used directly in Reactive Form.
+ * @description
+ * Stores things to be defined by a developer before creating the form field.
+ * E.g. what label should be presented in the form, what is the validation rule.
+ *
+ * Having definition and domain object, {@link DorfMapper} is able to create [metadata]{@link DorfFieldMetadata},
+ * which is used directly in DORF's reactive form.
+ *
+ * @stable
  */
 export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> {
     private _label: string;
@@ -103,7 +138,7 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
     private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
     private _errorMessage: string;
     private _isListField = false;
-    private _css: IDorfFieldCssClasses = new DorfFieldCssClasses()
+    private _css: IDorfFieldCssClasses = new DorfFieldCssClasses();
     private _extras: { [propertyName: string]: any };
     private _updateModelOnChange: boolean;
 
@@ -120,6 +155,9 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
         }
     }
 
+    /**
+     * Tag is de facto a selector for the component. It allows to identify a particular component in HTML form.
+     */
     abstract get tag(): string;
 
     get label() { return this._label; }
@@ -133,9 +171,12 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
 }
 
 /**
- * Metadata is used directly in Reactive Form by its fields.
- * There is no chance for creating Dorf Form without having Metadata.
+ * @whatItDoes is used directly in reactive form by the fields.
+ * There is no chance for creating DORF form without having metadata.
+ *
+ * @stable
  */
+// tslint:disable-next-line:max-line-length
 export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> extends DorfFieldDefinition<T> implements IDorfFieldMetadata<T> {
 
     private _key: string;
@@ -145,8 +186,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
     private _ctrl: FormControl;
 
     /**
-     * Definition should be always as detailed as possible (e.g. DorfSelectDefinition)
-     * and options should come from the Domain Object.
+     * Used rather by {@link DorfMapper}. Definition type should be always as detailed as possible (e.g. DorfSelectDefinition).
      */
     constructor(protected definition: D, options?: IDorfFieldMetadata<T>) {
         super(definition);
@@ -156,6 +196,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
             this._value = options.value;
             this._setDomainObjValue = options.setDomainObjValue;
 
+            // tslint:disable-next-line:forin
             for (let prop in definition.extras) {
                 this[prop] = definition.extras[prop];
             }
@@ -172,7 +213,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
     }
 
     /**
-     * Function for extracting FormControl (value and validators) from FieldMetadata.
+     * Function for extracting FormControl (value and validators) from `FieldMetadata`.
      */
     protected extractFormControl() {
         let ctrl = new FormControl(this._value, this.validator, this.asyncValidator);
@@ -187,11 +228,51 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
     }
 }
 
-
-
 /**
- * Base for each Dorf field.
+ * @whatItDoes Base for each DORF field.
+ *
+ * @howToUse
+ * Each custom field should be defined by a `Component` which extends this one.
+ * Subclass shouldn't contain annotations inside, e.g. on properties or methods.
+ *
+ * ### Example
+ *
+ * ```
+ * @Component({
+ *   moduleId: module.id,
+ *   selector: "star",
+ *   styleUrls: ["star-rating.component.css"],
+ *   templateUrl: "star-rating.component.html"
+ * })
+ * export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRatingMetadata<T>> implements IStarRatingDefinition<T> {
+ *
+ *   constructor(config: DorfConfigService) {
+ *     super(config);
+ *   }
+ *
+ *   setValue(val: number) {
+ *     this.formControl.setValue(val + 1);
+ *   }
+ *
+ *   get max() { return this.metadata.max; }
+ *
+ *   get stars() { return new Array(this.max); }
+ *   get value() { return this.formControl.value; }
+ * }
+ * ```
+ *
+ * @description
+ * Custom DORF field, extending this class, should take care of using both `metadata` and `parentForm` inside HTML template.
+ *
+ * `@Component()` annotation should be set on the subclass level and then no more annotations inside
+ * (e.g. no `@Input()` or `@Output()` on properties).
+ * If there is no way to go without additional annotations in subclass, `metadata` and `parentForm` should be listed directly
+ * in the subclass once again, with the corresponding `@Input`s annotations.
+ *
+ * @stable
  */
+// TODO: decorator which adds the same behavior as this class?
+// tslint:disable-next-line:max-line-length
 export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> implements IDorfFieldDefinition<T> {
 
     @Input()

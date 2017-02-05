@@ -1,14 +1,14 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 
-import { DorfFieldCssClasses } from "../src/base/dorf-css-classes.model";
+import { DorfFieldCssClasses } from '../src/base/dorf-css-classes.model';
 
-import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
-import { DorfSelectDefinition, DorfSelectMetadata } from "../src/fields/dorf-select.component";
+import { DorfInputDefinition, DorfInputMetadata } from '../src/fields/dorf-input.component';
+import { DorfSelectDefinition, DorfSelectMetadata } from '../src/fields/dorf-select.component';
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "../src/fields/base/abstract-dorf-field.component";
+import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.component';
 
-describe("DorfFieldDefinition", () => {
-    it("should have default values for validators, 'isListField' and 'css'", () => {
+describe('DorfFieldDefinition', () => {
+    it('should have default values for validators, "isListField" and "css"', () => {
         // GIVEN + WHEN
         let def1: DorfFieldDefinition<any> = new DorfInputDefinition();
         let def2: DorfFieldDefinition<any> = new DorfSelectDefinition();
@@ -25,8 +25,8 @@ describe("DorfFieldDefinition", () => {
     });
 });
 
-describe("DorfFieldMetadata", () => {
-    it("should get values from the definition", () => {
+describe('DorfFieldMetadata', () => {
+    it('should get values from the definition', () => {
         // GIVEN
         let def1 = new DorfInputDefinition();
         let def2 = new DorfSelectDefinition();
@@ -48,19 +48,19 @@ describe("DorfFieldMetadata", () => {
         expect(meta2.css).toEqual(new DorfFieldCssClasses());
     });
 
-    it("should get values from the provided options", () => {
+    it('should get values from the provided options', () => {
         // GIVEN
         let def1 = new DorfInputDefinition();
         let def2 = new DorfSelectDefinition();
         let setter = (val: any) => { };
 
         // WHEN
-        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1, { key: "aaa", value: null });
-        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2, { key: "bbb", setDomainObjValue: setter });
+        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1, { key: 'aaa', value: null });
+        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2, { key: 'bbb', setDomainObjValue: setter });
 
         // THEN
-        expect(meta1.key).toEqual("aaa");
-        expect(meta2.key).toEqual("bbb");
-        expect(meta2["_setDomainObjValue"]).toEqual(setter);
+        expect(meta1.key).toEqual('aaa');
+        expect(meta2.key).toEqual('bbb');
+        expect(meta2['_setDomainObjValue']).toEqual(setter);
     });
 });

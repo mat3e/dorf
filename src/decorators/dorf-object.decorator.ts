@@ -1,18 +1,18 @@
-import { DorfFieldDefinition } from "../fields/base/abstract-dorf-field.component";
-import { IDorfCheckboxDefinition, DorfCheckboxDefinition } from "../fields/dorf-checkbox.component";
-import { IDorfSelectDefinition, DorfSelectDefinition } from "../fields/dorf-select.component";
-import { IDorfRadioDefinition, DorfRadioDefinition } from "../fields/dorf-radio.component";
-import { IDorfInputDefinition, DorfInputDefinition } from "../fields/dorf-input.component";
+import { DorfFieldDefinition } from '../fields/base/abstract-dorf-field.component';
+import { IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../fields/dorf-checkbox.component';
+import { IDorfSelectDefinition, DorfSelectDefinition } from '../fields/dorf-select.component';
+import { IDorfRadioDefinition, DorfRadioDefinition } from '../fields/dorf-radio.component';
+import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.component';
 
-// TODO: use makeParamDecorator and makeDecorator
+// TODO: use makeParamDecorator and makeDecorator?
 
 /**
- * @whatItDoes Adds some information to the class, interpreted later by Dorf mechanisms.
- * Added things are 'fieldDefinitions' and 'isDorfObject' getter.
- * 
+ * @whatItDoes Adds some information to the class, interpreted later by DORF mechanisms.
+ *
  * @howToUse
  *
- * Class should be decorated with annotation with brackets (similar as in Angular). @DorfObject().
+ * Class should be decorated with annotation with brackets (similar as in Angular) - `@DorfObject()`.
+ * Then properties which should be exposed in the form, should be annotated as well.
  *
  * ### Example
  *
@@ -25,7 +25,7 @@ import { IDorfInputDefinition, DorfInputDefinition } from "../fields/dorf-input.
  *     updateModelOnChange: true
  *   })
  *   private _name: string;
- *   
+ *
  *   @DorfSelect<number>({
  *     optionsToSelect: [{
  *       key: 1,
@@ -41,7 +41,7 @@ import { IDorfInputDefinition, DorfInputDefinition } from "../fields/dorf-input.
  *     updateModelOnChange: true
  *   })
  *   private _favColor: number;
- * 
+ *
  *   @DorfRadio<string>({
  *     optionsToSelect: [{
  *       key: "m",
@@ -54,7 +54,7 @@ import { IDorfInputDefinition, DorfInputDefinition } from "../fields/dorf-input.
  *     updateModelOnChange: true
  *   })
  *   private _gender: string;
- * 
+ *
  *   @DorfCheckbox<string>({
  *     label: "Is smart?",
  *     mapping: {
@@ -66,7 +66,11 @@ import { IDorfInputDefinition, DorfInputDefinition } from "../fields/dorf-input.
  *   private _smart: string;
  * }
  * ```
- * 
+ *
+ * @description
+ * Adds `fieldDefinitions`, based on property annotations and `isDorfObject` getter which returns `true`,
+ * which makes an output object similar to [DorfDomainObject extension]{@link DorfDomainObject}.
+ *
  * @stable
  * @Annotation
  */
@@ -75,7 +79,7 @@ export function DorfObject() {
 
         Object.defineProperties(targetConstructor.prototype, {
             isDorfObject: {
-                get: function () {
+                get() {
                     return true;
                 },
                 enumerable: true,
@@ -86,15 +90,15 @@ export function DorfObject() {
                 configurable: true
             }
         });
-    }
+    };
 }
 
 /**
  * @whatItDoes Assignes {@link DorfInputDefinition} to a field from {@link DorfObject}.
- * 
+ *
  * @howToUse
  *
- * Field should be decorated with @DorfInput with parameters.
+ * Field should be decorated with `@DorfInput()` with parameters.
  *
  * ### Example
  *
@@ -109,21 +113,21 @@ export function DorfObject() {
  *   private _name: string;
  * }
  * ```
- * 
+ *
  * @stable
  * @Annotation
  */
-export function DorfInput<T>(definition: IDorfInputDefinition<T>) { // TODO: reflect-metadata and design:type without generic?
-    return createPropertyDecorator<T>(new DorfInputDefinition(definition));
+// TODO: reflect-metadata and design:type without generic? Do we need this typing?
+export function DorfInput<T>(options: IDorfInputDefinition<T>) {
+    return createPropertyDecorator<T>(new DorfInputDefinition<T>(options));
 }
-
 
 /**
  * @whatItDoes Assignes {@link DorfSelectDefinition} to a field from {@link DorfObject}.
- * 
+ *
  * @howToUse
  *
- * Field should be decorated with @DorfSelect with parameters.
+ * Field should be decorated with `@DorfSelect()` with parameters.
  *
  * ### Example
  *
@@ -147,20 +151,20 @@ export function DorfInput<T>(definition: IDorfInputDefinition<T>) { // TODO: ref
  *   private _favColor: number;
  * }
  * ```
- * 
+ *
  * @stable
  * @Annotation
  */
-export function DorfSelect<T>(definition: IDorfSelectDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfSelectDefinition(definition));
+export function DorfSelect<T>(options: IDorfSelectDefinition<T>) {
+    return createPropertyDecorator<T>(new DorfSelectDefinition<T>(options));
 }
 
 /**
  * @whatItDoes Assignes {@link DorfCheckboxDefinition} to a field from {@link DorfObject}.
- * 
+ *
  * @howToUse
  *
- * Field should be decorated with @DorfCheckbox with parameters.
+ * Field should be decorated with `@DorfCheckbox()` with parameters.
  *
  * ### Example
  *
@@ -178,20 +182,20 @@ export function DorfSelect<T>(definition: IDorfSelectDefinition<T>) {
  *   private _smart: string;
  * }
  * ```
- * 
+ *
  * @stable
  * @Annotation
  */
-export function DorfCheckbox<T>(definition: IDorfCheckboxDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfCheckboxDefinition(definition));
+export function DorfCheckbox<T>(options: IDorfCheckboxDefinition<T>) {
+    return createPropertyDecorator<T>(new DorfCheckboxDefinition<T>(options));
 }
 
 /**
  * @whatItDoes Assignes {@link DorfRadioDefinition} to a field from {@link DorfObject}.
- * 
+ *
  * @howToUse
  *
- * Field should be decorated with @DorfRadio with parameters.
+ * Field should be decorated with `@DorfRadio()` with parameters.
  *
  * ### Example
  *
@@ -212,26 +216,39 @@ export function DorfCheckbox<T>(definition: IDorfCheckboxDefinition<T>) {
  *   private _gender: string;
  * }
  * ```
- * 
+ *
  * @stable
  * @Annotation
  */
-export function DorfRadio<T>(definition: IDorfRadioDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfRadioDefinition(definition));
+export function DorfRadio<T>(options: IDorfRadioDefinition<T>) {
+    return createPropertyDecorator<T>(new DorfRadioDefinition<T>(options));
 }
 
 /**
- * Helper for wrapping a property decorator.
- * Should be used also with custom fields.
+ * @whatItDoes Helper for wrapping a property decorator.
+ *
+ * @howToUse Should be used also for creating the decorators for custom fields.
+ *
+ * ### Example
+ *
+ * ```
+ * export function CustomDecorator<T>(options: IDorfCustomDefinition<T>) {
+ *   return createPropertyDecorator<T>(new DorfCustomDefinition<T>(options));
+ * }
+ * ```
+ *
+ * @stable
  */
 export function createPropertyDecorator<T>(definition: DorfFieldDefinition<T>) {
     return function (targetProto: any, propName: string) {
         setDefinitionInObject(targetProto, propName, definition);
-    }
+    };
 }
 
 /**
  * Logic behind adding a field definition.
+ *
+ * @internal
  */
 function setDefinitionInObject<T>(targetProto: any, propName: string, definition: DorfFieldDefinition<T>) {
     targetProto.fieldDefinitions = targetProto.fieldDefinitions || {};

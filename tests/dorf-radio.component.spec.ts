@@ -1,9 +1,9 @@
-import { DorfTag } from "../src/fields/base/abstract-dorf-field.component";
-import { OptionType } from "../src/fields/base/abstract-dorf-choose.component";
-import { DorfRadioDefinition, DorfRadioMetadata } from "../src/fields/dorf-radio.component";
+import { DorfTag } from '../src/fields/base/abstract-dorf-field.component';
+import { OptionType } from '../src/fields/base/abstract-dorf-choose.component';
+import { DorfRadioDefinition, DorfRadioMetadata } from '../src/fields/dorf-radio.component';
 
-describe("DorfRadioDefinition", () => {
-    it("should have default values for options and tag properties", () => {
+describe('DorfRadioDefinition', () => {
+    it('should have default values for options and tag properties', () => {
         // GIVEN + WHEN
         let radioDef = new DorfRadioDefinition();
 
@@ -13,10 +13,10 @@ describe("DorfRadioDefinition", () => {
     });
 });
 
-describe("DorfRadioMetadata", () => {
-    it("should get values for options and tag properties from the definition", () => {
+describe('DorfRadioMetadata', () => {
+    it('should get values for options and tag properties from the definition', () => {
         // GIVEN
-        let opts: OptionType<number>[] = [{ key: 1, value: "1" }, { key: 2, value: "2" }];
+        let opts: OptionType<number>[] = [{ key: 1, value: '1' }, { key: 2, value: '2' }];
         let radioDef = new DorfRadioDefinition<number>({ optionsToSelect: opts });
 
         // WHEN

@@ -1,13 +1,13 @@
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 
-import { DorfConfigService } from "../src/dorf-config.service";
-import { DorfFieldMetadata } from "../src/fields/base/abstract-dorf-field.component";
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../src/dorf-mapper";
-import { DorfInputDefinition, DorfInputMetadata } from "../src/fields/dorf-input.component";
+import { DorfConfigService } from '../src/dorf-config.service';
+import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.component';
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../src/dorf-mapper';
+import { DorfInputDefinition, DorfInputMetadata } from '../src/fields/dorf-input.component';
 
-import { AbstractDorfFormComponent } from "../src/base/abstract-dorf-form.component";
+import { AbstractDorfFormComponent } from '../src/base/abstract-dorf-form.component';
 
-describe("AbstractDorfFormComponent", () => {
+describe('AbstractDorfFormComponent', () => {
 
     class TestSpies {
         formControls: jasmine.Spy[];
@@ -43,7 +43,7 @@ describe("AbstractDorfFormComponent", () => {
      */
     class TestDomainObject {
         private id = 999;
-        private name = "test";
+        private name = 'test';
     }
     let domObj: TestDomainObject;
 
@@ -54,17 +54,18 @@ describe("AbstractDorfFormComponent", () => {
     beforeEach(() => {
         domObj = new TestDomainObject();
 
+        // tslint:disable-next-line:forin
         for (let prop in domObj) {
             mocks.formControls[propertiesNum] = new FormControl();
             mocks.metadataElements[propertiesNum] = new DorfInputMetadata(new DorfInputDefinition<any>(), { key: prop });
 
-            spies.formControls[propertiesNum] = spyOn(mocks.formControls[propertiesNum], "disable").and.stub();
-            spies.metadataElements[propertiesNum] = spyOn(mocks.metadataElements[propertiesNum], "extractFormControl").and.returnValue(mocks.formControls[propertiesNum]);
+            spies.formControls[propertiesNum] = spyOn(mocks.formControls[propertiesNum], 'disable').and.stub();
+            spies.metadataElements[propertiesNum] = spyOn(mocks.metadataElements[propertiesNum], 'extractFormControl').and.returnValue(mocks.formControls[propertiesNum]);
 
             ++propertiesNum;
         }
 
-        spies.mapper = spyOn(mocks.mapper, "mapObjectWithDefinitionsToFieldsMetadata").and.returnValue(mocks.metadataElements);
+        spies.mapper = spyOn(mocks.mapper, 'mapObjectWithDefinitionsToFieldsMetadata').and.returnValue(mocks.metadataElements);
     })
 
     /**
@@ -84,7 +85,7 @@ describe("AbstractDorfFormComponent", () => {
         }
     }
 
-    it("inits form metadata and applies configurations to the form", () => {
+    it('inits form metadata and applies configurations to the form', () => {
         // GIVEN
         let SUT = new TestDetailComponent();
         SUT.domainObject = domObj;

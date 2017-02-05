@@ -1,20 +1,20 @@
-import { DorfFieldCssClasses, IDorfGeneralCssClasses, DorfServiceCss } from "../src/base/dorf-css-classes.model";
+import { DorfFieldCssClasses, IDorfGeneralCssClasses, DorfServiceCss } from '../src/base/dorf-css-classes.model';
 
-describe("DorfFieldCssClasses", () => {
-    it("sets no classes by default", () => {
+describe('DorfFieldCssClasses', () => {
+    it('sets no classes by default', () => {
         // GIVEN + WHEN
         let classes = new DorfFieldCssClasses();
 
         // THEN
-        expect(classes.error).toEqual("");
-        expect(classes.field).toEqual("");
-        expect(classes.group).toEqual("");
-        expect(classes.label).toEqual("");
+        expect(classes.error).toEqual('');
+        expect(classes.field).toEqual('');
+        expect(classes.group).toEqual('');
+        expect(classes.label).toEqual('');
     });
 });
 
-describe("DorfServiceCss", () => {
-    it("sets no classes by default", () => {
+describe('DorfServiceCss', () => {
+    it('sets no classes by default', () => {
         // GIVEN + WHEN
         let serviceCss = new DorfServiceCss();
 
@@ -25,8 +25,8 @@ describe("DorfServiceCss", () => {
         expect(serviceCss.checkbox).toEqual(new DorfFieldCssClasses());
 
         let general: IDorfGeneralCssClasses = new DorfFieldCssClasses();
-        general.form = "";
-        general.fieldset = "";
+        general.form = '';
+        general.fieldset = '';
         expect(serviceCss.general).toEqual(general);
     });
 });

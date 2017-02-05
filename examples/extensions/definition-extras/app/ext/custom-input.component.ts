@@ -1,14 +1,14 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
 import {
     DorfInputComponent,
     DorfConfigService
-} from "dorf"
+} from 'dorf'
 
 @Component({
     moduleId: module.id,
-    selector: "custom-input",
-    templateUrl: "dorf-input.component.html"
+    selector: 'custom-input',
+    templateUrl: 'dorf-input.component.html'
 })
 export class CustomDorfInputComponent<T> extends DorfInputComponent<T> {
 
@@ -17,6 +17,6 @@ export class CustomDorfInputComponent<T> extends DorfInputComponent<T> {
     }
 
     get placeholder() {
-        return this.metadata["placeholder"];
+        return this.metadata['placeholder'];
     }
 }

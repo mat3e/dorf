@@ -1,42 +1,82 @@
-import { OnChanges } from "@angular/core";
-import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
+import { OnChanges } from '@angular/core';
+import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { DorfConfigService } from "../dorf-config.service";
-import { DorfFieldDefinition, DorfFieldMetadata } from "../fields/base/abstract-dorf-field.component";
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../dorf-mapper";
+import { DorfConfigService } from '../dorf-config.service';
+import { DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.component';
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../dorf-mapper';
 
 /**
- * Should be used with details.view.html to create domain object details Component.
- * It should be extended for each Domain Object.
+ * @whatItDoes Should be used with `details.view.html` or a similar template to create a form `Component`.
+ *
+ * @howToUse
+ * This should be a base class for the form `Component`.
+ *
+ * ### Example
+ *
+ * ```
+ * @Component({
+ *   moduleId: module.id,
+ *   selector: 'person-details',
+ *     templateUrl: '../dorf-details.view.html'
+ * })
+ * export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
+ *   @Input() domainObject: Person;
+ *   @Output() createUpdate = new EventEmitter<IPerson>();
+ *
+ *   // @Override
+ *   protected get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
+ *     return Person.fieldDefinitions;
+ *   }
+ *
+ *   constructor(config: DorfConfigService) {
+ *     super(config);
+ *   }
+ *
+ *   onSubmit() {
+ *     let result = this.form.value as IPerson;
+ *     console.log(result);
+ *     this.createUpdate.emit(result);
+ *   }
+ * }
+ * ```
+ *
+ * @description
+ * This is the stable way of creating a DORF form, but it should be changed to {@link DorfForm} annotation when possible.
+ *
+ * @stable
  */
-export abstract class AbstractDorfFormComponent<T> implements OnChanges {
-    // @Input
-    abstract domainObject: T;
-
+export abstract class AbstractDorfFormComponent<DomObj> implements OnChanges {
     /**
-     * DomainObject-specific map.
+     * It should be an input property in the original `Component`.
      */
-    protected abstract fieldDefinitions: PropertiesToDorfDefinitionsMap<T>;
+    abstract domainObject: DomObj;
 
     /**
-     * General form validator, which should check, e.g. business context of the form.
-     * Fields might be valid one by one, but not together. E.g. city and country from address.
+     * DomainObject-specific map. It can be got directly from {@link DorfDomainObject}.
+     */
+    protected abstract fieldDefinitions: PropertiesToDorfDefinitionsMap<DomObj>;
+
+    /**
+     * General form validator, which should check, e.g. a business context of the form and the relations between the fields.
+     * E.g. if city and country form values match to each other.
      */
     protected get validator(): ValidatorFn {
         return Validators.nullValidator;
     }
 
+    /** @internal */
     private _form: FormGroup;
+    /** @internal */
     private _fieldsMetadata: DorfFieldMetadata<any, DorfFieldDefinition<any>>[];
 
     /**
-     * DorfService should be injected in the subtype's constructor and passed here
-     * in order to providing CSS classes to HTML template.
+     * {@link DorfConfigService} should be injected in the subtype's constructor and passed here
+     * in order to provide config for the HTML template.
      */
     constructor(public config: DorfConfigService, private _mapper: DorfMapper = new DorfMapper(config)) { }
 
     /**
-     * Domain Object should be an input property, so each change should rebuild form.
+     * Domain Object should be an input property, so each change should rebuild a form.
      */
     ngOnChanges() {
         this.initMetaForAllFields();
@@ -44,7 +84,7 @@ export abstract class AbstractDorfFormComponent<T> implements OnChanges {
     }
 
     /**
-     * Returns FieldMetadata for all the form fields.
+     * Returns {@link DorfFieldMetadata} for all the form fields.
      */
     get fieldsMetadata() {
         return this._fieldsMetadata;
@@ -57,10 +97,12 @@ export abstract class AbstractDorfFormComponent<T> implements OnChanges {
         return this._form;
     }
 
+    /** @internal */
     private initMetaForAllFields() {
         this._fieldsMetadata = this._mapper.mapObjectWithDefinitionsToFieldsMetadata(this.domainObject, this.fieldDefinitions);
     }
 
+    /** @internal */
     private initFormGroup() {
         let group: { [key: string]: FormControl } = {};
 

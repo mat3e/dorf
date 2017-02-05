@@ -1,4 +1,4 @@
-<form (ngSubmit)="config.isButtonVisible && onSubmit()" [ngClass]="config?.formClass">
+<form (ngSubmit)="config.isButtonVisible && onSubmit()" [ngClass]="config.css.general.form">
 
 	<fieldset>
 		<div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">

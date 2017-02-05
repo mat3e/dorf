@@ -1,15 +1,15 @@
-import { DebugElement } from "@angular/core";
-import { By } from "@angular/platform-browser";
-import { ComponentFixture, TestBed, async } from "@angular/core/testing";
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms";
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { newEvent } from "../util/events";
+import { newEvent } from '../util/events';
 
-import { DorfConfigService } from "../../src/dorf-config.service";
-import { InputType, DorfInputDefinition, DorfInputMetadata, DorfInputComponent } from "../../src/fields/dorf-input.component";
+import { DorfConfigService } from '../../src/dorf-config.service';
+import { InputType, DorfInputDefinition, DorfInputMetadata, DorfInputComponent } from '../../src/fields/dorf-input.component';
 
-describe("DorfInputComponent", () => {
+describe('DorfInputComponent', () => {
 
     let inputDef: DorfInputDefinition<number>;
     let inputMeta: DorfInputMetadata<number>;
@@ -18,9 +18,9 @@ describe("DorfInputComponent", () => {
      * System Under Test - DorfInputComponent with the numeric value.
      */
     let SUT: DorfInputComponent<number>;
-    let type = "number" as InputType;
+    let type = 'number' as InputType;
     let initial = 7;
-    let errorMsg = "Field is required!";
+    let errorMsg = 'Field is required!';
     let setterStub: jasmine.Spy;
 
     let fixture: ComponentFixture<DorfInputComponent<number>>;
@@ -31,8 +31,8 @@ describe("DorfInputComponent", () => {
         let dorfConfigServiceStub = new DorfConfigService({
             css: {
                 input: {
-                    field: "sut",
-                    error: "error"
+                    field: 'sut',
+                    error: 'error'
                 }
             }
         });
@@ -51,7 +51,7 @@ describe("DorfInputComponent", () => {
 
         inputDef = new DorfInputDefinition<number>({
             // first test
-            type: type,
+            type,
 
             // second test
             validator: Validators.required,
@@ -61,10 +61,10 @@ describe("DorfInputComponent", () => {
             updateModelOnChange: true
         });
 
-        setterStub = jasmine.createSpy("setterStub");
+        setterStub = jasmine.createSpy('setterStub');
 
         inputMeta = new DorfInputMetadata<number>(inputDef, {
-            key: "tested",
+            key: 'tested',
 
             // second test
             value: initial,
@@ -82,12 +82,12 @@ describe("DorfInputComponent", () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            debugElem = fixture.debugElement.query(By.css(".sut"));
+            debugElem = fixture.debugElement.query(By.css('.sut'));
             htmlElem = debugElem.nativeElement;
         });
     });
 
-    it("should take care about a value type", async(() => {
+    it('should take care about a value type', async(() => {
         fixture.whenStable().then(() => {
 
             expect(htmlElem.type).toBe(type);
@@ -96,8 +96,8 @@ describe("DorfInputComponent", () => {
 
             // WHEN
             // trying to spoil the value
-            htmlElem.value = "wrong value";
-            htmlElem.dispatchEvent(newEvent("input"));
+            htmlElem.value = 'wrong value';
+            htmlElem.dispatchEvent(newEvent('input'));
             fixture.detectChanges();
 
             // THEN
@@ -107,7 +107,7 @@ describe("DorfInputComponent", () => {
             // WHEN
             // proper value
             htmlElem.valueAsNumber = 8;
-            htmlElem.dispatchEvent(newEvent("input"));
+            htmlElem.dispatchEvent(newEvent('input'));
             fixture.detectChanges();
 
             // THEN
@@ -115,32 +115,32 @@ describe("DorfInputComponent", () => {
         });
     }));
 
-    it("should support 'required' validator", async(() => {
+    it('should support \'required\' validator', async(() => {
         fixture.whenStable().then(() => {
 
             // WHEN
             // trying to spoil the value
             htmlElem.focus();
             htmlElem.value = null;
-            htmlElem.dispatchEvent(newEvent("input"));
+            htmlElem.dispatchEvent(newEvent('input'));
             htmlElem.blur();
 
             // THEN
             fixture.detectChanges();
-            let errorElem: HTMLDivElement = fixture.debugElement.query(By.css(".error")).nativeElement;
+            let errorElem: HTMLDivElement = fixture.debugElement.query(By.css('.error')).nativeElement;
             expect(inputMeta.formControl.valid).toBeFalsy();
             expect(errorElem.textContent).toBe(errorMsg);
         });
     }));
 
-    it("should support 'updateModelOnChange'", () => {
+    it('should support \'updateModelOnChange\'', () => {
         fixture.whenStable().then(() => {
 
             // WHEN
             // proper value
             htmlElem.focus();
             htmlElem.valueAsNumber = 8;
-            htmlElem.dispatchEvent(newEvent("input"));
+            htmlElem.dispatchEvent(newEvent('input'));
             htmlElem.blur();
 
             // THEN

@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { DorfConfigService } from "../dorf-config.service";
+import { DorfConfigService } from '../dorf-config.service';
 
 import {
     DorfTag,
@@ -9,23 +9,29 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./base/abstract-dorf-field.component";
+} from './base/abstract-dorf-field.component';
 
 import {
     IDorfChooseDefinition,
     DorfChooseDefinition,
     DorfChooseMetadata,
     DorfChooseComponent
-} from "./base/abstract-dorf-choose.component";
+} from './base/abstract-dorf-choose.component';
 
 /**
- * Each new component specifies its own definition interface.
- * Radio field has to support possible options.
+ * @whatItDoes Represents constructor parameter for {@link DorfRadioDefinition}.
+ *
+ * @description
+ * Definition for radio is a pure extension of {@link IDorfChooseDefinition}.
+ *
+ * @stable
  */
 export interface IDorfRadioDefinition<T> extends IDorfChooseDefinition<T> { }
 
 /**
- * Definition for the radio field.
+ * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the radio field.
+ *
+ * @stable
  */
 export class DorfRadioDefinition<T> extends DorfChooseDefinition<T> implements IDorfRadioDefinition<T> {
 
@@ -37,7 +43,9 @@ export class DorfRadioDefinition<T> extends DorfChooseDefinition<T> implements I
 }
 
 /**
- * Metadata for the radio field.
+ * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the radio field.
+ *
+ * @stable
  */
 export class DorfRadioMetadata<T> extends DorfChooseMetadata<T, DorfRadioDefinition<T>> implements IDorfRadioDefinition<T> {
 
@@ -46,15 +54,18 @@ export class DorfRadioMetadata<T> extends DorfChooseMetadata<T, DorfRadioDefinit
     }
 }
 
-
-
 /**
- * Radio input field which consumes DorfRadioMetadata for rendering.
+ * @whatItDoes DORF radio field which consumes {@link DorfRadioMetadata} for rendering.
+ *
+ * @description
+ * One of the predefined DORF fields.
+ *
+ * @stable
  */
 @Component({
     moduleId: `${module.id}`,
-    selector: "dorf-radio",
-    templateUrl: "./dorf-radio.component.html"
+    selector: DorfTag.RADIO,
+    templateUrl: './dorf-radio.component.html'
 })
 export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetadata<T>> implements IDorfRadioDefinition<T> {
 

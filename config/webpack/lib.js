@@ -1,28 +1,28 @@
 (function (global) {
-    let webpack = require("webpack");
+    let webpack = require('webpack');
 
     module.exports = {
         entry: {
-            "index": "./index.ts"
+            'index': './index.ts'
         },
 
         output: {
-            filename: "[name].js",
+            filename: '[name].js',
             pathinfo: true,
-            publicPath: "/"
+            publicPath: '/'
         },
 
         resolve: {
-            extensions: ["", ".ts", ".js"]
+            extensions: ['', '.ts', '.js']
         },
 
         module: {
             loaders: [{
                 test: /\.ts$/,
-                loaders: ["ts-loader?configFileName=config/ts/lib.json", "angular2-template-loader"]
+                loaders: ['ts-loader?configFileName=config/ts/lib.json', 'angular2-template-loader']
             }, {
                 test: /\.(html|css)$/,
-                loader: "raw-loader"
+                loader: 'raw-loader'
             }]
         },
 
@@ -31,3 +31,4 @@
         ]
     };
 })(this);
+

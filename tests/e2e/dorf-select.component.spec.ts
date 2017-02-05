@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed, async } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { DebugElement } from "@angular/core";
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
-import { ReactiveFormsModule, FormGroup, FormControl } from "@angular/forms";
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
-import { DorfConfigService } from "../../src/dorf-config.service";
-import { OptionType } from "../../src/fields/base/abstract-dorf-choose.component";
-import { DorfSelectDefinition, DorfSelectMetadata, DorfSelectComponent } from "../../src/fields/dorf-select.component";
+import { DorfConfigService } from '../../src/dorf-config.service';
+import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
+import { DorfSelectDefinition, DorfSelectMetadata, DorfSelectComponent } from '../../src/fields/dorf-select.component';
 
-describe("DorfSelectComponent", () => {
+describe('DorfSelectComponent', () => {
 
     // we need a string array, but it is build out of string options
     let selectDef: DorfSelectDefinition<string>;
@@ -19,14 +19,14 @@ describe("DorfSelectComponent", () => {
      */
     let SUT: DorfSelectComponent<string[]>;
     let opts: OptionType<string>[] = [{
-        key: "http://9gag.com",
-        value: "9gag"
+        key: 'http://9gag.com',
+        value: '9gag'
     }, {
-        key: "http://thecodinglove.com/",
-        value: "the_coding_love();"
+        key: 'http://thecodinglove.com/',
+        value: 'the_coding_love();'
     }, {
-        key: "https://github.com/",
-        value: "GitHub"
+        key: 'https://github.com/',
+        value: 'GitHub'
     }];
 
     let fixture: ComponentFixture<DorfSelectComponent<string[]>>;
@@ -35,7 +35,7 @@ describe("DorfSelectComponent", () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { select: { field: "sut" } }
+            css: { select: { field: 'sut' } }
         });
 
         TestBed.configureTestingModule({
@@ -56,7 +56,7 @@ describe("DorfSelectComponent", () => {
         });
 
         selectMeta = new DorfSelectMetadata<any>(selectDef, {
-            key: "tested",
+            key: 'tested',
             value: [opts[0].key]
         });
 
@@ -69,15 +69,15 @@ describe("DorfSelectComponent", () => {
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-            debugElem = fixture.debugElement.query(By.css(".sut"));
+            debugElem = fixture.debugElement.query(By.css('.sut'));
             htmlElem = debugElem.nativeElement;
         });
     });
 
-    it("should support defined 'optionsToSelect'", async(() => {
+    it('should support defined \'optionsToSelect\'', async(() => {
         fixture.whenStable().then(() => {
 
-            let elements: DebugElement[] = fixture.debugElement.queryAll(By.css("option"));
+            let elements: DebugElement[] = fixture.debugElement.queryAll(By.css('option'));
 
             expect(elements.length).toEqual(3);
             expect((elements[0].nativeElement as HTMLOptionElement).selected).toBeTruthy();
@@ -89,7 +89,7 @@ describe("DorfSelectComponent", () => {
         });
     }));
 
-    it("should support 'multiple' option", async(() => {
+    it('should support \'multiple\' option', async(() => {
         fixture.whenStable().then(() => {
             expect(htmlElem.multiple).toBeTruthy();
         });

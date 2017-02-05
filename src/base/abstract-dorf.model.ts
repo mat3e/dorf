@@ -1,15 +1,59 @@
-import { PropertiesToDorfDefinitionsMap } from "../dorf-mapper";
+import { PropertiesToDorfDefinitionsMap } from '../dorf-mapper';
 
 /**
- * Domain Object should contain data about field definitions.
- * DorfPropertiesToDefinitionsMap is used in DorfMapper called from AbstractDorfFormComponent to create metadata for all the form fields.
+ * @whatItDoes Defines a Domain Object. Enfoces the existence of field definitions.
  *
- * In reality Domain Objcect doesn't have to extend this class, but it might be helpful.
- * When no additional backend calls needed for creating FieldDefinitions it is better to define them here.
+ * @howToUse
+ * This should be a base class for a domain object.
+ *
+ * ### Example
+ *
+ * ```
+ * class Person extends DorfDomainObject {
+ *
+ *   constructor(private name: string, private surname: string) {
+ *     super();
+ *   }
+ *
+ *   // @Override
+ *   get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
+ *     return {
+ *       "name": this.nameDef,
+ *       "surname": this.surnameDef
+ *     };
+ *   }
+ *
+ *   private get nameDef(): DorfInputDefinition<string> {
+ *     return new DorfInputDefinition({
+ *       label: "Name",
+ *       type: "text"
+ *     });
+ *   }
+ *
+ *   private get surnameDef(): DorfInputDefinition<string> {
+ *     return new DorfInputDefinition({
+ *       label: "Surname",
+ *       type: "text"
+ *     });
+ *   }
+ * }
+ * ```
+ *
+ * @description
+ * Either extending this class or using {@link DorfObject} and the related annotations
+ * is a proper way of acting with Domain Objects in DORF.
+ *
+ * @stable
  */
 export abstract class DorfDomainObject {
+    /**
+     * Used in {@link DorfMapper} called from {@link AbstractDorfFormComponent} to create metadata for all the form fields.
+     */
     abstract fieldDefinitions: PropertiesToDorfDefinitionsMap<DorfDomainObject>;
 
+    /**
+     * Indicates a `DorfObject` instance. Needed within form decorators.
+     */
     get isDorfObject() {
         return true;
     }

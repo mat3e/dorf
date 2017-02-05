@@ -1,4 +1,4 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 
 import {
     DorfDomainObject,
@@ -7,9 +7,9 @@ import {
     DorfInputDefinition,
     DorfSelectDefinition,
     PropertiesToDorfDefinitionsMap
-} from "dorf";
+} from 'dorf';
 
-import { StarRatingDefinition } from "../ext/star-rating.component";
+import { StarRatingDefinition } from '../ext/star-rating.component';
 
 /**
  * Reactive Form will return set of properties, not a class with methods.
@@ -47,7 +47,7 @@ export class Person extends DorfDomainObject implements IPerson {
      * Shortcut for getting name and surname pair.
      */
     get fullname() {
-        return this.name + " " + this.surname;
+        return this.name + ' ' + this.surname;
     }
 
     /**
@@ -66,9 +66,9 @@ export class Person extends DorfDomainObject implements IPerson {
     // @Override
     get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
         return {
-            "name": this.nameDef,
-            "surname": this.surnameDef,
-            "rating": this.ratingDef
+            name: this.nameDef,
+            surname: this.surnameDef,
+            rating: this.ratingDef
         };
     }
 
@@ -78,25 +78,25 @@ export class Person extends DorfDomainObject implements IPerson {
      */
     private get nameDef(): DorfInputDefinition<string> {
         return new DorfInputDefinition({
-            label: "Name",
-            type: "text",
+            label: 'Name',
+            type: 'text',
             validator: Validators.required,
-            errorMessage: "Name is required"
+            errorMessage: 'Name is required'
         });
     }
 
     private get surnameDef(): DorfInputDefinition<string> {
         return new DorfInputDefinition({
-            label: "Surname",
-            type: "text",
+            label: 'Surname',
+            type: 'text',
             validator: Validators.required,
-            errorMessage: "Surname is required"
+            errorMessage: 'Surname is required'
         });
     }
 
     private get ratingDef(): StarRatingDefinition<number> {
         return new StarRatingDefinition({
-            label: "Rating",
+            label: 'Rating',
             max: 7
         });
     }

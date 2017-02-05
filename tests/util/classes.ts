@@ -1,14 +1,14 @@
-import { Component } from "@angular/core";
-import { Validators } from "@angular/forms";
+import { Component } from '@angular/core';
+import { Validators } from '@angular/forms';
 
-import { DorfConfigService } from "../../src/dorf-config.service";
+import { DorfConfigService } from '../../src/dorf-config.service';
 
-import { DorfDomainObject } from "../../src/base/abstract-dorf.model"
-import { PropertiesToDorfDefinitionsMap } from "../../src/dorf-mapper";
-import { DorfInputDefinition } from "../../src/fields/dorf-input.component";
+import { DorfDomainObject } from '../../src/base/abstract-dorf.model'
+import { PropertiesToDorfDefinitionsMap } from '../../src/dorf-mapper';
+import { DorfInputDefinition } from '../../src/fields/dorf-input.component';
 
-import { DorfObject, DorfInput } from "../../src/decorators/dorf-object.decorator";
-import { IDorfForm, DorfForm, DorfObjectInput } from "../../src/decorators/dorf-form.decorator";
+import { DorfObject, DorfInput } from '../../src/decorators/dorf-object.decorator';
+import { IDorfForm, DorfForm, DorfObjectInput } from '../../src/decorators/dorf-form.decorator';
 
 /**
  * Plain old DorfDomainObject.
@@ -21,34 +21,34 @@ export class Person1 extends DorfDomainObject {
     constructor() {
         super();
 
-        this.name = "test";
-        this.surname = "test";
+        this.name = 'test';
+        this.surname = 'test';
     }
 
     // @Override
     get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person1> {
         return {
-            "name": this.nameDef,
-            "surname": this.surnameDef
+            'name': this.nameDef,
+            'surname': this.surnameDef
         };
     }
 
     private get nameDef(): DorfInputDefinition<string> {
         return new DorfInputDefinition({
-            label: "Name",
-            type: "text",
+            label: 'Name',
+            type: 'text',
             updateModelOnChange: true,
             validator: Validators.required,
-            errorMessage: "Name is required"
+            errorMessage: 'Name is required'
         });
     }
 
     private get surnameDef(): DorfInputDefinition<string> {
         return new DorfInputDefinition({
-            label: "Surname",
-            type: "text",
+            label: 'Surname',
+            type: 'text',
             validator: Validators.required,
-            errorMessage: "Surname is required"
+            errorMessage: 'Surname is required'
         });
     }
 }
@@ -59,24 +59,24 @@ export class Person1 extends DorfDomainObject {
 @DorfObject()
 export class Person2 {
     @DorfInput({
-        label: "Name", type: "text",
+        label: 'Name', type: 'text',
         updateModelOnChange: true,
         validator: Validators.required,
-        errorMessage: "Name is required"
+        errorMessage: 'Name is required'
     })
     name: string;
 
     @DorfInput({
-        label: "Surname", type: "text",
+        label: 'Surname', type: 'text',
         validator: Validators.required,
-        errorMessage: "Surname is required"
+        errorMessage: 'Surname is required'
     })
     surname: string;
 
     constructor() {
 
-        this.name = "test";
-        this.surname = "test";
+        this.name = 'test';
+        this.surname = 'test';
     }
 }
 
@@ -85,7 +85,7 @@ export class Person2 {
  */
 @DorfForm()
 @Component({
-    selector: "person1-details"
+    selector: 'person1-details'
 })
 export class Person1DetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person1;
@@ -98,7 +98,7 @@ export class Person1DetailComponent implements IDorfForm {
  */
 @DorfForm()
 @Component({
-    selector: "person2-details"
+    selector: 'person2-details'
 })
 export class Person2DetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person2;

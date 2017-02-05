@@ -1,20 +1,20 @@
-import { DebugElement } from "@angular/core";
-import { By } from "@angular/platform-browser";
-import { ComponentFixture, TestBed, async } from "@angular/core/testing";
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from "@angular/forms";
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { newEvent } from "../util/events";
+import { newEvent } from '../util/events';
 
-import { DorfConfigService } from "../../src/dorf-config.service";
+import { DorfConfigService } from '../../src/dorf-config.service';
 import {
     ICheckboxMapping,
     DorfCheckboxDefinition,
     DorfCheckboxMetadata,
     DorfCheckboxComponent
-} from "../../src/fields/dorf-checkbox.component";
+} from '../../src/fields/dorf-checkbox.component';
 
-describe("DorfCheckboxComponent", () => {
+describe('DorfCheckboxComponent', () => {
 
     // depends on the test we have either a boolean or a number value
     let inputDef: DorfCheckboxDefinition<boolean | number>;
@@ -31,7 +31,7 @@ describe("DorfCheckboxComponent", () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { checkbox: { field: "sut" } }
+            css: { checkbox: { field: 'sut' } }
         });
 
         TestBed.configureTestingModule({
@@ -47,7 +47,7 @@ describe("DorfCheckboxComponent", () => {
         changeComponent();
     });
 
-    it("should support boolean values by default", async(() => {
+    it('should support boolean values by default', async(() => {
         fixture.whenStable().then(() => {
             fixture.detectChanges();
 
@@ -56,7 +56,7 @@ describe("DorfCheckboxComponent", () => {
         });
     }));
 
-    it("should be mapped to a defined values", async(() => {
+    it('should be mapped to a defined values', async(() => {
         fixture.whenStable().then(() => {
 
             changeComponent({
@@ -70,7 +70,7 @@ describe("DorfCheckboxComponent", () => {
             // WHEN
             htmlElem.focus();
             htmlElem.click();
-            htmlElem.dispatchEvent(newEvent("input"));
+            htmlElem.dispatchEvent(newEvent('input'));
             htmlElem.blur();
 
             // THEN
@@ -82,16 +82,16 @@ describe("DorfCheckboxComponent", () => {
     function changeComponent(mapping: ICheckboxMapping<boolean | number> = null) {
         if (mapping) {
             inputDef = new DorfCheckboxDefinition<boolean | number>({
-                mapping: mapping
+                mapping
             });
             inputMeta = new DorfCheckboxMetadata<boolean | number>(inputDef, {
-                key: "tested",
+                key: 'tested',
                 value: mapping.trueValue
             });
         } else {
             inputDef = new DorfCheckboxDefinition<boolean | number>();
             inputMeta = new DorfCheckboxMetadata<boolean | number>(inputDef, {
-                key: "tested",
+                key: 'tested',
                 value: true
             });
         }
@@ -106,7 +106,7 @@ describe("DorfCheckboxComponent", () => {
 
         fixture.whenStable().then(() => {
             SUT.ngOnChanges(); // seems like ngOnInit works with detectChanges and this one doesn't
-            debugElem = fixture.debugElement.query(By.css(".sut"));
+            debugElem = fixture.debugElement.query(By.css('.sut'));
             htmlElem = debugElem.nativeElement;
         });
     }

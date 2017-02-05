@@ -1,45 +1,50 @@
-import { Input } from "@angular/core";
-import { FormControl, FormGroup, Validators, ValidatorFn } from "@angular/forms";
+import { Input } from '@angular/core';
+import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
-import { DorfConfigService } from "./../dorf-config.service";
-import { DorfMapper, PropertiesToDorfDefinitionsMap } from "../dorf-mapper";
+import { DorfConfigService } from '../dorf-config.service';
+import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../dorf-mapper';
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "../fields/base/abstract-dorf-field.component";
+import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.component';
 
 /**
- * @whatItDoes Optional interface for reminding about a 'config' property which is needed in a class marked as @DorfForm().
- * Contains also 
- * <ul>
- *   <li>an optional '_mapper' property which should be overriden for a usage of a different mapper (DorfMapper extension)</li>
- *   <li>an optional 'onSubmit' callback which should be overriden if the form actions are needed</li>
- *   <li>an optional 'validator' parameter which should be overriden if the form should be validated in a larger context</li>
- * </ul>
- * 
+ * @whatItDoes Optional interface for reminding about form properties.
+ *
+ *
  * @howToUse
- * 
- * `config` should be injected in the constructor of the class. And other properties may be overriden.
- * 
+ *
+ * [Service]{@link DorfConfigService} named `config` should be injected in the constructor of the implementing class.
+ * And other properties may be overriden.
+ *
  * ### Example
  *
  * ```
  * @DorfForm()
  * @Component({selector: "test-domain-object-form"})
- * class TestDomainObjectForm implements IDorfForm { 
+ * class TestDomainObjectForm implements IDorfForm {
  *   @DorfObjectInput()
  *   private domainObject: Person;
- * 
- *   @Output() 
+ *
+ *   @Output()
  *   createUpdate = new EventEmitter<IModel>();
- * 
+ *
  *   constructor(public config: DorfConfigService) {}
- * 
+ *
  *   onSubmit() {
  *     let result = this["form"].value as IPerson;
  *     this.createUpdate.emit(result);
  *   }
  * }
  * ```
- * 
+ *
+ * @description
+ * Enforces defining a `config` property which is needed in a class marked as @DorfForm().
+ * Contains also
+ * <ul>
+ *   <li>An optional `_mapper` property which should be overriden for a usage of a different [mapper]{@DorfMapper}</li>
+ *   <li>An optional `onSubmit` callback which should be overriden if the form actions are needed</li>
+ *   <li>An optional `validator` property which should be overriden if the form should be validated in a larger context</li>
+ * </ul>
+ *
  * @stable
  */
 // TODO: verify inject dedicated for tests or Reflect.metadata which returns decorator ("design:paramtypes" to Injectable)
@@ -55,10 +60,10 @@ export interface IDorfForm {
 
 /**
  * @whatItDoes Extends {@link Input Angular's Input} and stores property name for future processing by {@link DorfForm}.
- * 
+ *
  * @howToUse
  *
- * One field should be decorated with @DorfObjectInput() within @DorfForm().
+ * One field should be decorated with @DorfObjectInput() within [@DorfForm()]{@link DorfForm}.
  *
  * ### Example
  *
@@ -68,11 +73,11 @@ export interface IDorfForm {
  * class TestDomainObjectForm implements IDorfForm {
  *   @DorfObjectInput()
  *   private domainObject: Person;
- * 
+ *
  *   constructor(public config: DorfConfigService)
  * }
  * ```
- * 
+ *
  * @stable
  * @Annotation
  */
@@ -81,10 +86,31 @@ export function DorfObjectInput() {
         Input()(targetProto, propName);
         // formComponent.dorfDomainObjectInForm will store the property name of a domain object
         targetProto.dorfObjectInForm = propName;
-    }
+    };
 }
 
 /**
+ * @whatItDoes Superior of {@link AbstractDorfFormComponent}.
+ *
+ * @howToUse Add `@DorfForm()` annotation over `@Component()` one for the class which should control the form.
+ *
+ * ### Example
+ *
+ * ```
+ * @DorfForm()
+ * @Component({selector: "test-domain-object-form"})
+ * class TestDomainObjectForm implements IDorfForm {
+ *   @DorfObjectInput()
+ *   private domainObject: Person;
+ *
+ *   constructor(public config: DorfConfigService)
+ * }
+ * ```
+ *
+ * @description
+ * Adds additional behaviors like building metadata, reacting on changes, submitting the value.
+ * If no `template`/`templateUrl` specified in `@Component()`, it adds a default template as well.
+ *
  * @experimental
  */
 export function DorfForm() {
@@ -96,25 +122,25 @@ export function DorfForm() {
 
         Object.defineProperties(targetConstructor.prototype, {
             fieldsMetadata: {
-                get: function () {
+                get() {
                     return this._fieldsMetadata;
                 },
                 enumerable: true,
                 configurable: true
             }, form: {
-                get: function () {
+                get() {
                     return this._form;
                 },
                 enumerable: true,
                 configurable: true
             }, validator: {
-                get: function () {
+                get() {
                     return originalValidator || Validators.nullValidator;
                 },
                 enumerable: true,
                 configurable: true
             }, mapper: {
-                get: function () {
+                get() {
                     if (!this._mapper) {
                         this._mapper = new DorfMapper(this.config);
                     }
@@ -123,7 +149,7 @@ export function DorfForm() {
                 enumerable: true,
                 configurable: true
             }, ngOnChanges: {
-                value: function () {
+                value() {
                     if (oldNgOnChanges) {
                         oldNgOnChanges.call(this);
                     }
@@ -132,23 +158,24 @@ export function DorfForm() {
                     initFormGroup(this);
                 }
             }, onSubmit: {
-                value: function () {
-                    if (originalOnSubmit && typeof originalOnSubmit === "function") {
+                value() {
+                    if (originalOnSubmit && typeof originalOnSubmit === 'function') {
                         originalOnSubmit.call(this);
                     }
                 }
             }
         });
 
-        let annotations = (Reflect as any).getMetadata("annotations", targetConstructor) as any[];
+        let annotations = (Reflect as any).getMetadata('annotations', targetConstructor) as any[];
         if (annotations && annotations.length) {
             let components = annotations.filter((annotation: any) => {
-                return annotation.__proto__ && annotation.__proto__.toString() === "@Component";
+                return annotation.__proto__ && annotation.__proto__.toString() === '@Component';
             });
             let noTemplateExists = components.every((component: any) => {
                 return !component.template && !component.templateUrl;
             });
             if (noTemplateExists && components[0]) {
+                // TODO: simplify the template - component for this?
                 components[0].template = `
                 <form (ngSubmit)="onSubmit()" [ngClass]="config.css.general.form">
                     <fieldset [ngClass]="config.css.general.fieldset">
@@ -166,9 +193,10 @@ export function DorfForm() {
                 `;
             }
         }
-    }
+    };
 }
 
+/** @internal */
 interface ExtendedDorfForm {
     _form: FormGroup;
     _fieldsMetadata: DorfFieldMetadata<any, DorfFieldDefinition<any>>[];
@@ -179,6 +207,7 @@ interface ExtendedDorfForm {
     dorfObjectInForm: string;
 }
 
+/** @internal */
 function initMetaForAllFields(dorfForm: ExtendedDorfForm) {
     // TODO: using DorfForm as a function spoils dorfForm parameter (=== undefined); see dorf-form.decorator.spec from tests
     if (!dorfForm || !dorfForm.dorfObjectInForm) {
@@ -192,11 +221,14 @@ function initMetaForAllFields(dorfForm: ExtendedDorfForm) {
     dorfForm._fieldsMetadata = dorfForm.mapper.mapObjectWithDefinitionsToFieldsMetadata(domainObj, domainObj.fieldDefinitions);
 };
 
+/** @internal */
 function throwNoObject() {
-    console.info("@DorfObjectInput() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()");
-    throw new Error("DorfForm has to contain DorfObject annotated as @DorfObjectInput()");
+    // tslint:disable-next-line:no-console
+    console.info('@DorfObjectInput() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()');
+    throw new Error('DorfForm has to contain DorfObject annotated as @DorfObjectInput()');
 }
 
+/** @internal */
 function initFormGroup(dorfForm: ExtendedDorfForm) {
     let group: { [key: string]: FormControl } = {};
 

@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { PropertiesToDorfDefinitionsMap, AbstractDorfFormComponent, DorfConfigService } from "dorf";
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { PropertiesToDorfDefinitionsMap, AbstractDorfFormComponent, DorfConfigService } from 'dorf';
 
 import { CustomMapper } from '../ext/custom-mapper';
-import { IPerson, Person } from "./model";
+import { IPerson, Person } from './model';
 
 /**
  * Lightweight class which creates a form. 
@@ -12,9 +12,9 @@ import { IPerson, Person } from "./model";
  */
 @Component({
     moduleId: module.id,
-    selector: "person-details",
+    selector: 'person-details',
     // npm run prepare
-    templateUrl: "../dorf-details.view.html"
+    templateUrl: '../dorf-details.view.html'
 })
 export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
     @Input() domainObject: Person;

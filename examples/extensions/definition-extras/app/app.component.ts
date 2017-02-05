@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
-import { IPerson, Person } from "./person/model";
+import { Component } from '@angular/core';
+import { IPerson, Person } from './person/model';
 
 @Component({
-    selector: "my-app",
+    selector: 'my-app',
     template: `
     <h2>Person in form: {{activeIndex >= 0 ? activePerson.fullname : "new person"}}</h2>
     <person-details [domainObject]="activePerson" (createUpdate)=onCreateUpdate($event)></person-details>

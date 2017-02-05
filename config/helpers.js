@@ -1,6 +1,6 @@
 (function () {
-    let path = require("path");
-    let _root = path.resolve(__dirname, "..");
+    let path = require('path');
+    let _root = path.resolve(__dirname, '..');
 
     function root(args) {
         args = Array.prototype.slice.call(arguments, 0);
@@ -9,4 +9,4 @@
 
     // module.exports
     module.exports.root = root;
-} ());
+}());

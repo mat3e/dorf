@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { DorfConfigService } from "../dorf-config.service";
+import { DorfConfigService } from '../dorf-config.service';
 import {
     DorfTag,
     IDorfFieldDefinition,
@@ -8,24 +8,34 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./base/abstract-dorf-field.component";
+} from './base/abstract-dorf-field.component';
 
+/**
+ * @whatItDoes Represents all the possible input types.
+ */
+// tslint:disable-next-line:max-line-length
 export type InputType = "color" | "date" | "datetime" | "datetime-local" | "email" | "file" | "hidden" | "image" | "month" | "number" | "password" | "range" | "search" | "tel" | "text" | "time" | "url" | "week";
 
 /**
- * Each new component specifies its own definition interface.
- * Input field has to support HTML5 type.
+ * @whatItDoes Represents constructor parameter for {@link DorfInputDefinition}.
+ *
+ * @description
+ * Input has a mandatory [type]{@link InputType} property. It has to support HTML5 types.
+ *
+ * @stable
  */
 export interface IDorfInputDefinition<T> extends IDorfFieldDefinition<T> {
     type: InputType;
 }
 
 /**
- * Definition for the input field should point out the input type. All types from HTML5 are possible here.
+ * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the input field.
+ *
+ * @stable
  */
 export class DorfInputDefinition<T> extends DorfFieldDefinition<T> implements IDorfInputDefinition<T> {
 
-    private _type: InputType = "text";
+    private _type: InputType = 'text';
 
     constructor(options?: IDorfInputDefinition<T>) {
         super(options);
@@ -41,7 +51,9 @@ export class DorfInputDefinition<T> extends DorfFieldDefinition<T> implements ID
 }
 
 /**
- * Properties of the input field.
+ * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the input field.
+ *
+ * @stable
  */
 export class DorfInputMetadata<T> extends DorfFieldMetadata<T, DorfInputDefinition<T>> implements IDorfInputDefinition<T> {
 
@@ -49,18 +61,21 @@ export class DorfInputMetadata<T> extends DorfFieldMetadata<T, DorfInputDefiniti
         super(definition, options);
     }
 
-    get type() { return this.definition.type }
+    get type() { return this.definition.type; }
 }
 
-
-
 /**
- * Input field which supports DorfSelectMetadata for rendering.
+ * @whatItDoes DORF input field which consumes {@link DorfInputMetadata} for rendering.
+ *
+ * @description
+ * One of the predefined DORF fields.
+ *
+ * @stable
  */
 @Component({
     moduleId: `${module.id}`,
-    selector: "dorf-input",
-    templateUrl: "./dorf-input.component.html"
+    selector: DorfTag.INPUT,
+    templateUrl: './dorf-input.component.html'
 })
 export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInputMetadata<T>> implements IDorfInputDefinition<T> {
 

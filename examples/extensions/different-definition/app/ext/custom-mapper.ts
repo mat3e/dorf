@@ -13,9 +13,9 @@ import {
     DorfSelectDefinition,
     IDorfFieldMetadata,
     DorfFieldMetadata
-} from "dorf";
+} from 'dorf';
 
-import { IBackendDefinition } from "../person/backend-definition";
+import { IBackendDefinition } from '../person/backend-definition';
 
 export class CustomMapper extends DorfMapper {
     constructor(config: DorfConfigService) {
@@ -35,36 +35,40 @@ export class CustomMapper extends DorfMapper {
     }
 
     /**
-     * FieldDefinitions are in fact IBackendDefinitions and should be "fixed",
+     * FieldDefinitions are in fact IBackendDefinitions and should be 'fixed',
      * converted to sth understandable by mapper.
      */
-    private fixDefinitions<T>(fieldDefinitions: PropertiesToDorfDefinitionsMap<T>) {
+    private fixDefinitions<T>(fieldDefinitions: any) {
         let result: PropertiesToDorfDefinitionsMap<T> = {};
 
+        // tslint:disable-next-line:forin
         for (let key in fieldDefinitions) {
             // converting each backend definition into truthly, well-known field definition
             let currDef = fieldDefinitions[key] as IBackendDefinition<any>;
 
-            if (currDef.modifier === "Hidden") {
-                // this case should be mapped into DorfInputDefiniton with password type
+            // this case should be mapped into DorfInputDefiniton with password type
+            if (currDef.modifier === 'Hidden') {
                 result[key] = new DorfInputDefinition({
                     label: currDef.label,
-                    type: "password"
+                    type: 'password'
                 })
-            } else if (currDef.possibleValues && currDef.possibleValues.length === 2) {
-                // just 2 options to choose from - radio button; no chance for options and "Hidden" modifier
+            }
+            // just 2 options to choose from = radio button
+            else if (currDef.possibleValues && currDef.possibleValues.length === 2) {
                 let constructorOpts = this.extractStandardOptions(currDef) as IDorfSelectDefinition<any>;
                 constructorOpts.optionsToSelect = currDef.possibleValues;
                 result[key] = new DorfRadioDefinition(constructorOpts);
-            } else if (currDef.possibleValues) {
-                // not 2 options to choose from - ideal select definition
+            }
+            // more than 2 options to choose from = ideal for a select definition
+            else if (currDef.possibleValues) {
                 let constructorOpts = this.extractStandardOptions(currDef) as IDorfRadioDefinition<any>;
                 constructorOpts.optionsToSelect = currDef.possibleValues;
                 result[key] = new DorfSelectDefinition(constructorOpts);
-            } else {
-                // default - text here
+            }
+            // default = text in this case
+            else {
                 let constructorOpts = this.extractStandardOptions(currDef) as IDorfInputDefinition<any>;
-                constructorOpts.type = "text";
+                constructorOpts.type = 'text';
                 result[key] = new DorfInputDefinition(constructorOpts);
             }
         }
@@ -75,7 +79,8 @@ export class CustomMapper extends DorfMapper {
     private extractStandardOptions<T>(backendDef: IBackendDefinition<T>): IDorfFieldDefinition<T> {
         return {
             label: backendDef.label,
-            validator: backendDef.modifier === "NotNull" ? Validators.required : Validators.nullValidator
+            validator: backendDef.modifier === 'NotNull' ? Validators.required : Validators.nullValidator
         }
     }
 }
+

@@ -1,6 +1,6 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 
-import { DorfObject, DorfInput, DorfRadio, DorfSelect, DorfCheckbox } from "dorf";
+import { DorfObject, DorfInput, DorfRadio, DorfSelect, DorfCheckbox } from 'dorf';
 
 /**
  * Reactive Form will return set of properties, not a class with methods.
@@ -28,49 +28,49 @@ export class Person implements IPerson {
     Example properties.
      */
     @DorfInput<string>({
-        label: "Name", type: "text",
-        validator: Validators.required, errorMessage: "Name is required",
+        label: 'Name', type: 'text',
+        validator: Validators.required, errorMessage: 'Name is required',
         updateModelOnChange: true
     })
     name: string;
 
     @DorfInput<string>({
-        label: "Surname", type: "text",
-        validator: Validators.required, errorMessage: "Surname is required"
+        label: 'Surname', type: 'text',
+        validator: Validators.required, errorMessage: 'Surname is required'
     })
     surname: string;
 
     @DorfRadio<string>({
-        label: "Gender",
-        optionsToSelect: [{ key: "m", value: "male" }, { key: "f", value: "female" }],
-        validator: Validators.required, errorMessage: "Gender is required"
+        label: 'Gender',
+        optionsToSelect: [{ key: 'm', value: 'male' }, { key: 'f', value: 'female' }],
+        validator: Validators.required, errorMessage: 'Gender is required'
     })
     gender: string;
 
-    @DorfInput<number>({ label: "Age", type: "number" })
+    @DorfInput<number>({ label: 'Age', type: 'number' })
     age: number;
 
     @DorfInput<number>({
-        label: "Credit card PIN", type: "password",
-        validator: Validators.pattern("[0-9]{4}"), errorMessage: "PIN should contain just 4 digits"
+        label: 'Credit card PIN', type: 'password',
+        validator: Validators.pattern('[0-9]{4}'), errorMessage: 'PIN should contain just 4 digits'
     })
     cardCode: number;
 
     @DorfSelect({
-        label: "Favourite color",
+        label: 'Favourite color',
         optionsToSelect: [
-            { key: "#fff", value: "white" },
-            { key: "#000", value: "black" },
-            { key: "#ff0000", value: "red" },
-            { key: "#00ff00", value: "green" },
-            { key: "#0000ff", value: "blue" }
+            { key: '#fff', value: 'white' },
+            { key: '#000', value: 'black' },
+            { key: '#ff0000', value: 'red' },
+            { key: '#00ff00', value: 'green' },
+            { key: '#0000ff', value: 'blue' }
         ]
     })
     favColor: string;
 
     @DorfCheckbox<string>({
-        label: "Is smart?",
-        mapping: { trueValue: "yes", falseValue: "no" }
+        label: 'Is smart?',
+        mapping: { trueValue: 'yes', falseValue: 'no' }
     })
     smart: string;
 
@@ -78,7 +78,7 @@ export class Person implements IPerson {
      * Shortcut for getting name and surname pair.
      */
     get fullname() {
-        return this.name + " " + this.surname;
+        return this.name + ' ' + this.surname;
     }
 
     /**

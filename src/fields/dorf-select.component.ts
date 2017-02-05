@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
+import { Component } from '@angular/core';
 
-import { DorfConfigService } from "../dorf-config.service";
+import { DorfConfigService } from '../dorf-config.service';
 
 import {
     DorfTag,
@@ -9,33 +9,39 @@ import {
     DorfFieldDefinition,
     DorfFieldMetadata,
     AbstractDorfFieldComponent
-} from "./base/abstract-dorf-field.component";
+} from './base/abstract-dorf-field.component';
 
 import {
     IDorfChooseDefinition,
     DorfChooseDefinition,
     DorfChooseMetadata,
     DorfChooseComponent
-} from "./base/abstract-dorf-choose.component";
+} from './base/abstract-dorf-choose.component';
 
 /**
- * Each new component specifies its own definition interface.
- * Select field has to support options and multiple selection.
+ * @whatItDoes Represents constructor parameter for {@link DorfSelectDefinition}.
+ *
+ * @description
+ * Definition for radio is an extension of {@link IDorfChooseDefinition}. It contains also a `multiple` flag.
+ *
+ * @stable
  */
 export interface IDorfSelectDefinition<T> extends IDorfChooseDefinition<T> {
     /**
-     * Indicates if multiselection is possible. 
-     * When binding to [multiple], the return value is always an array, so *ngIf used in template.
+     * Indicates if multiselection is possible.
      */
+    // when binding to [multiple], the return value is always an array, so *ngIf used in template
     multiple?: boolean;
 }
 
 /**
- * Definition for the select field.
+ * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the select field.
+ *
+ * @stable
  */
 export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements IDorfSelectDefinition<T> {
 
-    private _multiple = false;
+    private _multiple: boolean = false;
 
     constructor(options?: IDorfSelectDefinition<T>) {
         super(options);
@@ -51,7 +57,9 @@ export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements 
 }
 
 /**
- * Metadata for the select field.
+ * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the select field.
+ *
+ * @stable
  */
 export class DorfSelectMetadata<T> extends DorfChooseMetadata<T, DorfSelectDefinition<T>> implements IDorfSelectDefinition<T> {
 
@@ -59,18 +67,21 @@ export class DorfSelectMetadata<T> extends DorfChooseMetadata<T, DorfSelectDefin
         super(definition, options);
     }
 
-    get multiple() { return this.definition.multiple }
+    get multiple() { return this.definition.multiple; }
 }
 
-
-
 /**
- * Select input field which consumes DorfSelectMetadata for rendering.
+ * @whatItDoes DORF select field which consumes {@link DorfSelectMetadata} for rendering.
+ *
+ * @description
+ * One of the predefined DORF fields.
+ *
+ * @stable
  */
 @Component({
     moduleId: `${module.id}`,
-    selector: "dorf-select",
-    templateUrl: "./dorf-select.component.html"
+    selector: DorfTag.SELECT,
+    templateUrl: './dorf-select.component.html'
 })
 export class DorfSelectComponent<T> extends DorfChooseComponent<T, DorfSelectMetadata<T>> implements IDorfSelectDefinition<T> {
 

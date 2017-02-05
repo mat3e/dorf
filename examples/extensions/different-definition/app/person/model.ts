@@ -1,4 +1,4 @@
-import { IBackendDefinition } from "./backend-definition";
+import { IBackendDefinition } from './backend-definition';
 
 import {
     DorfDomainObject,
@@ -7,7 +7,7 @@ import {
     DorfInputDefinition,
     DorfSelectDefinition,
     PropertiesToDorfDefinitionsMap
-} from "dorf";
+} from 'dorf';
 
 /**
  * Reactive Form will return set of properties, not a class with methods.
@@ -32,43 +32,43 @@ export class Person {
         return new this();
     }
 
-    /* 
+    /*
     Example properties.
      */
     name: IBackendDefinition<string> = {
-        label: "Name",
-        modifier: "NotNull",
+        label: 'Name',
+        modifier: 'NotNull',
         value: null
     };
     gender: IBackendDefinition<string> = {
-        label: "Gender",
-        modifier: "NotNull",
+        label: 'Gender',
+        modifier: 'NotNull',
         value: null,
-        possibleValues: [{ key: "m", value: "male" }, { key: "f", value: "female" }]
+        possibleValues: [{ key: 'm', value: 'male' }, { key: 'f', value: 'female' }]
     };
     cardCode: IBackendDefinition<number> = {
-        label: "Credit Card PIN",
-        modifier: "Hidden",
+        label: 'Credit Card PIN',
+        modifier: 'Hidden',
         value: null
     };
     favColor: IBackendDefinition<string> = {
-        label: "Favourite color",
+        label: 'Favourite color',
         value: null,
         possibleValues: [{
-            key: "#fff",
-            value: "white"
+            key: '#fff',
+            value: 'white'
         }, {
-            key: "#000",
-            value: "black"
+            key: '#000',
+            value: 'black'
         }, {
-            key: "#ff0000",
-            value: "red"
+            key: '#ff0000',
+            value: 'red'
         }, {
-            key: "#00ff00",
-            value: "green"
+            key: '#00ff00',
+            value: 'green'
         }, {
-            key: "#0000ff",
-            value: "blue"
+            key: '#0000ff',
+            value: 'blue'
         }]
     };
 

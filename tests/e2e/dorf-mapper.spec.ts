@@ -1,16 +1,16 @@
-import { Validators } from "@angular/forms";
+import { Validators } from '@angular/forms';
 
-import { DorfConfigService } from "../../src/dorf-config.service";
+import { DorfConfigService } from '../../src/dorf-config.service';
 
-import { DorfDomainObject } from "../../src/base/abstract-dorf.model";
-import { OptionType } from "../../src/fields/base/abstract-dorf-choose.component";
-import { DorfInputDefinition, DorfInputMetadata } from "../../src/fields/dorf-input.component";
-import { DorfSelectDefinition, DorfSelectMetadata } from "../../src/fields/dorf-select.component";
-import { DorfFieldDefinition } from "../../src/fields/base/abstract-dorf-field.component";
+import { DorfDomainObject } from '../../src/base/abstract-dorf.model';
+import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
+import { DorfInputDefinition, DorfInputMetadata } from '../../src/fields/dorf-input.component';
+import { DorfSelectDefinition, DorfSelectMetadata } from '../../src/fields/dorf-select.component';
+import { DorfFieldDefinition } from '../../src/fields/base/abstract-dorf-field.component';
 
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from "../../src/dorf-mapper";
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/dorf-mapper';
 
-describe("DorfMapper", () => {
+describe('DorfMapper', () => {
 
     /**
      * Simple class to be changed into fields metadata.
@@ -24,36 +24,36 @@ describe("DorfMapper", () => {
          */
         get fieldDefinitions(): PropertiesToDorfDefinitionsMap<DorfDomainObject> {
             return {
-                "id": this.idDef,
-                "_job": this.jobDef
+                id: this.idDef,
+                _job: this.jobDef
             }
         }
 
         private get idDef() {
             return new DorfInputDefinition<number>({
-                type: "number",
-                label: "Unique ID",
-                validator: Validators.pattern("[0-9]{3}")
+                type: 'number',
+                label: 'Unique ID',
+                validator: Validators.pattern('[0-9]{3}')
             })
         }
 
         private get jobDef() {
             let opts: OptionType<number>[] = [{
                 key: 1,
-                value: "doctor"
+                value: 'doctor'
             }, {
                 key: 2,
-                value: "postman"
+                value: 'postman'
             }];
 
             return new DorfSelectDefinition({
-                label: "Job",
+                label: 'Job',
                 optionsToSelect: opts
             });
         }
     }
 
-    it("maps from domain object and its definitions to fields metadata", () => {
+    it('maps from domain object and its definitions to fields metadata', () => {
         // GIVEN
         let mapper = new DorfMapper(new DorfConfigService());
         let testObj = new TestDomainObject();
@@ -68,21 +68,21 @@ describe("DorfMapper", () => {
         let jobMeta = result[1];
 
         expect(idMeta instanceof DorfInputMetadata).toBeTruthy();
-        expect((idMeta as DorfInputMetadata<number>).type).toEqual("number");
+        expect((idMeta as DorfInputMetadata<number>).type).toEqual('number');
         expect(idMeta.formControl.value).toEqual(999);
-        expect(idMeta.label).toEqual("Unique ID");
+        expect(idMeta.label).toEqual('Unique ID');
 
         expect(jobMeta instanceof DorfSelectMetadata).toBeTruthy();
         expect((jobMeta as DorfSelectMetadata<number>).optionsToSelect.length).toEqual(2);
         expect(jobMeta.formControl.value).toEqual(2);
-        expect(jobMeta.label).toEqual("Job");
+        expect(jobMeta.label).toEqual('Job');
     });
 
-    it("throws error when unknown definition provided", () => {
+    it('throws error when unknown definition provided', () => {
         // GIVEN
         let mapper = new DorfMapper(new DorfConfigService());
         let unknownDef = {
-            tag: "unknown"
+            tag: 'unknown'
         } as DorfFieldDefinition<any>;
         let map = {
             test: unknownDef

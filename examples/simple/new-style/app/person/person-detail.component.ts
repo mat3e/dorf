@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter } from "@angular/core";
-import { DorfConfigService, IDorfForm, DorfObjectInput, DorfForm } from "dorf";
+import { Component, Output, EventEmitter } from '@angular/core';
+import { DorfConfigService, IDorfForm, DorfObjectInput, DorfForm } from 'dorf';
 
-import { IPerson, Person } from "./model";
+import { IPerson, Person } from './model';
 
 /**
  * Lightweight class which creates a form. 
@@ -12,7 +12,7 @@ import { IPerson, Person } from "./model";
 @DorfForm()
 @Component({
     moduleId: module.id,
-    selector: "person-details"
+    selector: 'person-details'
 })
 export class PersonDetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person;
@@ -21,7 +21,7 @@ export class PersonDetailComponent implements IDorfForm {
     constructor(public config: DorfConfigService) { }
 
     onSubmit() {
-        let result = this["form"].value as IPerson;
+        let result = this['form'].value as IPerson;
 
         console.log(result);
         this.createUpdate.emit(result);

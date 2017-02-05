@@ -1,1 +1,1 @@
-export * from "./src/dorf.module";
+export * from './src/dorf.module';

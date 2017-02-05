@@ -1,26 +1,52 @@
-import { Injectable, Optional } from "@angular/core";
+import { Injectable, Optional } from '@angular/core';
 
-import { IDorfServiceCss, DorfServiceCss } from "./base/dorf-css-classes.model"
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from "./fields/base/abstract-dorf-field.component";
+import { IDorfServiceCss, DorfServiceCss } from './base/dorf-css-classes.model';
+import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/abstract-dorf-field.component';
 
 /**
- * Base for DorfModule configuration.
- * All those parameters should be defined once and used in forRoot method from the DorfModule.
+ * @whatItDoes It is a base for {@link DorfModule} configuration.
+ *
+ * @howToUse Those parameters should be defined in [forRoot]{@link DorfModule#forRoot} method from the {@link DorfModule}.
+ *
+ * ### Example
+ * ```
+ * DorfModule.forRoot({
+ *   css: {
+ *     general: {
+ *       form: "pure-form pure-form-aligned",
+ *       group: "pure-control-group",
+ *       error: "error-message"
+ *     }
+ *   },
+ *   additionalMetadataKinds: [{
+ *     tag: StarRatingDefinition.TAG,
+ *     definition: StarRatingDefinition,
+ *     metadata: StarRatingMetadata
+ *   }]
+ * })],
+ * ```
+ *
+ * @stable
  */
 export interface IDorfService {
     /**
-     * List of additional supproted kinds of DorfFieldDefinition, DofrFieldMetadata and tags.
+     * List of additional supproted kinds of {@link DorfFieldDefinition}, {@link DofrFieldMetadata} and their tags.
      */
     additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 
     /**
-     * General and field-default CSS classes.
+     * General and field-specific CSS classes.
      */
     css?: IDorfServiceCss;
 }
 
 /**
- * Service which should be provided as a parameter of DorfModule.forRoot method.
+ * @whatItDoes Injectable instance with parameters from {@link IDorfService}.
+ *
+ * @description
+ * It is an `@Optional()`, injectable constructor parameter for {@link DorfConfigService}.
+ *
+ * @stable
  */
 export class DorfSupportingService implements IDorfService {
     additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
@@ -35,16 +61,20 @@ export class DorfSupportingService implements IDorfService {
 }
 
 /**
- * Service which is used in all HTML templates. It specifies CSS classes for all important elements.
- * DorfService can also disable forms and prevent their submitting.
+ * @whatItDoes It is used in all HTML templates for DORF.
+ *
+ * @description
+ * It specifies CSS classes for all important elements. Can also disable forms and prevent their submitting.
+ *
+ * @stable
  */
 @Injectable()
 export class DorfConfigService implements IDorfService {
     additionalMetadataKinds: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [];
     css: IDorfServiceCss = new DorfServiceCss();
 
-    isDisabled = false;
-    isButtonVisible = true;
+    isDisabled: boolean = false;
+    isButtonVisible: boolean = true;
 
     /*
     Properties to be used in templates, where service is usually available as 'config'.

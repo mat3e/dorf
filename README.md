@@ -70,3 +70,9 @@ Future plans include:
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
  - New field example: [v2](http://embed.plnkr.co/q4EEDa/)
  - Bootstrap example: [v2](http://embed.plnkr.co/K1IVvZ/)
+
+ http://foundation.zurb.com/sites/docs/v/5.5.3/components/forms.html / http://foundation.zurb.com/sites/docs/forms.html
+ http://getbootstrap.com/css/#forms / https://v4-alpha.getbootstrap.com/components/forms/
+ https://purecss.io/forms/
+ https://material.angular.io/components/component/input
+ http://materializecss.com/forms.html

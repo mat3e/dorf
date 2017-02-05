@@ -1,4 +1,4 @@
-import { DorfConfigService } from "./dorf-config.service";
+import { DorfConfigService } from './dorf-config.service';
 
 import {
     DorfTag,
@@ -6,28 +6,40 @@ import {
     DorfFieldDefinition,
     IDorfFieldMetadata,
     DorfFieldMetadata
-} from "./fields/base/abstract-dorf-field.component";
+} from './fields/base/abstract-dorf-field.component';
 
-import { DorfInputDefinition, DorfInputMetadata } from "./fields/dorf-input.component";
-import { DorfRadioDefinition, DorfRadioMetadata } from "./fields/dorf-radio.component";
-import { DorfSelectDefinition, DorfSelectMetadata } from "./fields/dorf-select.component";
-import { DorfCheckboxDefinition, DorfCheckboxMetadata } from "./fields/dorf-checkbox.component";
+import { DorfInputDefinition, DorfInputMetadata } from './fields/dorf-input.component';
+import { DorfRadioDefinition, DorfRadioMetadata } from './fields/dorf-radio.component';
+import { DorfSelectDefinition, DorfSelectMetadata } from './fields/dorf-select.component';
+import { DorfCheckboxDefinition, DorfCheckboxMetadata } from './fields/dorf-checkbox.component';
 
 /**
- * The most important thing, which should be defined for each domain object.
+ * @whatItDoes Object's property-field definition map, which should be defined for each domain object.
+ *
+ * @description
+ * The most important thing, used by [mapper]{@link DorfMapper} for creating a metadata, which is used by field components.
+ * This interface should be returned by `fieldDefinitions` property from the domain object.
+ * Using DORF annotations ({@link DorfObject} and the related ones) automates the creation of this map.
+ *
+ * @stable
  */
-export interface PropertiesToDorfDefinitionsMap<T> {
-    [propertyName: string]: IDorfFieldDefinition<any>
+export interface PropertiesToDorfDefinitionsMap<DorfObj> {
+    [propertyName: string]: DorfFieldDefinition<any>;
 }
 
 /**
+ * @whatItDoes Transpiles {@link PropertiesToDorfDefinitionsMap} into fields metadata.
+ *
+ * @description
  * The heart of the solution.
- * Mapper goes through predefined map and create metadata needed for form fields.
+ * Mapper goes through predefined map and create metadata needed by field components.
+ *
+ * @stable
  */
 export class DorfMapper {
     /*
-    it depends on field components and components depend on the service, that's why we have this here;
-    without `any` there are problems with calling a constructor
+    it depends on field components and components depend on the service, so we have this here;
+    without `any` as a type, there are problems with calling a constructor
     */
     private _fields: DorfTag<typeof DorfFieldDefinition, any>[] = [{
         tag: DorfTag.CHECKBOX,
@@ -51,10 +63,15 @@ export class DorfMapper {
         this._fields = this._fields.concat(this._config.additionalMetadataKinds);
     }
 
-    mapObjectWithDefinitionsToFieldsMetadata<T>(domainObject: T, fieldDefinitions: PropertiesToDorfDefinitionsMap<T>): DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
+    /**
+     * Main method for transpiling.
+     */
+    mapObjectWithDefinitionsToFieldsMetadata<DomObj>(domainObject: DomObj, fieldDefinitions: PropertiesToDorfDefinitionsMap<DomObj>):
+        DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
 
         let fields: DorfFieldMetadata<any, DorfFieldDefinition<any>>[] = [];
 
+        // tslint:disable-next-line:forin
         for (let key in fieldDefinitions) {
 
             let definition = fieldDefinitions[key];
@@ -68,17 +85,24 @@ export class DorfMapper {
         return fields;
     }
 
-    protected getMetadataOptions<T>(propertyName: string, obj: T): IDorfFieldMetadata<any> {
+    /**
+     * Creates {@link IDorfFieldMetadata} for the particular property, identified by `propertyName`.
+     * Property comes from domain object, passed as `obj`.
+     */
+    protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj): IDorfFieldMetadata<any> {
         return {
             key: propertyName,
             value: obj[propertyName],
-            setDomainObjValue: (val: T) => { obj[propertyName] = val; }
+            setDomainObjValue: (val: DomObj[keyof DomObj ]) => { obj[propertyName] = val; }
         };
     }
 
+    /**
+     * Returns metadata constructor for a given tag.
+     * Takes into account both DORF predefined fields and custom fields, defined by a DORF consumer.
+     */
     protected getMetadataForTag(tag: string) {
-        for (let i = 0; i < this._fields.length; ++i) {
-            let currField = this._fields[i];
+        for (let currField of this._fields) {
             if (currField.tag === tag) {
                 return currField.metadata;
             }

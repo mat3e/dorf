@@ -1,28 +1,28 @@
-import { IDorfInputDefinition, DorfInputDefinition } from "../../src/fields/dorf-input.component";
-import { IDorfSelectDefinition, DorfSelectDefinition } from "../../src/fields/dorf-select.component";
+import { IDorfInputDefinition, DorfInputDefinition } from '../../src/fields/dorf-input.component';
+import { IDorfSelectDefinition, DorfSelectDefinition } from '../../src/fields/dorf-select.component';
 
-import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio } from "../../src/decorators/dorf-object.decorator";
+import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio } from '../../src/decorators/dorf-object.decorator';
 
-describe("DorfObject", () => {
+describe('DorfObject', () => {
 
     @DorfObject()
     class TestDomainObject { }
 
     let obj = new TestDomainObject();
 
-    it("adds 'isDorfObject' and 'fieldDefinitions' to annotated object", () => {
-        expect(obj["isDorfObject"]).toBeDefined();
-        expect(obj["isDorfObject"]).toBeTruthy();
-        expect(obj["fieldDefinitions"]).toBeDefined();
-        expect(obj["fieldDefinitions"]).toEqual({});
+    it('adds \'isDorfObject\' and \'fieldDefinitions\' to annotated object', () => {
+        expect(obj['isDorfObject']).toBeDefined();
+        expect(obj['isDorfObject']).toBeTruthy();
+        expect(obj['fieldDefinitions']).toBeDefined();
+        expect(obj['fieldDefinitions']).toEqual({});
     });
 });
 
-describe("DorfInput", () => {
+describe('DorfInput', () => {
 
     let def1: IDorfInputDefinition<string> = {
-        type: "text",
-        label: "Name",
+        type: 'text',
+        label: 'Name',
         updateModelOnChange: true
     }
 
@@ -31,26 +31,26 @@ describe("DorfInput", () => {
         @DorfInput<string>(def1)
         private _name: string;
 
-        @DorfInput<string>({ type: "text", label: "Surname", updateModelOnChange: true })
+        @DorfInput<string>({ type: 'text', label: 'Surname', updateModelOnChange: true })
         private _surname: string;
     }
 
     let obj = new TestDomainObject();
 
-    it("adds definitions to a 'fieldDefinitions' map", () => {
-        expect(obj["fieldDefinitions"]._name).toBeDefined();
-        expect(obj["fieldDefinitions"]._name).toEqual(new DorfInputDefinition<string>(def1));
-        expect(obj["fieldDefinitions"]._surname).toBeDefined();
+    it('adds definitions to a \'fieldDefinitions\' map', () => {
+        expect(obj['fieldDefinitions']._name).toBeDefined();
+        expect(obj['fieldDefinitions']._name).toEqual(new DorfInputDefinition<string>(def1));
+        expect(obj['fieldDefinitions']._surname).toBeDefined();
 
-        expect(Object.keys(obj["fieldDefinitions"]).length).toEqual(2);
+        expect(Object.keys(obj['fieldDefinitions']).length).toEqual(2);
     });
 });
 
-describe("DorfSelect", () => {
+describe('DorfSelect', () => {
 
     let def: IDorfSelectDefinition<number> = {
-        optionsToSelect: [{ key: 1, value: "red" }, { key: 2, value: "green" }, { key: 3, value: "blue" }],
-        label: "Favourite color",
+        optionsToSelect: [{ key: 1, value: 'red' }, { key: 2, value: 'green' }, { key: 3, value: 'blue' }],
+        label: 'Favourite color',
         updateModelOnChange: true
     }
 
@@ -62,19 +62,19 @@ describe("DorfSelect", () => {
 
     let obj = new TestDomainObject();
 
-    it("adds definitions to a 'fieldDefinitions' map", () => {
-        expect(obj["fieldDefinitions"]._favColor).toBeDefined();
-        expect(obj["fieldDefinitions"]._favColor).toEqual(new DorfSelectDefinition<number>(def));
+    it('adds definitions to a \'fieldDefinitions\' map', () => {
+        expect(obj['fieldDefinitions']._favColor).toBeDefined();
+        expect(obj['fieldDefinitions']._favColor).toEqual(new DorfSelectDefinition<number>(def));
     });
 });
 
-describe("DorfCheckbox", () => {
+describe('DorfCheckbox', () => {
 
     @DorfObject()
     class TestDomainObject {
         @DorfCheckbox<string>({
-            label: "Is smart?",
-            mapping: { trueValue: "yes", falseValue: "no" },
+            label: 'Is smart?',
+            mapping: { trueValue: 'yes', falseValue: 'no' },
             updateModelOnChange: true
         })
         private _smart: string;
@@ -82,18 +82,18 @@ describe("DorfCheckbox", () => {
 
     let obj = new TestDomainObject();
 
-    it("adds definitions to a 'fieldDefinitions' map", () => {
-        expect(obj["fieldDefinitions"]._smart).toBeDefined();
+    it('adds definitions to a \'fieldDefinitions\' map', () => {
+        expect(obj['fieldDefinitions']._smart).toBeDefined();
     });
 });
 
-describe("DorfRadio", () => {
+describe('DorfRadio', () => {
 
     @DorfObject()
     class TestDomainObject {
         @DorfRadio<string>({
-            optionsToSelect: [{ key: "m", value: "male" }, { key: "f", value: "female" }],
-            label: "Gender",
+            optionsToSelect: [{ key: 'm', value: 'male' }, { key: 'f', value: 'female' }],
+            label: 'Gender',
             updateModelOnChange: true
         })
         private _gender: string;
@@ -101,7 +101,7 @@ describe("DorfRadio", () => {
 
     let obj = new TestDomainObject();
 
-    it("adds definitions to a 'fieldDefinitions' map", () => {
-        expect(obj["fieldDefinitions"]._gender).toBeDefined();
+    it('adds definitions to a \'fieldDefinitions\' map', () => {
+        expect(obj['fieldDefinitions']._gender).toBeDefined();
     });
 });
