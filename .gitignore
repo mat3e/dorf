@@ -10,6 +10,8 @@
 !index.ts
 !package.json
 !README.md
+!tsconfig.json
+!tslint.json
 
 /**/*npm-debug.log*
 
