@@ -241,7 +241,7 @@ export function DorfRadio<T>(options: IDorfRadioDefinition<T>) {
  */
 export function createPropertyDecorator<T>(definition: DorfFieldDefinition<T>) {
     return function (targetProto: any, propName: string) {
-        setDefinitionInObject(targetProto, propName, definition);
+        setDefinitionInObject<T>(targetProto, propName, definition);
     };
 }
 

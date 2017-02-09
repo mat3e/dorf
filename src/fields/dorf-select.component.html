@@ -1,9 +1,9 @@
-<div [formGroup]="parentForm" [ngClass]="css.group || config.css.select.group || config.css.general.group">
+<div [ngClass]="css.group || config.css.select.group || config.css.general.group">
     <label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.css.select.label || config.css.general.label">{{label}}</label>
-    <select *ngIf="!multiple" [id]="key" [name]="key" [formControlName]="key" [ngClass]="css.field || config.css.select.field || config.css.general.field">
+    <select *ngIf="!multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.css.select.field || config.css.general.field">
         <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
     </select>
-    <select *ngIf="multiple" [id]="key" [name]="key" [formControlName]="key" [ngClass]="css.field || config.css.select.field || config.css.general.field"
+    <select *ngIf="multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.css.select.field || config.css.general.field"
         multiple>
         <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
     </select>

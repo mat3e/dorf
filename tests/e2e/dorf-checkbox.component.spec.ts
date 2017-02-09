@@ -100,7 +100,6 @@ describe('DorfCheckboxComponent', () => {
 
         let group: { [key: string]: FormControl } = {};
         group[inputMeta.key] = inputMeta.formControl;
-        SUT.parentForm = new FormGroup(group);
 
         fixture.detectChanges();
 

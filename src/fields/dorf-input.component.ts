@@ -14,7 +14,7 @@ import {
  * @whatItDoes Represents all the possible input types.
  */
 // tslint:disable-next-line:max-line-length
-export type InputType = "color" | "date" | "datetime" | "datetime-local" | "email" | "file" | "hidden" | "image" | "month" | "number" | "password" | "range" | "search" | "tel" | "text" | "time" | "url" | "week";
+export type InputType = 'color' | 'date' | 'datetime' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'range' | 'search' | 'tel' | 'text' | 'time' | 'url' | 'week';
 
 /**
  * @whatItDoes Represents constructor parameter for {@link DorfInputDefinition}.

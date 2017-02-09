@@ -113,6 +113,7 @@ export function DorfObjectInput() {
  *
  * @experimental
  */
+// TODO: extending AbstractDorfFormComponent and using its functions here
 export function DorfForm() {
     return function <D extends Function>(targetConstructor: D) {
 
@@ -180,10 +181,10 @@ export function DorfForm() {
                 <form (ngSubmit)="onSubmit()" [ngClass]="config.css.general.form">
                     <fieldset [ngClass]="config.css.general.fieldset">
                         <div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
-                            <${DorfTag.INPUT} *ngSwitchCase="config.INPUT" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.INPUT}>
-                            <${DorfTag.RADIO} *ngSwitchCase="config.RADIO" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.RADIO}>
-                            <${DorfTag.SELECT} *ngSwitchCase="config.SELECT" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.SELECT}>
-                            <${DorfTag.CHECKBOX} *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta" [parentForm]="form"></${DorfTag.CHECKBOX}>
+                            <${DorfTag.INPUT} *ngSwitchCase="config.INPUT" [metadata]="fieldMeta"></${DorfTag.INPUT}>
+                            <${DorfTag.RADIO} *ngSwitchCase="config.RADIO" [metadata]="fieldMeta"></${DorfTag.RADIO}>
+                            <${DorfTag.SELECT} *ngSwitchCase="config.SELECT" [metadata]="fieldMeta"></${DorfTag.SELECT}>
+                            <${DorfTag.CHECKBOX} *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta"></${DorfTag.CHECKBOX}>
                         </div>
                     </fieldset>
                     <div>

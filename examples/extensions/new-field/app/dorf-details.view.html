@@ -2,12 +2,12 @@
 
 	<fieldset>
 		<div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
-			<dorf-input *ngSwitchCase="config.INPUT" [metadata]="fieldMeta" [parentForm]="form"></dorf-input>
-			<dorf-radio *ngSwitchCase="config.RADIO" [metadata]="fieldMeta" [parentForm]="form"></dorf-radio>
-			<dorf-select *ngSwitchCase="config.SELECT" [metadata]="fieldMeta" [parentForm]="form"></dorf-select>
-			<dorf-checkbox *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta" [parentForm]="form"></dorf-checkbox>
+			<dorf-input *ngSwitchCase="config.INPUT" [metadata]="fieldMeta"></dorf-input>
+			<dorf-radio *ngSwitchCase="config.RADIO" [metadata]="fieldMeta"></dorf-radio>
+			<dorf-select *ngSwitchCase="config.SELECT" [metadata]="fieldMeta"></dorf-select>
+			<dorf-checkbox *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta"></dorf-checkbox>
 
-			<star-rating *ngSwitchCase="'star-rating'" [metadata]="fieldMeta" [parentForm]="form"></star-rating>
+			<star-rating *ngSwitchCase="'star-rating'" [metadata]="fieldMeta"></star-rating>
 		</div>
 	</fieldset>
 	<div>

@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "2.1.2",
+  "version": "2.2.0",
   "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "angular",
@@ -57,8 +57,8 @@
     "@angular/platform-browser": "~2.4.4",
     "@angular/platform-browser-dynamic": "~2.4.4",
     "@types/core-js": "^0.9.34",
-    "@types/node": "^6.0.45",
     "@types/jasmine": "^2.5.35",
+    "@types/node": "^6.0.45",
     "@types/selenium-webdriver": "^2.53.33",
     "angular2-template-loader": "^0.6.0",
     "copyfiles": "1.0.0",
@@ -80,6 +80,7 @@
     "style-loader": "^0.13.1",
     "ts-loader": "^1.0.0",
     "tslint": "4.4.2",
+    "typedoc": "^0.5.5",
     "typescript": "^2.1.5",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",

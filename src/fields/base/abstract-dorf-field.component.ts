@@ -278,8 +278,6 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     @Input()
     metadata: M;
 
-    @Input()
-    parentForm: FormGroup;
     constructor(public config: DorfConfigService) { }
 
     get css() { return this.metadata.css; }
@@ -292,7 +290,7 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
         return this.formControl.touched && this.formControl.dirty && this.formControl.invalid;
     }
 
-    protected get formControl() {
+    get formControl() {
         return this.metadata.formControl;
     }
 }

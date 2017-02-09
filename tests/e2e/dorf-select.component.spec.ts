@@ -64,7 +64,6 @@ describe('DorfSelectComponent', () => {
 
         let group: { [key: string]: FormControl } = {};
         group[selectMeta.key] = selectMeta.formControl;
-        SUT.parentForm = new FormGroup(group);
 
         fixture.detectChanges();
 

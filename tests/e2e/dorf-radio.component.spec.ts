@@ -60,7 +60,6 @@ describe('DorfRadioComponent', () => {
 
         let group: { [key: string]: FormControl } = {};
         group[radioMeta.key] = radioMeta.formControl;
-        SUT.parentForm = new FormGroup(group);
 
         fixture.detectChanges();
     });

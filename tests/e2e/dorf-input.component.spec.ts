@@ -77,7 +77,6 @@ describe('DorfInputComponent', () => {
 
         let group: { [key: string]: FormControl } = {};
         group[inputMeta.key] = inputMeta.formControl;
-        SUT.parentForm = new FormGroup(group);
 
         fixture.detectChanges();
 
