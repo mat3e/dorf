@@ -32,6 +32,7 @@ export interface IDorfService {
     /**
      * List of additional supproted kinds of {@link DorfFieldDefinition}, {@link DofrFieldMetadata} and their tags.
      */
+    // TODO: additionalTags/additionalFields
     additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 
     /**

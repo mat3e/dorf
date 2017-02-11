@@ -1,6 +1,9 @@
 import { Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 import { IDorfFieldCssClasses, DorfFieldCssClasses } from '../../base/dorf-css-classes.model';
 import { DorfConfigService } from '../../dorf-config.service';
 
@@ -90,6 +93,12 @@ export interface IDorfFieldDefinition<T> {
     extras?: { [propertyName: string]: any };
 
     /**
+     * Property known from `ng-model-options` from Angular 1.3.
+     * Defines time (in milliseconds) which should pass before updating a field value.
+     */
+    debounce?: number;
+
+    /**
      * Indicates if we want to immediately update a corresponding value in object.
      * Behavior is similar to `NgModel`'s one.
      */
@@ -137,9 +146,10 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
     private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
     private _errorMessage: string;
-    private _isListField = false;
+    private _isListField: boolean = false;
     private _css: IDorfFieldCssClasses = new DorfFieldCssClasses();
     private _extras: { [propertyName: string]: any };
+    private _debounce: number;
     private _updateModelOnChange: boolean;
 
     constructor(options?: IDorfFieldDefinition<T>) {
@@ -151,6 +161,7 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
             this._isListField = options.isListField || this._isListField;
             this._css = options.css ? new DorfFieldCssClasses(options.css) : this._css;
             this._extras = options.extras;
+            this._debounce = options.debounce;
             this._updateModelOnChange = options.updateModelOnChange;
         }
     }
@@ -167,6 +178,7 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
     get isListField() { return this._isListField; }
     get css() { return this._css; }
     get extras() { return this._extras; }
+    get debounce() { return this._debounce; }
     get updateModelOnChange() { return this._updateModelOnChange; }
 }
 
@@ -181,7 +193,10 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
 
     private _key: string;
     private _value: T;
-    private _setDomainObjValue: (val: T) => void;
+    private _setDomainObjValue: (val: T) => void = (newVal: T) => { };
+
+    // tslint:disable-next-line:member-ordering
+    private _invalid: boolean;
 
     private _ctrl: FormControl;
 
@@ -194,17 +209,20 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
         if (options) {
             this._key = options.key;
             this._value = options.value;
-            this._setDomainObjValue = options.setDomainObjValue;
+            this._setDomainObjValue = this.updateModelOnChange ? options.setDomainObjValue : this._setDomainObjValue;
 
             // tslint:disable-next-line:forin
             for (let prop in definition.extras) {
-                this[prop] = definition.extras[prop];
+                Object.defineProperty(this, prop, {
+                    get: this.extras[prop]
+                });
             }
         }
     }
 
     get tag() { return this.definition.tag; }
     get key() { return this._key; }
+    get invalid() { return this._invalid; }
     get formControl() {
         if (!this._ctrl) {
             this._ctrl = this.extractFormControl();
@@ -218,9 +236,15 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
     protected extractFormControl() {
         let ctrl = new FormControl(this._value, this.validator, this.asyncValidator);
 
-        if (this.updateModelOnChange) {
-            ctrl.valueChanges.subscribe(() => {
-                this._setDomainObjValue(ctrl.value);
+        if (this.debounce && this.debounce > 0) {
+            ctrl.valueChanges.debounceTime(this.debounce).subscribe((value: T) => {
+                this._setDomainObjValue(value);
+                this._invalid = this.formControl.dirty && this.formControl.invalid;
+            });
+        } else {
+            ctrl.valueChanges.subscribe((value: T) => {
+                this._setDomainObjValue(value);
+                this._invalid = this.formControl.dirty && this.formControl.invalid;
             });
         }
 
@@ -286,8 +310,9 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     get label() { return this.metadata.label; }
     get errorMessage() { return this.metadata.errorMessage; }
 
+    // TODO: is there a way for `touch`? FormControl.markAsTouched is triggered on blur on elemenent with formControl directive
     get invalid() {
-        return this.formControl.touched && this.formControl.dirty && this.formControl.invalid;
+        return this.metadata.invalid;
     }
 
     get formControl() {

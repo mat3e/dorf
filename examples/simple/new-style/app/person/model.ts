@@ -17,14 +17,14 @@ export interface IPerson {
 }
 
 /**
- * Domain Object. 
+ * Domain Object.
  * Big part of the class is a standard definition - properties, getters, constructor (based on the interface).
  * Real additional job is when providing FieldDefinitions.
  */
 @DorfObject()
 export class Person implements IPerson {
 
-    /* 
+    /*
     Example properties.
      */
     @DorfInput<string>({
@@ -36,7 +36,9 @@ export class Person implements IPerson {
 
     @DorfInput<string>({
         label: 'Surname', type: 'text',
-        validator: Validators.required, errorMessage: 'Surname is required'
+        validator: Validators.required, errorMessage: 'Surname is required',
+        debounce: 1000,
+        updateModelOnChange: true
     })
     surname: string;
 
@@ -52,6 +54,7 @@ export class Person implements IPerson {
 
     @DorfInput<number>({
         label: 'Credit card PIN', type: 'password',
+        debounce: 1000,
         validator: Validators.pattern('[0-9]{4}'), errorMessage: 'PIN should contain just 4 digits'
     })
     cardCode: number;

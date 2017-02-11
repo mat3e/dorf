@@ -51,16 +51,21 @@ describe('DorfFieldMetadata', () => {
     it('should get values from the provided options', () => {
         // GIVEN
         let def1 = new DorfInputDefinition();
-        let def2 = new DorfSelectDefinition();
-        let setter = (val: any) => { };
+        let def2 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: true });
+        let def3 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: false });
+        let setter = (val: any) => { console.log(val); };
 
         // WHEN
         let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1, { key: 'aaa', value: null });
         let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2, { key: 'bbb', setDomainObjValue: setter });
+        let meta3: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def3, { key: 'ccc', setDomainObjValue: setter });
 
         // THEN
         expect(meta1.key).toEqual('aaa');
         expect(meta2.key).toEqual('bbb');
         expect(meta2['_setDomainObjValue']).toEqual(setter);
+        expect(meta3.key).toEqual('ccc');
+        // without `updateModelOnChange` here should be a noop setter
+        expect(meta3['_setDomainObjValue']).not.toEqual(setter);
     });
 });
