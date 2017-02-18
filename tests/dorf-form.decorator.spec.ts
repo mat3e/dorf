@@ -21,7 +21,8 @@ describe('DorfForm', () => {
         expect((result as any).prop1).toEqual('value1');
         expect((result as any).prop2).toEqual(2);
 
-        expect((result as any).onSubmit).toBeDefined();
+        expect((result as any).onDorfSubmit).toBeDefined();
+        expect((result as any).onDorfReset).toBeDefined();
         expect((result as any).validator).toBeDefined();
         expect((result as any).ngOnChanges).toBeDefined();
 

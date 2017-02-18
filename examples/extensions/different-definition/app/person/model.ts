@@ -23,14 +23,7 @@ export interface IPerson {
 /**
  * Domain Object, which we should get from the backend.
  */
-export class Person {
-
-    /**
-     * In this case definition is almost the same thing as object itself.
-     */
-    static get fieldDefinitions() {
-        return new this();
-    }
+export class Person extends DorfDomainObject {
 
     /*
     Example properties.
@@ -76,6 +69,7 @@ export class Person {
      * Creation from the interface should be supported.
      */
     constructor(base: IPerson = null) {
+        super();
 
         if (base) {
             this.name.value = base.name;
@@ -83,5 +77,12 @@ export class Person {
             this.cardCode.value = base.cardCode;
             this.favColor.value = base.favColor;
         }
+    }
+
+    /**
+     * In this case definition is almost the same thing as object itself.
+     */
+    get fieldDefinitions() {
+        return this as any;
     }
 }

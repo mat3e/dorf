@@ -13,7 +13,7 @@ import { IPerson, Person } from './model';
     moduleId: module.id,
     selector: 'person-details',
     // npm run prepare
-    templateUrl: '../dorf-details.view.html'
+    templateUrl: '../dorf-form.html'
 })
 export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
     @Input() domainObject: Person;
@@ -28,7 +28,7 @@ export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
         super(config);
     }
 
-    onSubmit() {
+    onDorfSubmit() {
         let result = this.form.value as IPerson;
 
         // tslint:disable-next-line:no-console

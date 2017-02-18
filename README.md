@@ -58,10 +58,8 @@ The aim of this library is to speed up boring things like a creation of the ordi
 
 Future plans include:
 
- - More examples (many of them already in the repository), more online examples, more tests and a nicer documentation
- - More definition options - debounce, etc.
- - Material Design (either testing with [a css library](http://materializecss.com/getting-started.html) or connecting with [an official Angular's library](https://material.angular.io/))
- - Changeable HTML templates [v3]
+ - More online examples, more tests and a nice documentation
+ - Changeable HTML templates
  - Nested groups [v3]
  - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
 

@@ -1,0 +1,11 @@
+<form [ngClass]="config.css.general.form">
+	<fieldset [ngClass]="config.css.general.fieldset">
+		<section *ngFor="let fieldMeta of fieldsMetadata">
+			<dorf-field [metadata]="fieldMeta"></dorf-field>
+		</section>
+	</fieldset>
+
+	<dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
+
+	<ng-content></ng-content>
+</form>

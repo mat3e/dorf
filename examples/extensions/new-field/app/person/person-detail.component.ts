@@ -4,7 +4,7 @@ import { PropertiesToDorfDefinitionsMap, AbstractDorfFormComponent, DorfConfigSe
 import { IPerson, Person } from './model';
 
 /**
- * Lightweight class which creates a form. 
+ * Lightweight class which creates a form.
  * Template provided from the library, but it is possible to prowide a custom one (which uses Dorf components).
  *
  * It's important to pass config in the constructor and define onSubmit method.
@@ -12,8 +12,7 @@ import { IPerson, Person } from './model';
 @Component({
     moduleId: module.id,
     selector: 'person-details',
-    // npm run prepare
-    templateUrl: '../dorf-details.view.html'
+    templateUrl: './person-detail.component.html'
 })
 export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
     @Input() domainObject: Person;
@@ -28,7 +27,7 @@ export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
         super(config);
     }
 
-    onSubmit() {
+    onDorfSubmit() {
         let result = this.form.value as IPerson;
 
         console.log(result);

@@ -75,23 +75,12 @@ export class DorfConfigService implements IDorfService {
     css: IDorfServiceCss = new DorfServiceCss();
 
     isDisabled: boolean = false;
-    isButtonVisible: boolean = true;
 
-    /*
-    Properties to be used in templates, where service is usually available as 'config'.
-    */
-    get INPUT() {
-        return DorfTag.INPUT;
-    }
-    get RADIO() {
-        return DorfTag.RADIO;
-    }
-    get SELECT() {
-        return DorfTag.SELECT;
-    }
-    get CHECKBOX() {
-        return DorfTag.CHECKBOX;
-    }
+    /**
+     * @deprecated
+     * Buttons should be managed by {@link DorfButtonsComponent} and/or [CSS]{@link DorfConfigService#css}.
+     */
+    isButtonVisible: boolean = true;
 
     constructor( @Optional() config?: DorfSupportingService) {
         if (config) {

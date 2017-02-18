@@ -65,8 +65,8 @@ export class CustomMapper extends DorfMapper {
                 constructorOpts.optionsToSelect = currDef.possibleValues;
                 result[key] = new DorfSelectDefinition(constructorOpts);
             }
-            // default = text in this case
-            else {
+            // last chance - 'value' exists; we are creating an input text field for this value
+            else if ((currDef as any).hasOwnProperty('value')) {
                 let constructorOpts = this.extractStandardOptions(currDef) as IDorfInputDefinition<any>;
                 constructorOpts.type = 'text';
                 result[key] = new DorfInputDefinition(constructorOpts);

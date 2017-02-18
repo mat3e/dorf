@@ -13,7 +13,12 @@ import { PersonDetailComponent } from './person/person-detail.component';
             general: {
                 form: 'pure-form pure-form-aligned',
                 group: 'pure-control-group',
-                error: 'error-message'
+                error: 'error-message',
+                buttons: {
+                    save: 'pure-button pure-button-primary',
+                    reset: 'hidden',
+                    group: 'pure-controls'
+                }
             }
         }
     })],

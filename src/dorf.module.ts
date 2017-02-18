@@ -1,38 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IDorfService, DorfConfigService, DorfSupportingService } from './dorf-config.service';
-import { DorfMapper } from './dorf-mapper';
+import { DorfCoreModule } from './dorf-core.module';
+
+import { DorfButtonsComponent } from './base/dorf-buttons.component';
+import { IDorfService, DorfSupportingService } from './dorf-config.service';
 
 import { DorfInputComponent } from './fields/dorf-input.component';
 import { DorfRadioComponent } from './fields/dorf-radio.component';
 import { DorfSelectComponent } from './fields/dorf-select.component';
 import { DorfCheckboxComponent } from './fields/dorf-checkbox.component';
-
-/*
-Typescript files which should be exported.
- */
-export * from './decorators/dorf-form.decorator';
-export * from './decorators/dorf-object.decorator';
-
-export * from './base/abstract-dorf.model';
-export * from './base/dorf-css-classes.model';
-export * from './base/abstract-dorf-form.component';
-
-export * from './fields/base/abstract-dorf-field.component';
-export * from './fields/base/abstract-dorf-choose.component';
-
-export * from './dorf-mapper';
-export * from './dorf-config.service';
+import { DorfFieldWrapperComponent } from './fields/base/abstract-dorf-field.component';
 
 export * from './fields/dorf-checkbox.component';
 export * from './fields/dorf-input.component';
 export * from './fields/dorf-radio.component';
 export * from './fields/dorf-select.component';
+export * from './base/dorf-buttons.component';
 
 /**
- * @whatItDoes Library module.
+ * @whatItDoes Library module with all the default components.
  *
  * @howToUse
  * It may be imported by `forRoot` method and then there is a possibility to define custom fields and CSS classes.
@@ -61,20 +48,26 @@ export * from './fields/dorf-select.component';
  * @stable
  */
 @NgModule({
-    imports: [CommonModule, ReactiveFormsModule],
-    providers: [DorfConfigService],
-    declarations: [DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent],
-    exports: [
-        FormsModule,
-        ReactiveFormsModule,
+    imports: [CommonModule, DorfCoreModule],
+    declarations: [
+        DorfButtonsComponent,
         DorfInputComponent,
         DorfRadioComponent,
         DorfSelectComponent,
-        DorfCheckboxComponent
+        DorfCheckboxComponent,
+        DorfFieldWrapperComponent
+    ],
+    exports: [
+        DorfCoreModule,
+        DorfInputComponent,
+        DorfRadioComponent,
+        DorfSelectComponent,
+        DorfCheckboxComponent,
+        DorfButtonsComponent,
+        DorfFieldWrapperComponent
     ]
 })
 export class DorfModule {
-    // TODO: add another module which would use HTML templates provided by user
     static forRoot(config: IDorfService): ModuleWithProviders {
         return {
             ngModule: DorfModule,

@@ -1,4 +1,4 @@
-import { DorfFieldCssClasses, IDorfGeneralCssClasses, DorfServiceCss } from '../src/base/dorf-css-classes.model';
+import { DorfFieldCssClasses, DorfButtonsCssClasses, IDorfGeneralCssClasses, DorfServiceCss } from '../src/base/dorf-css-classes.model';
 
 describe('DorfFieldCssClasses', () => {
     it('sets no classes by default', () => {
@@ -10,6 +10,18 @@ describe('DorfFieldCssClasses', () => {
         expect(classes.field).toEqual('');
         expect(classes.group).toEqual('');
         expect(classes.label).toEqual('');
+    });
+});
+
+describe('DorfButtonsCssClasses', () => {
+    it('sets no classes by default', () => {
+        // GIVEN + WHEN
+        let classes = new DorfButtonsCssClasses();
+
+        // THEN
+        expect(classes.save).toEqual('');
+        expect(classes.reset).toEqual('');
+        expect(classes.group).toEqual('');
     });
 });
 
@@ -27,6 +39,12 @@ describe('DorfServiceCss', () => {
         let general: IDorfGeneralCssClasses = new DorfFieldCssClasses();
         general.form = '';
         general.fieldset = '';
+        general.section = '';
+        general.buttons = new DorfButtonsCssClasses({
+            save: '',
+            reset: '',
+            group: ''
+        });
         expect(serviceCss.general).toEqual(general);
     });
 });

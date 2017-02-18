@@ -15,10 +15,6 @@ describe('DorfConfigService', () => {
         expect(service.isDisabled).toBeFalsy();
         expect(service.isButtonVisible).toBeTruthy();
         expect(service.css).toEqual(new DorfServiceCss());
-        expect(service.INPUT).toEqual(DorfTag.INPUT);
-        expect(service.RADIO).toEqual(DorfTag.RADIO);
-        expect(service.SELECT).toEqual(DorfTag.SELECT);
-        expect(service.CHECKBOX).toEqual(DorfTag.CHECKBOX);
     });
 
     it('should get values from the provided config', () => {
@@ -41,7 +37,13 @@ describe('DorfConfigService', () => {
                     field: `${name}${i++}`,
                     label: `${name}${i++}`,
                     error: `${name}${i++}`,
-                    group: `${name}${i++}`
+                    group: `${name}${i++}`,
+                    section: `${name}${i++}`,
+                    buttons: {
+                        save: `${name}${i++}`,
+                        reset: `${name}${i++}`,
+                        group: `${name}${i++}`
+                    }
                 },
                 input: {
                     field: `${name}${i++}`,
@@ -79,6 +81,10 @@ describe('DorfConfigService', () => {
         expect(service.css.general.label).toEqual(`${name}${i++}`);
         expect(service.css.general.error).toEqual(`${name}${i++}`);
         expect(service.css.general.group).toEqual(`${name}${i++}`);
+        expect(service.css.general.section).toEqual(`${name}${i++}`);
+        expect(service.css.general.buttons.save).toEqual(`${name}${i++}`);
+        expect(service.css.general.buttons.reset).toEqual(`${name}${i++}`);
+        expect(service.css.general.buttons.group).toEqual(`${name}${i++}`);
 
         expect(service.css.input.field).toEqual(`${name}${i++}`);
         expect(service.css.input.label).toEqual(`${name}${i++}`);

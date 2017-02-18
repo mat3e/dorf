@@ -13,7 +13,12 @@ import { PersonDetailComponent } from './person/person-detail.component';
             general: {
                 form: 'pure-form pure-form-aligned',
                 group: 'pure-control-group',
-                error: 'pure-form-message-inline'
+                error: 'pure-form-message-inline',
+                buttons: {
+                    save: 'pure-button pure-button-primary',
+                    reset: 'hidden',
+                    group: 'pure-controls'
+                }
             },
             checkbox: {
                 label: 'pure-checkbox'

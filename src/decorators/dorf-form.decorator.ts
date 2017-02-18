@@ -38,24 +38,37 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/
  *
  * @description
  * Enforces defining a `config` property which is needed in a class marked as @DorfForm().
- * Contains also
- * <ul>
- *   <li>An optional `_mapper` property which should be overriden for a usage of a different [mapper]{@DorfMapper}</li>
- *   <li>An optional `onSubmit` callback which should be overriden if the form actions are needed</li>
- *   <li>An optional `validator` property which should be overriden if the form should be validated in a larger context</li>
- * </ul>
+ * Contains other useful properties as well.
  *
  * @stable
  */
-// TODO: verify inject dedicated for tests or Reflect.metadata which returns decorator ("design:paramtypes" to Injectable)
+// TODO: verify inject dedicated for tests or @Inject or Reflect.metadata which returns decorator ("design:paramtypes" to Injectable)
 export interface IDorfForm {
+    /**
+     * Potential, extended [mapper]{@DorfMapper} which will be used for building a form.
+     */
     _mapper?: DorfMapper;
 
+    /**
+     * Mandatory service, which should be included in a form component built with DORF.
+     */
     config: DorfConfigService;
 
+    /**
+     * Validates a whole form, in a wider context. E.g. an introduced phone number may be OK as well as a country,
+     * but both fields together don't match (e.g. wrong first numbers, not applicable for a particular country).
+     */
     validator?: ValidatorFn;
 
-    onSubmit?: () => void;
+    /**
+     * Callback when saving a form.
+     */
+    onDorfSubmit?: () => void;
+
+    /**
+     * Callback when resetting a form.
+     */
+    onDorfReset?: () => void;
 }
 
 /**
@@ -90,6 +103,18 @@ export function DorfObjectInput() {
 }
 
 /**
+ * @whatItDoes Defines options which should be passed to {@link DorfForm} annotation.
+ *
+ * @experimental
+ */
+export interface IDorfFormOptions {
+    // TODO: rendered section should contain this number of fields
+    fieldsInSection: number;
+    // TODO: should be passed as an inner dorf-field HTML
+    additionalFieldsTemplate: string;
+}
+
+/**
  * @whatItDoes Superior of {@link AbstractDorfFormComponent}.
  *
  * @howToUse Add `@DorfForm()` annotation over `@Component()` one for the class which should control the form.
@@ -112,13 +137,17 @@ export function DorfObjectInput() {
  * If no `template`/`templateUrl` specified in `@Component()`, it adds a default template as well.
  *
  * @experimental
+ * @Annotation
  */
-// TODO: extending AbstractDorfFormComponent and using its functions here
-export function DorfForm() {
+// TODO: extending AbstractDorfFormComponent and using its functions here?
+export function DorfForm(options?: IDorfFormOptions) {
     return function <D extends Function>(targetConstructor: D) {
 
         let oldNgOnChanges = targetConstructor.prototype.ngOnChanges;
-        let originalOnSubmit = targetConstructor.prototype.onSubmit;
+        let originalOnReset = targetConstructor.prototype.onDorfReset;
+
+        // TODO: get rid of onSubmit, just DORF version should be supported
+        let originalOnSubmit = targetConstructor.prototype.onDorfSubmit || targetConstructor.prototype.onSubmit;
         let originalValidator = targetConstructor.prototype.validator;
 
         Object.defineProperties(targetConstructor.prototype, {
@@ -158,10 +187,16 @@ export function DorfForm() {
                     initMetaForAllFields(this);
                     initFormGroup(this);
                 }
-            }, onSubmit: {
+            }, onDorfSubmit: {
                 value() {
                     if (originalOnSubmit && typeof originalOnSubmit === 'function') {
                         originalOnSubmit.call(this);
+                    }
+                }
+            }, onDorfReset: {
+                value() {
+                    if (originalOnReset && typeof originalOnReset === 'function') {
+                        originalOnReset.call(this);
                     }
                 }
             }
@@ -176,20 +211,15 @@ export function DorfForm() {
                 return !component.template && !component.templateUrl;
             });
             if (noTemplateExists && components[0]) {
-                // TODO: simplify the template - component for this?
                 components[0].template = `
-                <form (ngSubmit)="onSubmit()" [ngClass]="config.css.general.form">
+                <form [ngClass]="config.css.general.form">
                     <fieldset [ngClass]="config.css.general.fieldset">
-                        <div *ngFor="let fieldMeta of fieldsMetadata" [ngSwitch]="fieldMeta.tag">
-                            <${DorfTag.INPUT} *ngSwitchCase="config.INPUT" [metadata]="fieldMeta"></${DorfTag.INPUT}>
-                            <${DorfTag.RADIO} *ngSwitchCase="config.RADIO" [metadata]="fieldMeta"></${DorfTag.RADIO}>
-                            <${DorfTag.SELECT} *ngSwitchCase="config.SELECT" [metadata]="fieldMeta"></${DorfTag.SELECT}>
-                            <${DorfTag.CHECKBOX} *ngSwitchCase="config.CHECKBOX" [metadata]="fieldMeta"></${DorfTag.CHECKBOX}>
-                        </div>
+                        <section *ngFor="let fieldMeta of fieldsMetadata">
+                            <dorf-field [metadata]="fieldMeta"></dorf-field>
+                        </section>
                     </fieldset>
-                    <div>
-                        <button *ngIf="config.isButtonVisible" type="submit" [disabled]="!form || !form.valid">Save</button>
-                    </div>
+                    <dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
+                    <ng-content></ng-content>
                 </form>
                 `;
             }

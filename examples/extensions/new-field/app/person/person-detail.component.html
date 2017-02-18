@@ -1,0 +1,11 @@
+<form [ngClass]="config.css.general.form">
+	<fieldset>
+		<section *ngFor="let fieldMeta of fieldsMetadata">
+			<dorf-field [metadata]="fieldMeta">
+				<star-rating *ngIf="fieldMeta.tag == 'star-rating'" [metadata]="fieldMeta"></star-rating>
+			</dorf-field>
+		</section>
+	</fieldset>
+
+	<dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
+</form>

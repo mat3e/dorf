@@ -5,7 +5,12 @@ import { DorfFieldCssClasses } from '../src/base/dorf-css-classes.model';
 import { DorfInputDefinition, DorfInputMetadata } from '../src/fields/dorf-input.component';
 import { DorfSelectDefinition, DorfSelectMetadata } from '../src/fields/dorf-select.component';
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.component';
+import {
+    DorfTag,
+    DorfFieldDefinition,
+    DorfFieldMetadata,
+    DorfFieldWrapperComponent
+} from '../src/fields/base/abstract-dorf-field.component';
 
 describe('DorfFieldDefinition', () => {
     it('should have default values for validators, "isListField" and "css"', () => {
@@ -67,5 +72,28 @@ describe('DorfFieldMetadata', () => {
         expect(meta3.key).toEqual('ccc');
         // without `updateModelOnChange` here should be a noop setter
         expect(meta3['_setDomainObjValue']).not.toEqual(setter);
+    });
+});
+
+describe('DorfFielWrapperComponent', () => {
+    it('should support built in tags', () => {
+        // GIVEN
+        let testData = [
+            // metaWithTag, input, radio, select, checkbox
+            [DorfInputMetadata, true, false, false, false],
+            [DorfSelectMetadata, false, false, true, false]
+        ];
+        let SUT = new DorfFieldWrapperComponent<any, any>();
+
+        for (let testCase of testData) {
+            // WHEN
+            SUT.metadata = new (testCase[0] as any)();
+
+            // THEN
+            expect(SUT.isDorfInput).toEqual(testCase[1]);
+            expect(SUT.isDorfRadio).toEqual(testCase[2]);
+            expect(SUT.isDorfSelect).toEqual(testCase[3]);
+            expect(SUT.isDorfCheckbox).toEqual(testCase[4]);
+        }
     });
 });

@@ -6,6 +6,8 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { Person1, Person2, Person1DetailComponent, Person2DetailComponent } from '../util/classes'
 
+import { DorfButtonsComponent } from '../../src/base/dorf-buttons.component';
+import { DorfFieldWrapperComponent } from '../../src/fields/base/abstract-dorf-field.component';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 import { DorfSelectComponent } from '../../src/fields/dorf-select.component';
 import { DorfRadioComponent } from '../../src/fields/dorf-radio.component';
@@ -37,10 +39,12 @@ describe('DorfForm', () => {
         TestBed.configureTestingModule({
             imports: [FormsModule, ReactiveFormsModule],
             declarations: [
+                DorfFieldWrapperComponent,
                 DorfInputComponent,
                 DorfSelectComponent,
                 DorfRadioComponent,
                 DorfCheckboxComponent,
+                DorfButtonsComponent,
                 Person1DetailComponent,
                 Person2DetailComponent
             ],

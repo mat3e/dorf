@@ -1,4 +1,4 @@
-import { Input } from '@angular/core';
+import { Input, Component } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
 import 'rxjs/add/operator/debounceTime';
@@ -214,7 +214,7 @@ export abstract class DorfFieldMetadata<T, D extends DorfFieldDefinition<T>> ext
             // tslint:disable-next-line:forin
             for (let prop in definition.extras) {
                 Object.defineProperty(this, prop, {
-                    get: this.extras[prop]
+                    get: () => this.extras[prop]
                 });
             }
         }
@@ -317,5 +317,50 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
 
     get formControl() {
         return this.metadata.formControl;
+    }
+}
+
+/**
+ * @whatItDoes Component which switch between all DORF fields.
+ *
+ * @howToUse
+ * It is used within all the default form templates.
+ *
+ * ##Example
+ * ```
+ * <dorf-field></dorf-field>
+ * ```
+ *
+ * @description
+ * There are 4 base fields + additional ones, defined by the library user. This component group all those fields in order to speed up HTML
+ * creation. It is possible to include own HTML code between tags.
+ */
+@Component({
+    moduleId: `${module.id}`,
+    selector: 'dorf-field',
+    templateUrl: './dorf-field-wrapper.component.html'
+})
+export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> {
+    @Input()
+    metadata: M;
+
+    get isDorfInput() {
+        return this.isDorfTag(DorfTag.INPUT);
+    }
+
+    get isDorfRadio() {
+        return this.isDorfTag(DorfTag.RADIO);
+    }
+
+    get isDorfSelect() {
+        return this.isDorfTag(DorfTag.SELECT);
+    }
+
+    get isDorfCheckbox() {
+        return this.isDorfTag(DorfTag.CHECKBOX);
+    }
+
+    protected isDorfTag(tag: string) {
+        return this.metadata.tag === tag;
     }
 }
