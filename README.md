@@ -45,7 +45,7 @@ This library is about taking them to the next level by coupling with _Domain Obj
 
         constructor(public config: DorfConfigService) { }
 
-        onSubmit() {
+        onDorfSubmit() {
             let result = this["form"].value;
             console.log(result);
         }
