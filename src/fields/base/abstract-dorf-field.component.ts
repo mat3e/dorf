@@ -18,7 +18,11 @@ export class DorfTag<D extends typeof DorfFieldDefinition, M extends typeof Dorf
     static get SELECT() { return 'dorf-select'; }
     static get CHECKBOX() { return 'dorf-checkbox'; }
 
+    /**
+     * Unique field identifier. Should be used as Component's selector.
+     */
     tag: string;
+
     // TODO: do we need this?
     definition: D;
     metadata: M;

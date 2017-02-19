@@ -42,7 +42,7 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/
  *
  * @stable
  */
-// TODO: verify inject dedicated for tests or @Inject or Reflect.metadata which returns decorator ("design:paramtypes" to Injectable)
+// TODO: inject dedicated for tests or @Inject or Reflect.metadata with "design:paramtypes" (Injectable) for passing config with @DorfForm
 export interface IDorfForm {
     /**
      * Potential, extended [mapper]{@DorfMapper} which will be used for building a form.
@@ -108,10 +108,15 @@ export function DorfObjectInput() {
  * @experimental
  */
 export interface IDorfFormOptions {
-    // TODO: rendered section should contain this number of fields
-    fieldsInSection: number;
-    // TODO: should be passed as an inner dorf-field HTML
-    additionalFieldsTemplate: string;
+    /**
+     * Number of fields which should be grouped together in a particular form within a section.
+     */
+    fieldsInSection?: number;
+
+    /**
+     * Additional fields or a piece of HTML, which should be used within a particular form (inside `dorf-field` template).
+     */
+    additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 }
 
 /**
@@ -136,10 +141,10 @@ export interface IDorfFormOptions {
  * Adds additional behaviors like building metadata, reacting on changes, submitting the value.
  * If no `template`/`templateUrl` specified in `@Component()`, it adds a default template as well.
  *
- * @experimental
+ * @stable
  * @Annotation
  */
-// TODO: extending AbstractDorfFormComponent and using its functions here?
+// TODO: mixin from TS 2.2; hopefuly it will give us this.form instead of this['form'] in the decorated classes
 export function DorfForm(options?: IDorfFormOptions) {
     return function <D extends Function>(targetConstructor: D) {
 
@@ -153,6 +158,9 @@ export function DorfForm(options?: IDorfFormOptions) {
         Object.defineProperties(targetConstructor.prototype, {
             fieldsMetadata: {
                 get() {
+                    if (this._multipleFieldsInSection) {
+                        return this._dividedFieldsMetadata;
+                    }
                     return this._fieldsMetadata;
                 },
                 enumerable: true,
@@ -184,7 +192,7 @@ export function DorfForm(options?: IDorfFormOptions) {
                         oldNgOnChanges.call(this);
                     }
 
-                    initMetaForAllFields(this);
+                    initMetaForAllFields(this, options);
                     initFormGroup(this);
                 }
             }, onDorfSubmit: {
@@ -214,9 +222,7 @@ export function DorfForm(options?: IDorfFormOptions) {
                 components[0].template = `
                 <form [ngClass]="config.css.general.form">
                     <fieldset [ngClass]="config.css.general.fieldset">
-                        <section *ngFor="let fieldMeta of fieldsMetadata">
-                            <dorf-field [metadata]="fieldMeta"></dorf-field>
-                        </section>
+                    ${parseOptionsToTemplate(options)}
                     </fieldset>
                     <dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
                     <ng-content></ng-content>
@@ -228,9 +234,48 @@ export function DorfForm(options?: IDorfFormOptions) {
 }
 
 /** @internal */
+function parseOptionsToTemplate(options?: IDorfFormOptions): string {
+    let start = '<section *ngFor="let fieldMeta of fieldsMetadata">';
+    let md = `<dorf-field [metadata]="fieldMeta">${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}</dorf-field>`;
+    let end = '</section>';
+
+    if (options && options.fieldsInSection > 1) {
+        md = parseForMultipleFieldsInSection(options.additionalTags);
+    }
+
+    return `${start}${md}${end}`;
+}
+
+/** @internal */
+// tslint:disable-next-line:max-line-length
+function parseForMultipleFieldsInSection(additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+    return `<dorf-field *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field>`;
+}
+
+/** @internal */
+// tslint:disable-next-line:max-line-length
+function parseAdditionalTags(metaName?: string, additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+    let result = '';
+
+    if (additionalTags) {
+        if (typeof additionalTags === 'string') {
+            result += additionalTags;
+        } else {
+            for (let dorfTag of additionalTags) {
+                result += `<${dorfTag.tag} *ngIf="${metaName}.tag=='${dorfTag.tag}'" [metadata]="${metaName}"></${dorfTag.tag}>`;
+            }
+        }
+    }
+
+    return result;
+}
+
+/** @internal */
 interface ExtendedDorfForm {
     _form: FormGroup;
     _fieldsMetadata: DorfFieldMetadata<any, DorfFieldDefinition<any>>[];
+    _multipleFieldsInSection: boolean;
+    _dividedFieldsMetadata: DorfFieldMetadata<any, DorfFieldDefinition<any>>[][];
 
     config: DorfConfigService;
     mapper: DorfMapper;
@@ -239,7 +284,7 @@ interface ExtendedDorfForm {
 }
 
 /** @internal */
-function initMetaForAllFields(dorfForm: ExtendedDorfForm) {
+function initMetaForAllFields(dorfForm: ExtendedDorfForm, options?: IDorfFormOptions) {
     // TODO: using DorfForm as a function spoils dorfForm parameter (=== undefined); see dorf-form.decorator.spec from tests
     if (!dorfForm || !dorfForm.dorfObjectInForm) {
         throwNoObject();
@@ -250,6 +295,22 @@ function initMetaForAllFields(dorfForm: ExtendedDorfForm) {
         throwNoObject();
     }
     dorfForm._fieldsMetadata = dorfForm.mapper.mapObjectWithDefinitionsToFieldsMetadata(domainObj, domainObj.fieldDefinitions);
+
+    dorfForm._multipleFieldsInSection = options && options.fieldsInSection > 1;
+
+    if (dorfForm._multipleFieldsInSection) {
+        dorfForm._dividedFieldsMetadata = [];
+        let length = dorfForm._fieldsMetadata.length;
+        let increment = options.fieldsInSection;
+        for (let i = 0; i < (length + length % increment); i += increment) {
+            let setOfFields: DorfFieldMetadata<any, DorfFieldDefinition<any>>[] = [];
+            for (let j = 0; j < increment && (i + j) < length; ++j) {
+                setOfFields.push(dorfForm._fieldsMetadata[i + j]);
+            }
+
+            dorfForm._dividedFieldsMetadata.push(setOfFields);
+        }
+    }
 };
 
 /** @internal */

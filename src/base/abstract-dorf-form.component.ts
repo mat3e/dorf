@@ -43,6 +43,9 @@ import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../dorf-mapper';
  * @description
  * This is the stable way of creating a DORF form, but it should be changed to {@link DorfForm} annotation when possible.
  *
+ * @deprecated
+ * This is an old way of creating DORF forms. You should use [DorfForm annotation]{@link DorfForm}, which gives more possibilities.
+ *
  * @stable
  */
 export abstract class AbstractDorfFormComponent<DomObj> implements OnChanges {

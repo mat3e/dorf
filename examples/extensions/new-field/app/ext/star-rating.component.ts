@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import {
+    DorfTag,
     DorfConfigService,
     IDorfFieldDefinition,
     IDorfFieldMetadata,
@@ -10,18 +11,18 @@ import {
     AbstractDorfFieldComponent
 } from 'dorf';
 
-export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
+export interface IStarRatingDefinition extends IDorfFieldDefinition<number> {
     max: number;
 }
 
-export class StarRatingDefinition<T> extends DorfFieldDefinition<T> implements IStarRatingDefinition<T> {
+export class StarRatingDefinition extends DorfFieldDefinition<number> implements IStarRatingDefinition {
     static get TAG() {
         return 'star-rating';
     }
 
-    private _max = 5;
+    private _max: number = 5;
 
-    constructor(options?: IStarRatingDefinition<T>) {
+    constructor(options?: IStarRatingDefinition) {
         super(options);
 
         if (options) {
@@ -34,8 +35,8 @@ export class StarRatingDefinition<T> extends DorfFieldDefinition<T> implements I
     get tag() { return StarRatingDefinition.TAG; }
 }
 
-export class StarRatingMetadata<T> extends DorfFieldMetadata<T, StarRatingDefinition<T>> implements IStarRatingDefinition<T> {
-    constructor(definition = new StarRatingDefinition<T>(), options?: IDorfFieldMetadata<T>) {
+export class StarRatingMetadata extends DorfFieldMetadata<number, StarRatingDefinition> implements IStarRatingDefinition {
+    constructor(definition = new StarRatingDefinition(), options?: IDorfFieldMetadata<number>) {
         super(definition, options);
     }
 
@@ -48,7 +49,7 @@ export class StarRatingMetadata<T> extends DorfFieldMetadata<T, StarRatingDefini
     styleUrls: ['star-rating.component.css'],
     templateUrl: 'star-rating.component.html'
 })
-export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRatingMetadata<T>> implements IStarRatingDefinition<T> {
+export class StarRatingComponent extends AbstractDorfFieldComponent<number, StarRatingMetadata> implements IStarRatingDefinition {
 
     constructor(config: DorfConfigService) {
         super(config);
@@ -63,4 +64,10 @@ export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRa
 
     get stars() { return new Array(this.max); }
     get value() { return this.formControl.value; }
+}
+
+export const STAR_TAG: DorfTag<typeof StarRatingDefinition, typeof StarRatingMetadata> = {
+    tag: StarRatingDefinition.TAG,
+    definition: StarRatingDefinition,
+    metadata: StarRatingMetadata
 }

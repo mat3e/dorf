@@ -22,21 +22,13 @@ export interface IPerson {
 }
 
 /**
- * Domain Object. 
+ * Domain Object.
  * Big part of the class is a standard definition - properties, getters, constructor (based on the interface).
  * Real additional job is when providing FieldDefinitions.
  */
 export class Person extends DorfDomainObject implements IPerson {
 
-    /**
-     * Definition is class specific in most cases, 
-     * so it's more meaningful to have it as a static property/function.
-     */
-    static get fieldDefinitions() {
-        return new this().fieldDefinitions;
-    }
-
-    /* 
+    /*
     Example properties.
      */
     name: string;
@@ -73,7 +65,7 @@ export class Person extends DorfDomainObject implements IPerson {
     }
 
     /*
-    Example definitions. 
+    Example definitions.
     It's more readable to store them in getters.
      */
     private get nameDef(): DorfInputDefinition<string> {
@@ -94,7 +86,7 @@ export class Person extends DorfDomainObject implements IPerson {
         });
     }
 
-    private get ratingDef(): StarRatingDefinition<number> {
+    private get ratingDef(): StarRatingDefinition {
         return new StarRatingDefinition({
             label: 'Rating',
             max: 7

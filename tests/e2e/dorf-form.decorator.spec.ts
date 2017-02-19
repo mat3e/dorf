@@ -18,7 +18,7 @@ import { DorfConfigService } from '../../src/dorf-config.service';
 
 import { DorfForm } from '../../src/decorators/dorf-form.decorator';
 
-// TODO: tests for custom properties from IDorfForm
+// TODO: tests for custom config and mapper, test for fieldDefinitions from 2 sources
 describe('DorfForm', () => {
 
     let SUT1: Person1DetailComponent;
@@ -96,7 +96,7 @@ describe('DorfForm', () => {
             expect((SUT1 as any).validator).toEqual(Validators.nullValidator);
 
             expect((SUT1 as any).fieldsMetadata).toBeDefined();
-            expect(Object.keys((SUT1 as any).fieldsMetadata).length).toEqual(2);
+            expect((SUT1 as any).fieldsMetadata.length).toEqual(2);
 
             expect((SUT1 as any).form).toBeDefined();
             expect(Object.keys((SUT1 as any).form.controls).length).toEqual(2);
@@ -132,8 +132,12 @@ describe('DorfForm', () => {
             expect((SUT2 as any).validator).toBeDefined();
             expect((SUT2 as any).validator).toEqual(Validators.nullValidator);
 
-            expect((SUT2 as any).fieldsMetadata).toBeDefined();
-            expect(Object.keys((SUT2 as any).fieldsMetadata).length).toEqual(2);
+            expect((SUT2 as any)._fieldsMetadata).toBeDefined();
+            expect((SUT2 as any)._fieldsMetadata.length).toEqual(2);
+            expect((SUT2 as any)._multipleFieldsInSection).toBeTruthy();
+            expect((SUT2 as any)._dividedFieldsMetadata).toBeDefined();
+            expect((SUT2 as any)._dividedFieldsMetadata.length).toEqual(1);
+            expect((SUT2 as any).fieldsMetadata.length).toEqual(1);
 
             expect((SUT2 as any).form).toBeDefined();
             expect(Object.keys((SUT2 as any).form.controls).length).toEqual(2);
@@ -149,6 +153,27 @@ describe('DorfForm', () => {
                 let inputs = debugElem2.queryAll(By.css('input'));
                 expect(inputs.length).toEqual(2);
             });
+        });
+    }));
+
+    it('uses methods defined in form component', async(() => {
+        // GIVEN
+        let resetSpy = spyOn(SUT1, 'onDorfReset').and.callThrough();
+        let submitSpy = spyOn(SUT1, 'onDorfSubmit').and.callThrough();
+
+        // template
+        fixture1.detectChanges();
+        fixture1.whenStable().then(() => {
+            let buttons = debugElem1.queryAll(By.css('button'));
+            expect(buttons.length).toEqual(2);
+
+            // WHEN
+            buttons[0].triggerEventHandler('click', null);
+            buttons[1].triggerEventHandler('click', null);
+
+            // THEN
+            expect(resetSpy).toHaveBeenCalledTimes(1);
+            expect(submitSpy).toHaveBeenCalledTimes(1);
         });
     }));
 });

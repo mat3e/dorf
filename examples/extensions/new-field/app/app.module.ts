@@ -6,6 +6,7 @@ import { DorfModule } from 'dorf';
 import { AppComponent } from './app.component';
 
 import {
+    STAR_TAG,
     StarRatingDefinition,
     StarRatingMetadata,
     StarRatingComponent
@@ -26,11 +27,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
                 }
             }
         },
-        additionalMetadataKinds: [{
-            tag: StarRatingDefinition.TAG,
-            definition: StarRatingDefinition,
-            metadata: StarRatingMetadata
-        }]
+        additionalMetadataKinds: [STAR_TAG]
     })],
     declarations: [AppComponent, StarRatingComponent, PersonDetailComponent],
     bootstrap: [AppComponent]

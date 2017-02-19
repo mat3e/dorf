@@ -1,7 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { PropertiesToDorfDefinitionsMap, AbstractDorfFormComponent, DorfConfigService } from 'dorf';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { PropertiesToDorfDefinitionsMap, IDorfForm, DorfForm, DorfObjectInput, DorfConfigService } from 'dorf';
 
 import { IPerson, Person } from './model';
+import { STAR_TAG } from '../ext/star-rating.component';
 
 /**
  * Lightweight class which creates a form.
@@ -9,26 +10,21 @@ import { IPerson, Person } from './model';
  *
  * It's important to pass config in the constructor and define onSubmit method.
  */
+@DorfForm({
+    additionalTags: [STAR_TAG]
+})
 @Component({
     moduleId: module.id,
-    selector: 'person-details',
-    templateUrl: './person-detail.component.html'
+    selector: 'person-details'
 })
-export class PersonDetailComponent extends AbstractDorfFormComponent<Person> {
-    @Input() domainObject: Person;
+export class PersonDetailComponent implements IDorfForm {
+    @DorfObjectInput() domainObject: Person;
     @Output() createUpdate = new EventEmitter<IPerson>();
 
-    // @Override
-    protected get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person> {
-        return Person.fieldDefinitions;
-    }
-
-    constructor(config: DorfConfigService) {
-        super(config);
-    }
+    constructor(public config: DorfConfigService) { }
 
     onDorfSubmit() {
-        let result = this.form.value as IPerson;
+        let result = this['form'].value as IPerson;
 
         console.log(result);
         this.createUpdate.emit(result);

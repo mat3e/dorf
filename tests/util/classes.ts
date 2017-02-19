@@ -28,8 +28,8 @@ export class Person1 extends DorfDomainObject {
     // @Override
     get fieldDefinitions(): PropertiesToDorfDefinitionsMap<Person1> {
         return {
-            'name': this.nameDef,
-            'surname': this.surnameDef
+            name: this.nameDef,
+            surname: this.surnameDef
         };
     }
 
@@ -91,12 +91,17 @@ export class Person1DetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person1;
 
     constructor(public config: DorfConfigService) { }
+
+    onDorfSubmit() { }
+    onDorfReset() { }
 }
 
 /**
  * New form with a new object.
  */
-@DorfForm()
+@DorfForm({
+    fieldsInSection: 2
+})
 @Component({
     selector: 'person2-details'
 })

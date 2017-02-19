@@ -58,9 +58,9 @@ The aim of this library is to speed up boring things like a creation of the ordi
 
 Future plans include:
 
- - More online examples, more tests and a nice documentation
- - Changeable HTML templates
- - Nested groups [v3]
+ - More online examples, more tests, a nice documentation and step by step tutorial on building with DORF
+ - Methods for speeding up the creation of custom fields (even more)
+ - Nested groups and form arrays [v3]
  - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
 
 ### List of the online examples
