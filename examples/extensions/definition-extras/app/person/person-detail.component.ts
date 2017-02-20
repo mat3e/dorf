@@ -9,7 +9,7 @@ import { IPerson, Person } from './model';
  * Lightweight class which creates a form.
  * Template provided from the library, but it is possible to prowide a custom one (which uses Dorf components).
  *
- * It's important to pass config in the constructor and define onSubmit method.
+ * It's important to pass config in the constructor and define onDorfSubmit method.
  */
 @DorfForm()
 @Component({
