@@ -7,14 +7,14 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { Person1, Person2, Person1DetailComponent, Person2DetailComponent } from '../util/classes'
 
 import { DorfButtonsComponent } from '../../src/base/dorf-buttons.component';
-import { DorfFieldWrapperComponent } from '../../src/fields/base/abstract-dorf-field.component';
+import { DorfFieldWrapperComponent } from '../../src/fields/base/dorf-field-wrapper.component';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 import { DorfSelectComponent } from '../../src/fields/dorf-select.component';
 import { DorfRadioComponent } from '../../src/fields/dorf-radio.component';
 import { DorfInputComponent } from '../../src/fields/dorf-input.component';
-import { DorfMapper } from '../../src/dorf-mapper';
+import { DorfMapper } from '../../src/base/dorf-mapper';
 
-import { DorfConfigService } from '../../src/dorf-config.service';
+import { DorfConfigService, DorfSupportingService } from '../../src/dorf-config.service';
 
 import { DorfForm } from '../../src/decorators/dorf-form.decorator';
 
@@ -32,9 +32,9 @@ describe('DorfForm', () => {
     let htmlElem2: HTMLInputElement;
 
     beforeEach(async(() => {
-        let dorfConfigService = new DorfConfigService({
-            css: { general: { form: 'sut' } }
-        });
+        let dorfConfigService = new DorfConfigService(new DorfSupportingService({
+            css: { form: 'sut' }
+        }));
 
         TestBed.configureTestingModule({
             imports: [FormsModule, ReactiveFormsModule],
@@ -87,7 +87,7 @@ describe('DorfForm', () => {
             expect(SUT1[(SUT1 as any).dorfObjectInForm]).toBe(SUT1.domainObject);
 
             expect(SUT1.config).toBeDefined()
-            expect(SUT1.config.css.general.form).toEqual('sut');
+            expect(SUT1.config.css.form).toEqual('sut');
 
             expect((SUT1 as any).mapper).toBeDefined();
             expect((SUT1 as any).mapper instanceof DorfMapper).toBeTruthy();
@@ -124,7 +124,7 @@ describe('DorfForm', () => {
             expect(SUT2[(SUT2 as any).dorfObjectInForm]).toBe(SUT2.domainObject);
 
             expect(SUT2.config).toBeDefined()
-            expect(SUT2.config.css.general.form).toEqual('sut');
+            expect(SUT2.config.css.form).toEqual('sut');
 
             expect((SUT2 as any).mapper).toBeDefined();
             expect((SUT2 as any).mapper instanceof DorfMapper).toBeTruthy();

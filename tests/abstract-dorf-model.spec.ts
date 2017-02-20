@@ -1,4 +1,4 @@
-import { PropertiesToDorfDefinitionsMap } from '../src/dorf-mapper';
+import { PropertiesToDorfDefinitionsMap } from '../src/base/dorf-mapper';
 
 import { DorfDomainObject } from '../src/base/abstract-dorf.model';
 

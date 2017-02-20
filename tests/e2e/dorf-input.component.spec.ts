@@ -7,7 +7,10 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { InputType, DorfInputDefinition, DorfInputMetadata, DorfInputComponent } from '../../src/fields/dorf-input.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { InputType, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
+import { DorfInputComponent } from '../../src/fields/dorf-input.component';
 
 describe('DorfInputComponent', () => {
 
@@ -29,12 +32,13 @@ describe('DorfInputComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: {
-                input: {
+            dorfFields: [{
+                tag: DorfField.INPUT,
+                css: {
                     field: 'sut',
                     error: 'error'
                 }
-            }
+            }]
         });
 
         TestBed.configureTestingModule({

@@ -1,4 +1,4 @@
-import { PropertiesToDorfDefinitionsMap } from '../dorf-mapper';
+import { PropertiesToDorfDefinitionsMap } from './dorf-mapper';
 
 /**
  * @whatItDoes Defines a Domain Object. Enfoces the existence of field definitions.

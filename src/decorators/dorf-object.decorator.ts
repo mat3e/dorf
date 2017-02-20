@@ -1,8 +1,8 @@
-import { DorfFieldDefinition } from '../fields/base/abstract-dorf-field.component';
-import { IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../fields/dorf-checkbox.component';
-import { IDorfSelectDefinition, DorfSelectDefinition } from '../fields/dorf-select.component';
-import { IDorfRadioDefinition, DorfRadioDefinition } from '../fields/dorf-radio.component';
-import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.component';
+import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
+import { IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../fields/dorf-checkbox.definition';
+import { IDorfSelectDefinition, DorfSelectDefinition } from '../fields/dorf-select.definition';
+import { IDorfRadioDefinition, DorfRadioDefinition } from '../fields/dorf-radio.definition';
+import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.definition';
 
 // TODO: use makeParamDecorator and makeDecorator?
 
@@ -19,14 +19,14 @@ import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.
  * ```
  * @DorfObject()
  * class TestDomainObject {
- *   @DorfInput<string>({
+ *   @DorfInput({
  *     type: "text",
  *     label: "Name",
  *     updateModelOnChange: true
  *   })
  *   private _name: string;
  *
- *   @DorfSelect<number>({
+ *   @DorfSelect({
  *     optionsToSelect: [{
  *       key: 1,
  *       value: "red"
@@ -42,7 +42,7 @@ import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.
  *   })
  *   private _favColor: number;
  *
- *   @DorfRadio<string>({
+ *   @DorfRadio({
  *     optionsToSelect: [{
  *       key: "m",
  *       value: "male"
@@ -55,7 +55,7 @@ import { IDorfInputDefinition, DorfInputDefinition } from '../fields/dorf-input.
  *   })
  *   private _gender: string;
  *
- *   @DorfCheckbox<string>({
+ *   @DorfCheckbox({
  *     label: "Is smart?",
  *     mapping: {
  *       trueValue: "yes",
@@ -105,7 +105,7 @@ export function DorfObject() {
  * ```
  * @DorfObject()
  * class TestDomainObject {
- *   @DorfInput<string>({
+ *   @DorfInput({
  *     type: "text",
  *     label: "Name",
  *     updateModelOnChange: true
@@ -117,9 +117,8 @@ export function DorfObject() {
  * @stable
  * @Annotation
  */
-// TODO: reflect-metadata and design:type without generic? Do we need this typing?
-export function DorfInput<T>(options: IDorfInputDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfInputDefinition<T>(options));
+export function DorfInput(options: IDorfInputDefinition<any>) {
+    return createPropertyDecorator(new DorfInputDefinition<any>(options));
 }
 
 /**
@@ -134,7 +133,7 @@ export function DorfInput<T>(options: IDorfInputDefinition<T>) {
  * ```
  * @DorfObject()
  * class TestDomainObject {
- *   @DorfSelect<number>({
+ *   @DorfSelect({
  *     optionsToSelect: [{
  *       key: 1,
  *       value: "red"
@@ -155,8 +154,8 @@ export function DorfInput<T>(options: IDorfInputDefinition<T>) {
  * @stable
  * @Annotation
  */
-export function DorfSelect<T>(options: IDorfSelectDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfSelectDefinition<T>(options));
+export function DorfSelect(options: IDorfSelectDefinition<any>) {
+    return createPropertyDecorator(new DorfSelectDefinition<any>(options));
 }
 
 /**
@@ -171,7 +170,7 @@ export function DorfSelect<T>(options: IDorfSelectDefinition<T>) {
  * ```
  * @DorfObject()
  * class TestDomainObject {
- *   @DorfCheckbox<string>({
+ *   @DorfCheckbox({
  *     label: "Is smart?",
  *     mapping: {
  *       trueValue: "yes",
@@ -186,8 +185,8 @@ export function DorfSelect<T>(options: IDorfSelectDefinition<T>) {
  * @stable
  * @Annotation
  */
-export function DorfCheckbox<T>(options: IDorfCheckboxDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfCheckboxDefinition<T>(options));
+export function DorfCheckbox(options: IDorfCheckboxDefinition<any>) {
+    return createPropertyDecorator(new DorfCheckboxDefinition<any>(options));
 }
 
 /**
@@ -202,7 +201,7 @@ export function DorfCheckbox<T>(options: IDorfCheckboxDefinition<T>) {
  * ```
  * @DorfObject()
  * class TestDomainObject {
- *   @DorfRadio<string>({
+ *   @DorfRadio({
  *     optionsToSelect: [{
  *       key: "m",
  *       value: "male"
@@ -220,8 +219,8 @@ export function DorfCheckbox<T>(options: IDorfCheckboxDefinition<T>) {
  * @stable
  * @Annotation
  */
-export function DorfRadio<T>(options: IDorfRadioDefinition<T>) {
-    return createPropertyDecorator<T>(new DorfRadioDefinition<T>(options));
+export function DorfRadio(options: IDorfRadioDefinition<any>) {
+    return createPropertyDecorator(new DorfRadioDefinition<any>(options));
 }
 
 /**
@@ -232,16 +231,16 @@ export function DorfRadio<T>(options: IDorfRadioDefinition<T>) {
  * ### Example
  *
  * ```
- * export function CustomDecorator<T>(options: IDorfCustomDefinition<T>) {
- *   return createPropertyDecorator<T>(new DorfCustomDefinition<T>(options));
+ * export function CustomDecorator(options: IDorfCustomDefinition) {
+ *   return createPropertyDecorator(new DorfCustomDefinition(options));
  * }
  * ```
  *
  * @stable
  */
-export function createPropertyDecorator<T>(definition: DorfFieldDefinition<T>) {
+export function createPropertyDecorator(definition: DorfFieldDefinition<any>) {
     return function (targetProto: any, propName: string) {
-        setDefinitionInObject<T>(targetProto, propName, definition);
+        setDefinitionInObject(targetProto, propName, definition);
     };
 }
 
@@ -250,7 +249,7 @@ export function createPropertyDecorator<T>(definition: DorfFieldDefinition<T>) {
  *
  * @internal
  */
-function setDefinitionInObject<T>(targetProto: any, propName: string, definition: DorfFieldDefinition<T>) {
+function setDefinitionInObject(targetProto: any, propName: string, definition: DorfFieldDefinition<any>) {
     targetProto.fieldDefinitions = targetProto.fieldDefinitions || {};
     targetProto.fieldDefinitions[propName] = definition;
 }

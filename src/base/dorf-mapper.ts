@@ -1,17 +1,16 @@
-import { DorfConfigService } from './dorf-config.service';
+import { DorfConfigService } from '../dorf-config.service';
 
-import {
-    DorfTag,
-    IDorfFieldDefinition,
-    DorfFieldDefinition,
-    IDorfFieldMetadata,
-    DorfFieldMetadata
-} from './fields/base/abstract-dorf-field.component';
-
-import { DorfInputDefinition, DorfInputMetadata } from './fields/dorf-input.component';
-import { DorfRadioDefinition, DorfRadioMetadata } from './fields/dorf-radio.component';
-import { DorfSelectDefinition, DorfSelectMetadata } from './fields/dorf-select.component';
-import { DorfCheckboxDefinition, DorfCheckboxMetadata } from './fields/dorf-checkbox.component';
+import { IDorfFieldDefinition, DorfFieldDefinition } from '../fields/base/dorf-field.definition';
+import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { DorfInputDefinition } from '../fields/dorf-input.definition';
+import { DorfInputMetadata } from '../fields/dorf-input.metadata';
+import { DorfRadioDefinition } from '../fields/dorf-radio.definition';
+import { DorfRadioMetadata } from '../fields/dorf-radio.metadata';
+import { DorfSelectDefinition } from '../fields/dorf-select.definition';
+import { DorfSelectMetadata } from '../fields/dorf-select.metadata';
+import { DorfCheckboxDefinition } from '../fields/dorf-checkbox.definition';
+import { DorfCheckboxMetadata } from '../fields/dorf-checkbox.metadata';
+import { DorfField } from '../fields/base/dorf-field';
 
 /**
  * @whatItDoes Object's property-field definition map, which should be defined for each domain object.
@@ -37,31 +36,8 @@ export interface PropertiesToDorfDefinitionsMap<DorfObj> {
  * @stable
  */
 export class DorfMapper {
-    /*
-    it depends on field components and components depend on the service, so we have this here;
-    without `any` as a type, there are problems with calling a constructor
-    */
-    private _fields: DorfTag<typeof DorfFieldDefinition, any>[] = [{
-        tag: DorfTag.CHECKBOX,
-        definition: DorfCheckboxDefinition,
-        metadata: DorfCheckboxMetadata
-    }, {
-        tag: DorfTag.INPUT,
-        definition: DorfInputDefinition,
-        metadata: DorfInputMetadata
-    }, {
-        tag: DorfTag.RADIO,
-        definition: DorfRadioDefinition,
-        metadata: DorfRadioMetadata
-    }, {
-        tag: DorfTag.SELECT,
-        definition: DorfSelectDefinition,
-        metadata: DorfSelectMetadata
-    }];
 
-    constructor(private _config: DorfConfigService) {
-        this._fields = this._fields.concat(this._config.additionalMetadataKinds);
-    }
+    constructor(private _config: DorfConfigService) { }
 
     /**
      * Main method for transpiling.
@@ -93,7 +69,7 @@ export class DorfMapper {
         return {
             key: propertyName,
             value: obj[propertyName],
-            setDomainObjValue: (val: DomObj[keyof DomObj ]) => { obj[propertyName] = val; }
+            setDomainObjValue: (val: DomObj[keyof DomObj]) => { obj[propertyName] = val; }
         };
     }
 
@@ -102,10 +78,9 @@ export class DorfMapper {
      * Takes into account both DORF predefined fields and custom fields, defined by a DORF consumer.
      */
     protected getMetadataForTag(tag: string) {
-        for (let currField of this._fields) {
-            if (currField.tag === tag) {
-                return currField.metadata;
-            }
+        let field = this._config.getFieldForTag(tag);
+        if (field) {
+            return field.metadata as any;
         }
 
         throw new Error(`Unknown DORF tag: ${tag}`);

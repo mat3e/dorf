@@ -2,9 +2,11 @@ import { Input } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 import { DorfConfigService } from '../dorf-config.service';
-import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../dorf-mapper';
+import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../base/dorf-mapper';
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.component';
+import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
+import { DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { DorfField } from '../fields/base/dorf-field';
 
 /**
  * @whatItDoes Optional interface for reminding about form properties.
@@ -116,7 +118,7 @@ export interface IDorfFormOptions {
     /**
      * Additional fields or a piece of HTML, which should be used within a particular form (inside `dorf-field` template).
      */
-    additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+    additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 }
 
 /**
@@ -151,13 +153,12 @@ export function DorfForm(options?: IDorfFormOptions) {
         let oldNgOnChanges = targetConstructor.prototype.ngOnChanges;
         let originalOnReset = targetConstructor.prototype.onDorfReset;
 
-        // TODO: get rid of onSubmit, just DORF version should be supported
-        let originalOnSubmit = targetConstructor.prototype.onDorfSubmit || targetConstructor.prototype.onSubmit;
+        let originalOnSubmit = targetConstructor.prototype.onDorfSubmit;
         let originalValidator = targetConstructor.prototype.validator;
 
         Object.defineProperties(targetConstructor.prototype, {
             fieldsMetadata: {
-                get() {
+                get(): DorfFieldMetadata<any, DorfFieldDefinition<any>>[] | DorfFieldMetadata<any, DorfFieldDefinition<any>>[][] {
                     if (this._multipleFieldsInSection) {
                         return this._dividedFieldsMetadata;
                     }
@@ -166,19 +167,19 @@ export function DorfForm(options?: IDorfFormOptions) {
                 enumerable: true,
                 configurable: true
             }, form: {
-                get() {
+                get(): FormGroup {
                     return this._form;
                 },
                 enumerable: true,
                 configurable: true
             }, validator: {
-                get() {
+                get(): ValidatorFn {
                     return originalValidator || Validators.nullValidator;
                 },
                 enumerable: true,
                 configurable: true
             }, mapper: {
-                get() {
+                get(): DorfMapper {
                     if (!this._mapper) {
                         this._mapper = new DorfMapper(this.config);
                     }
@@ -220,8 +221,8 @@ export function DorfForm(options?: IDorfFormOptions) {
             });
             if (noTemplateExists && components[0]) {
                 components[0].template = `
-                <form [ngClass]="config.css.general.form">
-                    <fieldset [ngClass]="config.css.general.fieldset">
+                <form [ngClass]="config.css.form">
+                    <fieldset [ngClass]="config.css.fieldset">
                     ${parseOptionsToTemplate(options)}
                     </fieldset>
                     <dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
@@ -248,21 +249,21 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
 
 /** @internal */
 // tslint:disable-next-line:max-line-length
-function parseForMultipleFieldsInSection(additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+function parseForMultipleFieldsInSection(additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
     return `<dorf-field *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field>`;
 }
 
 /** @internal */
 // tslint:disable-next-line:max-line-length
-function parseAdditionalTags(metaName?: string, additionalTags?: string | DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+function parseAdditionalTags(metaName?: string, additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
     let result = '';
 
     if (additionalTags) {
         if (typeof additionalTags === 'string') {
             result += additionalTags;
         } else {
-            for (let dorfTag of additionalTags) {
-                result += `<${dorfTag.tag} *ngIf="${metaName}.tag=='${dorfTag.tag}'" [metadata]="${metaName}"></${dorfTag.tag}>`;
+            for (let dorfField of additionalTags) {
+                result += `<${dorfField.tag} *ngIf="${metaName}.tag=='${dorfField.tag}'" [metadata]="${metaName}"></${dorfField.tag}>`;
             }
         }
     }
@@ -285,7 +286,7 @@ interface ExtendedDorfForm {
 
 /** @internal */
 function initMetaForAllFields(dorfForm: ExtendedDorfForm, options?: IDorfFormOptions) {
-    // TODO: using DorfForm as a function spoils dorfForm parameter (=== undefined); see dorf-form.decorator.spec from tests
+    // TODO: using @DorfForm as a function spoils dorfForm parameter (=== undefined); see dorf-form.decorator.spec from tests
     if (!dorfForm || !dorfForm.dorfObjectInForm) {
         throwNoObject();
     }

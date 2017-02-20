@@ -2,8 +2,9 @@ import { OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 import { DorfConfigService } from '../dorf-config.service';
-import { DorfFieldDefinition, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.component';
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../dorf-mapper';
+import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
+import { DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from './dorf-mapper';
 
 /**
  * @whatItDoes Should be used with `details.view.html` or a similar template to create a form `Component`.

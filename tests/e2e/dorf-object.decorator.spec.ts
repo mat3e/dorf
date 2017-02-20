@@ -1,5 +1,5 @@
-import { IDorfInputDefinition, DorfInputDefinition } from '../../src/fields/dorf-input.component';
-import { IDorfSelectDefinition, DorfSelectDefinition } from '../../src/fields/dorf-select.component';
+import { IDorfInputDefinition, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { IDorfSelectDefinition, DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
 
 import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio } from '../../src/decorators/dorf-object.decorator';
 
@@ -28,10 +28,10 @@ describe('DorfInput', () => {
 
     @DorfObject()
     class TestDomainObject {
-        @DorfInput<string>(def1)
+        @DorfInput(def1)
         private _name: string;
 
-        @DorfInput<string>({ type: 'text', label: 'Surname', updateModelOnChange: true })
+        @DorfInput({ type: 'text', label: 'Surname', updateModelOnChange: true })
         private _surname: string;
     }
 
@@ -56,7 +56,7 @@ describe('DorfSelect', () => {
 
     @DorfObject()
     class TestDomainObject {
-        @DorfSelect<number>(def)
+        @DorfSelect(def)
         private _favColor: number;
     }
 
@@ -72,7 +72,7 @@ describe('DorfCheckbox', () => {
 
     @DorfObject()
     class TestDomainObject {
-        @DorfCheckbox<string>({
+        @DorfCheckbox({
             label: 'Is smart?',
             mapping: { trueValue: 'yes', falseValue: 'no' },
             updateModelOnChange: true
@@ -91,7 +91,7 @@ describe('DorfRadio', () => {
 
     @DorfObject()
     class TestDomainObject {
-        @DorfRadio<string>({
+        @DorfRadio({
             optionsToSelect: [{ key: 'm', value: 'male' }, { key: 'f', value: 'female' }],
             label: 'Gender',
             updateModelOnChange: true

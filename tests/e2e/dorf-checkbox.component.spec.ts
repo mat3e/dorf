@@ -7,12 +7,10 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import {
-    ICheckboxMapping,
-    DorfCheckboxDefinition,
-    DorfCheckboxMetadata,
-    DorfCheckboxComponent
-} from '../../src/fields/dorf-checkbox.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { ICheckboxMapping, DorfCheckboxDefinition } from '../../src/fields/dorf-checkbox.definition';
+import { DorfCheckboxMetadata } from '../../src/fields/dorf-checkbox.metadata';
+import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 
 describe('DorfCheckboxComponent', () => {
 
@@ -31,7 +29,12 @@ describe('DorfCheckboxComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { checkbox: { field: 'sut' } }
+            dorfFields: [{
+                tag: DorfField.CHECKBOX,
+                css: {
+                    field: 'sut'
+                }
+            }]
         });
 
         TestBed.configureTestingModule({

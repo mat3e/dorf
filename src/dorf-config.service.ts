@@ -1,7 +1,10 @@
 import { Injectable, Optional } from '@angular/core';
 
-import { IDorfServiceCss, DorfServiceCss } from './base/dorf-css-classes.model';
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/abstract-dorf-field.component';
+import { DorfFieldCssClasses, IDorfGeneralCssClasses, DorfGeneralCssClasses } from './base/dorf-css-classes';
+
+import { BUILT_IN_FIELDS, DorfField } from './fields/base/dorf-field';
+import { DorfFieldDefinition } from './fields/base/dorf-field.definition';
+import { DorfFieldMetadata } from './fields/base/dorf-field.metadata';
 
 /**
  * @whatItDoes It is a base for {@link DorfModule} configuration.
@@ -18,7 +21,7 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/a
  *       error: "error-message"
  *     }
  *   },
- *   additionalMetadataKinds: [{
+ *   additionalFields: [{
  *     tag: StarRatingDefinition.TAG,
  *     definition: StarRatingDefinition,
  *     metadata: StarRatingMetadata
@@ -30,15 +33,14 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/a
  */
 export interface IDorfService {
     /**
-     * List of additional supproted kinds of {@link DorfFieldDefinition}, {@link DofrFieldMetadata} and their tags.
+     * List of supproted fields defined by {@link DorfFieldDefinition}, {@link DofrFieldMetadata}, css and tags.
      */
-    // TODO: additionalTags/additionalFields
-    additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+    dorfFields?: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 
     /**
      * General and field-specific CSS classes.
      */
-    css?: IDorfServiceCss;
+    css?: IDorfGeneralCssClasses;
 }
 
 /**
@@ -50,12 +52,12 @@ export interface IDorfService {
  * @stable
  */
 export class DorfSupportingService implements IDorfService {
-    additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
-    css?: IDorfServiceCss;
+    dorfFields?: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+    css?: IDorfGeneralCssClasses;
 
-    constructor(options: IDorfService) {
+    constructor(options?: IDorfService) {
         if (options) {
-            this.additionalMetadataKinds = options.additionalMetadataKinds;
+            this.dorfFields = options.dorfFields;
             this.css = options.css;
         }
     }
@@ -71,21 +73,35 @@ export class DorfSupportingService implements IDorfService {
  */
 @Injectable()
 export class DorfConfigService implements IDorfService {
-    additionalMetadataKinds: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [];
-    css: IDorfServiceCss = new DorfServiceCss();
+    dorfFields: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = BUILT_IN_FIELDS;
+    css: IDorfGeneralCssClasses = new DorfGeneralCssClasses();
 
     isDisabled: boolean = false;
 
-    /**
-     * @deprecated
-     * Buttons should be managed by {@link DorfButtonsComponent} and/or [CSS]{@link DorfConfigService#css}.
-     */
-    isButtonVisible: boolean = true;
-
     constructor( @Optional() config?: DorfSupportingService) {
         if (config) {
-            this.additionalMetadataKinds = config.additionalMetadataKinds || this.additionalMetadataKinds;
-            this.css = config.css ? new DorfServiceCss(config.css) : this.css;
+            this.css = config.css ? new DorfGeneralCssClasses(config.css) : this.css;
+
+            if (config.dorfFields) {
+                config.dorfFields.forEach((field) => {
+                    let existing = this.getFieldForTag(field.tag);
+                    if (!existing) {
+                        this.dorfFields.push(field);
+                    } else {
+                        existing.css = new DorfFieldCssClasses(field.css);
+                        existing.definition = field.definition || existing.definition;
+                        existing.metadata = field.metadata || existing.metadata;
+                    }
+                })
+            }
+        }
+    }
+
+    getFieldForTag(tag: string) {
+        for (let currField of this.dorfFields) {
+            if (currField.tag === tag) {
+                return currField;
+            }
         }
     }
 }

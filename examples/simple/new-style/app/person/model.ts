@@ -27,14 +27,14 @@ export class Person implements IPerson {
     /*
     Example properties.
      */
-    @DorfInput<string>({
+    @DorfInput({
         label: 'Name', type: 'text',
         validator: Validators.required, errorMessage: 'Name is required',
         updateModelOnChange: true
     })
     name: string;
 
-    @DorfInput<string>({
+    @DorfInput({
         label: 'Surname', type: 'text',
         validator: Validators.required, errorMessage: 'Surname is required',
         debounce: 1000,
@@ -42,17 +42,17 @@ export class Person implements IPerson {
     })
     surname: string;
 
-    @DorfRadio<string>({
+    @DorfRadio({
         label: 'Gender',
         optionsToSelect: [{ key: 'm', value: 'male' }, { key: 'f', value: 'female' }],
         validator: Validators.required, errorMessage: 'Gender is required'
     })
     gender: string;
 
-    @DorfInput<number>({ label: 'Age', type: 'number' })
+    @DorfInput({ label: 'Age', type: 'number' })
     age: number;
 
-    @DorfInput<number>({
+    @DorfInput({
         label: 'Credit card PIN', type: 'password',
         debounce: 1000,
         validator: Validators.pattern('[0-9]{4}'), errorMessage: 'PIN should contain just 4 digits'
@@ -71,7 +71,7 @@ export class Person implements IPerson {
     })
     favColor: string;
 
-    @DorfCheckbox<string>({
+    @DorfCheckbox({
         label: 'Is smart?',
         mapping: { trueValue: 'yes', falseValue: 'no' }
     })

@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "2.5.2",
+  "version": "3.0.0-pre-alpha",
   "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "decorator",
@@ -81,7 +81,7 @@
     "ts-loader": "^1.0.0",
     "tslint": "4.4.2",
     "typedoc": "^0.5.5",
-    "typescript": "^2.1.5",
+    "typescript": "^2.2.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1",
     "webpack-merge": "^0.14.0",

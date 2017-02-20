@@ -1,4 +1,4 @@
-<section [ngClass]="config.css.general.buttons.group">
-    <button *ngIf="config.isButtonVisible" (click)="submit()" [ngClass]="config.css.general.buttons.save" [disabled]="!form || !form.valid">Save</button>
-    <button *ngIf="config.isButtonVisible" (click)="reset()" [ngClass]="config.css.general.buttons.reset">Reset</button>
+<section [ngClass]="config.css.buttons.group">
+    <button (click)="submit()" [ngClass]="config.css.buttons.save" [disabled]="!form || !form.valid">Save</button>
+    <button (click)="reset()" [ngClass]="config.css.buttons.reset">Reset</button>
 </section>

@@ -1,4 +1,4 @@
-[![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf)
+[![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf) [![Build Status](https://travis-ci.org/mat3e/dorf.svg?branch=master)](https://travis-ci.org/mat3e/dorf)
 
 ## Domain Object Reactive Forms
 
@@ -13,7 +13,7 @@ This library is about taking them to the next level by coupling with _Domain Obj
     ```typescript
     @DorfObject()
     export class Person {
-        @DorfInput<string>({
+        @DorfInput({
             label: "Name", 
             type: "text",
             validator: Validators.required, 
@@ -22,7 +22,7 @@ This library is about taking them to the next level by coupling with _Domain Obj
         })
         name: string;
 
-        @DorfInput<string>({
+        @DorfInput({
             label: "Surname", 
             type: "text",
             validator: Validators.required, 
@@ -61,7 +61,7 @@ Future plans include:
  - More online examples, more tests, a nice documentation and step by step tutorial on building with DORF
  - Methods for speeding up the creation of custom fields (even more)
  - Nested groups and form arrays [v3]
- - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
+ - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `onSummary` is already presented in the `field definition` ;)) [v4 or greater]
 
 ### List of the online examples
  - [Simple example](http://embed.plnkr.co/6H2jto/)

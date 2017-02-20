@@ -1,17 +1,9 @@
-import { OptionType, DorfChooseDefinition, DorfChooseMetadata } from '../src/fields/base/abstract-dorf-choose.component';
-import { DorfRadioDefinition, DorfRadioMetadata } from '../src/fields/dorf-radio.component';
-import { DorfSelectDefinition, DorfSelectMetadata } from '../src/fields/dorf-select.component';
-
-describe('DorfChooseDefinition', () => {
-    it('should have default values for options', () => {
-        // GIVEN + WHEN
-        let def1: DorfChooseDefinition<string> = new DorfRadioDefinition<string>();
-        let def2: DorfChooseDefinition<number> = new DorfSelectDefinition<number>();
-
-        // THEN
-        expect(def1.optionsToSelect).toEqual(def2.optionsToSelect);
-    });
-});
+import { OptionType, DorfChooseDefinition } from '../src/fields/base/dorf-choose.definition';
+import { DorfChooseMetadata } from '../src/fields/base/dorf-choose.metadata';
+import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
+import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
+import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
+import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 
 describe('DorfChooseMetadata', () => {
     it('should get values for options from the definition', () => {

@@ -4,8 +4,8 @@ import { Validators } from '@angular/forms';
 import { DorfConfigService } from '../../src/dorf-config.service';
 
 import { DorfDomainObject } from '../../src/base/abstract-dorf.model'
-import { PropertiesToDorfDefinitionsMap } from '../../src/dorf-mapper';
-import { DorfInputDefinition } from '../../src/fields/dorf-input.component';
+import { PropertiesToDorfDefinitionsMap } from '../../src/base/dorf-mapper';
+import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
 
 import { DorfObject, DorfInput } from '../../src/decorators/dorf-object.decorator';
 import { IDorfForm, DorfForm, DorfObjectInput } from '../../src/decorators/dorf-form.decorator';

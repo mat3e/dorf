@@ -10,15 +10,13 @@ import { PersonDetailComponent } from './person/person-detail.component';
 @NgModule({
     imports: [BrowserModule, DorfModule.forRoot({
         css: {
-            general: {
-                form: 'pure-form pure-form-aligned',
-                group: 'pure-control-group',
-                error: 'error-message',
-                buttons: {
-                    save: 'pure-button pure-button-primary',
-                    reset: 'hidden',
-                    group: 'pure-controls'
-                }
+            form: 'pure-form pure-form-aligned',
+            group: 'pure-control-group',
+            error: 'error-message',
+            buttons: {
+                save: 'pure-button pure-button-primary',
+                reset: 'hidden',
+                group: 'pure-controls'
             }
         }
     })],

@@ -3,12 +3,14 @@ import { Validators } from '@angular/forms';
 import { DorfConfigService } from '../../src/dorf-config.service';
 
 import { DorfDomainObject } from '../../src/base/abstract-dorf.model';
-import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
-import { DorfInputDefinition, DorfInputMetadata } from '../../src/fields/dorf-input.component';
-import { DorfSelectDefinition, DorfSelectMetadata } from '../../src/fields/dorf-select.component';
-import { DorfFieldDefinition } from '../../src/fields/base/abstract-dorf-field.component';
+import { OptionType } from '../../src/fields/base/dorf-choose.definition';
+import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
+import { DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
+import { DorfSelectMetadata } from '../../src/fields/dorf-select.metadata';
+import { DorfFieldDefinition } from '../../src/fields/base/dorf-field.definition';
 
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/dorf-mapper';
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/base/dorf-mapper';
 
 describe('DorfMapper', () => {
 

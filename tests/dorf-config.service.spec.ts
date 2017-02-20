@@ -1,10 +1,12 @@
-import { DorfServiceCss } from '../src/base/dorf-css-classes.model';
+import { DorfGeneralCssClasses } from '../src/base/dorf-css-classes';
 import { DorfConfigService } from '../src/dorf-config.service';
 
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.component';
-import { DorfInputMetadata } from '../src/fields/dorf-input.component';
-import { DorfRadioMetadata } from '../src/fields/dorf-radio.component';
-import { DorfSelectMetadata } from '../src/fields/dorf-select.component';
+import { DorfFieldDefinition } from '../src/fields/base/dorf-field.definition';
+import { DorfFieldMetadata } from '../src/fields/base/dorf-field.metadata';
+import { BUILT_IN_FIELDS, DorfField } from '../src/fields/base/dorf-field';
+import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
+import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
+import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 
 describe('DorfConfigService', () => {
     it('should have default values', () => {
@@ -13,8 +15,19 @@ describe('DorfConfigService', () => {
 
         // THEN
         expect(service.isDisabled).toBeFalsy();
-        expect(service.isButtonVisible).toBeTruthy();
-        expect(service.css).toEqual(new DorfServiceCss());
+        expect(service.dorfFields).toEqual(BUILT_IN_FIELDS);
+        expect(service.css).toEqual(new DorfGeneralCssClasses());
+    });
+
+    it('returns DorfField for a given tag', () => {
+        // GIVEN
+        let service = new DorfConfigService();
+
+        // WHEN
+        let result = service.getFieldForTag(DorfField.INPUT);
+
+        // THEN
+        expect(result).toEqual(BUILT_IN_FIELDS[0]);
     });
 
     it('should get values from the provided config', () => {
@@ -22,92 +35,52 @@ describe('DorfConfigService', () => {
         let i = 1;
         let name = 'class';
         class TestMeta<T> extends DorfFieldMetadata<T, DorfFieldDefinition<T>> { /**/ }
-        let customDorfKinds: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [{
+        let customDorfKinds: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [{
             tag: 'test',
             definition: DorfFieldDefinition,
-            metadata: TestMeta
+            metadata: TestMeta,
+            css: {
+                field: `${name}${i++}`,
+                label: `${name}${i++}`,
+                error: `${name}${i++}`,
+                group: `${name}${i++}`
+            }
         }];
 
         // WHEN
         let service = new DorfConfigService({
             css: {
-                general: {
-                    form: `${name}${i++}`,
-                    fieldset: `${name}${i++}`,
-                    field: `${name}${i++}`,
-                    label: `${name}${i++}`,
-                    error: `${name}${i++}`,
-                    group: `${name}${i++}`,
-                    section: `${name}${i++}`,
-                    buttons: {
-                        save: `${name}${i++}`,
-                        reset: `${name}${i++}`,
-                        group: `${name}${i++}`
-                    }
-                },
-                input: {
-                    field: `${name}${i++}`,
-                    label: `${name}${i++}`,
-                    error: `${name}${i++}`,
-                    group: `${name}${i++}`
-                },
-                radio: {
-                    field: `${name}${i++}`,
-                    label: `${name}${i++}`,
-                    error: `${name}${i++}`,
-                    group: `${name}${i++}`
-                },
-                select: {
-                    field: `${name}${i++}`,
-                    label: `${name}${i++}`,
-                    error: `${name}${i++}`,
-                    group: `${name}${i++}`
-                },
-                checkbox: {
-                    field: `${name}${i++}`,
-                    label: `${name}${i++}`,
-                    error: `${name}${i++}`,
+                form: `${name}${i++}`,
+                fieldset: `${name}${i++}`,
+                field: `${name}${i++}`,
+                label: `${name}${i++}`,
+                error: `${name}${i++}`,
+                group: `${name}${i++}`,
+                section: `${name}${i++}`,
+                buttons: {
+                    save: `${name}${i++}`,
+                    reset: `${name}${i++}`,
                     group: `${name}${i++}`
                 }
             },
-            additionalMetadataKinds: customDorfKinds
+            dorfFields: customDorfKinds
         });
 
         // THEN
-        i = 1;
-        expect(service.css.general.form).toEqual(`${name}${i++}`);
-        expect(service.css.general.fieldset).toEqual(`${name}${i++}`);
-        expect(service.css.general.field).toEqual(`${name}${i++}`);
-        expect(service.css.general.label).toEqual(`${name}${i++}`);
-        expect(service.css.general.error).toEqual(`${name}${i++}`);
-        expect(service.css.general.group).toEqual(`${name}${i++}`);
-        expect(service.css.general.section).toEqual(`${name}${i++}`);
-        expect(service.css.general.buttons.save).toEqual(`${name}${i++}`);
-        expect(service.css.general.buttons.reset).toEqual(`${name}${i++}`);
-        expect(service.css.general.buttons.group).toEqual(`${name}${i++}`);
-
-        expect(service.css.input.field).toEqual(`${name}${i++}`);
-        expect(service.css.input.label).toEqual(`${name}${i++}`);
-        expect(service.css.input.error).toEqual(`${name}${i++}`);
-        expect(service.css.input.group).toEqual(`${name}${i++}`);
-
-        expect(service.css.radio.field).toEqual(`${name}${i++}`);
-        expect(service.css.radio.label).toEqual(`${name}${i++}`);
-        expect(service.css.radio.error).toEqual(`${name}${i++}`);
-        expect(service.css.radio.group).toEqual(`${name}${i++}`);
-
-        expect(service.css.select.field).toEqual(`${name}${i++}`);
-        expect(service.css.select.label).toEqual(`${name}${i++}`);
-        expect(service.css.select.error).toEqual(`${name}${i++}`);
-        expect(service.css.select.group).toEqual(`${name}${i++}`);
-
-        expect(service.css.checkbox.field).toEqual(`${name}${i++}`);
-        expect(service.css.checkbox.label).toEqual(`${name}${i++}`);
-        expect(service.css.checkbox.error).toEqual(`${name}${i++}`);
-        expect(service.css.checkbox.group).toEqual(`${name}${i++}`);
+        i = Object.keys(customDorfKinds[0].css).length + 1; // 5
+        expect(service.css.form).toEqual(`${name}${i++}`);
+        expect(service.css.fieldset).toEqual(`${name}${i++}`);
+        expect(service.css.field).toEqual(`${name}${i++}`);
+        expect(service.css.label).toEqual(`${name}${i++}`);
+        expect(service.css.error).toEqual(`${name}${i++}`);
+        expect(service.css.group).toEqual(`${name}${i++}`);
+        expect(service.css.section).toEqual(`${name}${i++}`);
+        expect(service.css.buttons.save).toEqual(`${name}${i++}`);
+        expect(service.css.buttons.reset).toEqual(`${name}${i++}`);
+        expect(service.css.buttons.group).toEqual(`${name}${i++}`);
 
         expect(service.isDisabled).toBeFalsy();
-        expect(service.isButtonVisible).toBeTruthy();
-        expect(service.additionalMetadataKinds).toEqual(customDorfKinds);
+        expect(service.dorfFields.length).toEqual(5);
+        expect(service.dorfFields[4]).toEqual(customDorfKinds[0]);
     });
 });

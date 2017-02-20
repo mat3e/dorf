@@ -1,8 +1,8 @@
 import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio } from '../src/decorators/dorf-object.decorator';
-import { DorfInputDefinition } from '../src/fields/dorf-input.component';
-import { DorfSelectDefinition } from '../src/fields/dorf-select.component';
-import { DorfRadioDefinition } from '../src/fields/dorf-radio.component';
-import { DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.component';
+import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
+import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
+import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
+import { DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.definition';
 
 describe('DorfObject', () => {
     it('extends a class with additional properties', () => {
