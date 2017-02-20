@@ -64,7 +64,7 @@ Future plans include:
  - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
 
 ### List of the online examples
- - Simple example: [v1](http://embed.plnkr.co/5I5eKSuxcWnWbYjKQeTF/), [v2](http://embed.plnkr.co/6H2jto/)
+ - [Simple example](http://embed.plnkr.co/6H2jto/)
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
- - New field example: [v2](http://embed.plnkr.co/q4EEDa/)
- - Bootstrap example: [v2](http://embed.plnkr.co/K1IVvZ/)
+ - [New field example](http://embed.plnkr.co/q4EEDa/)
+ - [Bootstrap example](http://embed.plnkr.co/K1IVvZ/)
