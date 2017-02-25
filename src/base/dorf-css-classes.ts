@@ -38,9 +38,14 @@ export class DorfButtonsCssClasses implements IDorfButtonsCssClasses {
 
     constructor(options?: IDorfButtonsCssClasses) {
         if (options) {
-            // tslint:disable-next-line:forin
+            this.save = options.save || this.save;
+            this.reset = options.reset || this.reset;
+            this.group = options.group || this.group;
+
             for (let cls in options) {
-                this[cls] = options[cls] || this[cls];
+                if (!this.hasOwnProperty(cls)) {
+                    this[cls] = options[cls];
+                }
             }
         }
     }
@@ -129,9 +134,15 @@ export class DorfFieldCssClasses implements IDorfFieldCssClasses {
 
     constructor(options?: IDorfFieldCssClasses) {
         if (options) {
-            // tslint:disable-next-line:forin
+            this.group = options.group || this.group;
+            this.label = options.label || this.label;
+            this.field = options.field || this.field;
+            this.error = options.error || this.error;
+
             for (let cls in options) {
-                this[cls] = options[cls] || this[cls];
+                if (!this.hasOwnProperty(cls)) {
+                    this[cls] = options[cls];
+                }
             }
         }
     }
@@ -215,6 +226,9 @@ export class DorfGeneralCssClasses extends DorfFieldCssClasses implements IDorfG
         super(options);
 
         if (options) {
+            this.form = options.form || this.form;
+            this.fieldset = options.fieldset || this.fieldset;
+            this.section = options.section || this.section;
             this.buttons = new DorfButtonsCssClasses(options.buttons);
         }
     }
