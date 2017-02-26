@@ -10,6 +10,7 @@ import { DorfInputComponent } from './fields/dorf-input.component';
 import { DorfRadioComponent } from './fields/dorf-radio.component';
 import { DorfSelectComponent } from './fields/dorf-select.component';
 import { DorfCheckboxComponent } from './fields/dorf-checkbox.component';
+import { DorfFieldComponent } from './fields/base/dorf-field.component';
 import { DorfFieldWrapperComponent } from './fields/base/dorf-field-wrapper.component';
 
 export * from './fields/dorf-checkbox.definition';
@@ -28,6 +29,7 @@ export * from './fields/dorf-select.definition';
 export * from './fields/dorf-select.metadata';
 export * from './fields/dorf-select.component';
 
+export * from './fields/base/dorf-field.component';
 export * from './fields/base/dorf-field-wrapper.component';
 export * from './base/dorf-buttons.component';
 
@@ -68,6 +70,7 @@ export * from './base/dorf-buttons.component';
         DorfRadioComponent,
         DorfSelectComponent,
         DorfCheckboxComponent,
+        DorfFieldComponent,
         DorfFieldWrapperComponent
     ],
     exports: [
@@ -77,6 +80,7 @@ export * from './base/dorf-buttons.component';
         DorfSelectComponent,
         DorfCheckboxComponent,
         DorfButtonsComponent,
+        DorfFieldComponent,
         DorfFieldWrapperComponent
     ]
 })

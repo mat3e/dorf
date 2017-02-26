@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { IDorfInputDefinition } from './dorf-input.definition';
+import { InputType, IDorfInputDefinition } from './dorf-input.definition';
 import { DorfInputMetadata } from './dorf-input.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
 import { DorfField } from './base/dorf-field';
@@ -27,4 +27,7 @@ export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInp
     }
 
     get type() { return this.metadata.type; }
+    get isRange() { return this.type === 'range' as InputType; }
+    get isNumber() { return this.type === 'number' as InputType; }
+    get isFreeType() { return !this.isRange && !this.isNumber; }
 }

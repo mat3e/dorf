@@ -1,52 +1,37 @@
-import { Input, Component } from '@angular/core';
+import { Component } from '@angular/core';
 
+import { DorfConfigService } from '../../dorf-config.service';
 import { DorfFieldDefinition } from './dorf-field.definition';
 import { DorfFieldMetadata } from './dorf-field.metadata';
+import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
 
 /**
- * @whatItDoes Component which switch between all DORF fields.
+ * @whatItDoes Group which wraps label, dorf-field and error.
  *
  * @howToUse
- * It is used within all the default form templates.
- *
- * ##Example
- * ```
- * <dorf-field></dorf-field>
- * ```
+ * In order to use different field components (e.g. from Angular's material) this component should be one of the changed ones.
  *
  * @description
- * There are 4 base fields + additional ones, defined by the library user. This component group all those fields in order to speed up HTML
- * creation. It is possible to include own HTML code between tags.
+ * This component is used in default templates. It abstracts DORF group. It contains a common part for all the fields and the fields
+ * themselves, by using [DorfFieldComponent abstraction]{@link DorfFieldComponent}.
  *
  * @stable
  */
 @Component({
     moduleId: `${module.id}`,
-    selector: 'dorf-field',
+    selector: 'dorf-field-wrapper',
     templateUrl: './dorf-field-wrapper.component.html'
 })
-export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> {
-    @Input()
-    metadata: M;
+export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
 
-    get isDorfInput() {
-        return this.isDorfTag(DorfField.INPUT);
+    constructor(config: DorfConfigService) {
+        super(config);
     }
 
-    get isDorfRadio() {
-        return this.isDorfTag(DorfField.RADIO);
-    }
+    get errorMessage() { return this.metadata.errorMessage; }
+    get labelAlreadyInField() { return this.metadata['embeddedLabel']; }
 
-    get isDorfSelect() {
-        return this.isDorfTag(DorfField.SELECT);
-    }
-
-    get isDorfCheckbox() {
-        return this.isDorfTag(DorfField.CHECKBOX);
-    }
-
-    protected isDorfTag(tag: string) {
-        return this.metadata.tag === tag;
-    }
+    get groupCss() { return this.directCss.group || this.cssFromFieldConfig.group || this.cssFromConfig.group; }
+    get errorCss() { return this.directCss.error || this.cssFromFieldConfig.error || this.cssFromConfig.error; }
 }

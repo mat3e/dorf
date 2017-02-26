@@ -64,10 +64,11 @@ export class DorfSupportingService implements IDorfService {
 }
 
 /**
- * @whatItDoes It is used in all HTML templates for DORF.
+ * @whatItDoes It is used in all DORF HTML templates for modyfing fields behavior.
  *
  * @description
- * It specifies CSS classes for all important elements. Can also disable forms and prevent their submitting.
+ * It specifies CSS classes for all important elements. It can also disable forms and this is an entry point
+ * where additional fields needs to be specified.
  *
  * @stable
  */
@@ -86,6 +87,8 @@ export class DorfConfigService implements IDorfService {
                 config.dorfFields.forEach((field) => {
                     let existing = this.getFieldForTag(field.tag);
                     if (!existing) {
+                        // to populate with dummy values if no css
+                        field.css = new DorfFieldCssClasses(field.css);
                         this.dorfFields.push(field);
                     } else {
                         existing.css = new DorfFieldCssClasses(field.css);

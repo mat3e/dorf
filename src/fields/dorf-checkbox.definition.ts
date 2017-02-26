@@ -1,4 +1,5 @@
 import { IDorfFieldDefinition, DorfFieldDefinition } from './base/dorf-field.definition';
+import { supportEmbeddedLabel } from './base/dorf-embedded-label.definition';
 import { DorfField } from './base/dorf-field';
 
 /**
@@ -66,7 +67,7 @@ export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements
     private _mapping: ICheckboxMapping<T>;
 
     constructor(options?: IDorfCheckboxDefinition<T>) {
-        super(options);
+        super(supportEmbeddedLabel(options));
 
         if (options) {
             this._mapping = options.mapping;

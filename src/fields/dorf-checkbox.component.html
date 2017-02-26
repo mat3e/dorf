@@ -1,8 +1,4 @@
-<div [ngClass]="css.group || config.getFieldForTag(metadata.tag).css.group || config.css.group">
-	<label [attr.for]="key" [ngClass]="css.label || config.getFieldForTag(metadata.tag).css.label || config.css.label">
-		<input #view [id]="key" [ngClass]="css.field || config.getFieldForTag(metadata.tag).css.field || config.css.field" 
-		(change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{label}}
-	</label>
-	<input [name]="key" [formControl]="formControl" type="hidden" />
-	<div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.getFieldForTag(metadata.tag).css.error || config.css.error">{{errorMessage}}</div>
-</div>
+<label [attr.for]="key" [ngClass]="labelCss">
+	<input #view [id]="key" [ngClass]="fieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{label}}
+</label>
+<input [name]="key" [formControl]="formControl" type="hidden" />

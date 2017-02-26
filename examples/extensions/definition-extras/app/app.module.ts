@@ -8,6 +8,7 @@ import {
     DorfSelectComponent,
     DorfCheckboxComponent,
     DorfButtonsComponent,
+    DorfFieldComponent,
     DorfFieldWrapperComponent
 } from 'dorf';
 
@@ -41,6 +42,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
         DorfSelectComponent,
         DorfCheckboxComponent,
         DorfButtonsComponent,
+        DorfFieldComponent,
         DorfFieldWrapperComponent,
         AppComponent,
         CustomDorfInputComponent,

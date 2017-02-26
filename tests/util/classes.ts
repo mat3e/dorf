@@ -100,7 +100,9 @@ export class Person1DetailComponent implements IDorfForm {
  * New form with a new object.
  */
 @DorfForm({
-    fieldsInSection: 2
+    fieldsInSection: 2,
+    renderFieldsetAroundFields: true,
+    renderWithoutButtons: true
 })
 @Component({
     selector: 'person2-details'

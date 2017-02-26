@@ -130,9 +130,7 @@ describe('DorfInputComponent', () => {
 
             // THEN
             fixture.detectChanges();
-            let errorElem: HTMLDivElement = fixture.debugElement.query(By.css('.error')).nativeElement;
             expect(inputMeta.formControl.valid).toBeFalsy();
-            expect(errorElem.textContent).toBe(errorMsg);
         });
     }));
 

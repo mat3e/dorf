@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { DorfFieldMetadata } from './dorf-field.metadata';
 import { DorfFieldDefinition } from './dorf-field.definition';
-import { IDorfFieldCssClasses } from '../../base/dorf-css-classes';
+import { IDorfFieldCssClasses, IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
 import { DorfConfigService } from '../../dorf-config.service';
 
 /**
@@ -49,19 +49,17 @@ import { DorfConfigService } from '../../dorf-config.service';
  *
  * @stable
  */
-// TODO: decorator which adds the same behavior as this class?
+// TODO: decorator which adds the same behavior as this class/DorfField factory method
 export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> {
-
     @Input()
     metadata: M;
 
     constructor(public config: DorfConfigService) { }
 
-    get css() { return this.metadata.css; }
-
     get key() { return this.metadata.key; }
     get label() { return this.metadata.label; }
-    get errorMessage() { return this.metadata.errorMessage; }
+    get fieldCss() { return this.directCss.field || this.cssFromFieldConfig.field || this.cssFromConfig.field; }
+    get labelCss() { return this.directCss.label || this.cssFromFieldConfig.label || this.cssFromConfig.label; }
 
     // TODO: is there a way for `touch`? FormControl.markAsTouched is triggered on blur on elemenent with formControl directive
     get invalid() {
@@ -71,4 +69,8 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     get formControl() {
         return this.metadata.formControl;
     }
+
+    protected get directCss() { return this.metadata.css; }
+    protected get cssFromFieldConfig() { return this.config.getFieldForTag(this.metadata.tag).css; }
+    protected get cssFromConfig() { return this.config.css; }
 }

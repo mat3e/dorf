@@ -57,7 +57,7 @@ export class DorfField<D extends typeof DorfFieldDefinition, M extends typeof Do
             tag: tagName,
             definition: null,
             metadata: null,
-            css: null
+            css: null // new class instance
         };
     }
 }

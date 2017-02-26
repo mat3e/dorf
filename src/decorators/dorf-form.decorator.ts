@@ -117,7 +117,7 @@ export interface IDorfFormOptions {
     fieldsInSection?: number;
 
     /**
-     * Additional fields represented as tags or DorfFields or a simple piece of HTML,
+     * Additional fields represented as tags (array of selectors) or DorfFields or a simple piece of HTML,
      * which should be used within a particular form (inside `dorf-field` template).
      */
     additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
@@ -125,7 +125,12 @@ export interface IDorfFormOptions {
     /**
      * Indicates if there should be a fieldset around all the fields or not.
      */
-    fieldsetAroundFields?: boolean;
+    renderFieldsetAroundFields?: boolean;
+
+    /**
+     * Indicates if the form should contain buttons.
+     */
+    renderWithoutButtons?: boolean;
 }
 
 /**
@@ -230,7 +235,6 @@ export function DorfForm(options?: IDorfFormOptions) {
                 components[0].template = `
                 <form [ngClass]="config.css.form">
                     ${parseOptionsToTemplate(options)}
-                    <dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
                     <ng-content></ng-content>
                 </form>
                 `;
@@ -242,17 +246,21 @@ export function DorfForm(options?: IDorfFormOptions) {
 /** @internal */
 function parseOptionsToTemplate(options?: IDorfFormOptions): string {
     let start = '<section *ngFor="let fieldMeta of fieldsMetadata">';
-    let md = `<dorf-field [metadata]="fieldMeta">${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}</dorf-field>`;
+    // tslint:disable-next-line:max-line-length
+    let md = `<dorf-field-wrapper [metadata]="fieldMeta">${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}</dorf-field-wrapper>`;
     let end = '</section>';
 
     if (options) {
-        if (options.fieldsetAroundFields) {
+        if (options.renderFieldsetAroundFields) {
             start = `<fieldset [ngClass]="config.css.fieldset">${start}`;
             end += '</fieldset>';
         }
         if (options.fieldsInSection > 1) {
             md = parseForMultipleFieldsInSection(options.additionalTags);
         }
+    }
+    if (!options || !options.renderWithoutButtons) {
+        end += '<dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>';
     }
 
     return `${start}${md}${end}`;
@@ -261,7 +269,7 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
 /** @internal */
 // tslint:disable-next-line:max-line-length
 function parseForMultipleFieldsInSection(additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
-    return `<dorf-field *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field>`;
+    return `<dorf-field-wrapper *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field-wrapper>`;
 }
 
 /** @internal */

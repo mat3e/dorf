@@ -1,8 +1,4 @@
-<div [ngClass]="css.group || config.css.group">
-    <label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.css.label">{{label}}</label>
-    <span class="rating">
-        <input type="hidden" [id]="key" [name]="key" [formControl]="formControl" />
-        <span *ngFor="let star of stars; let i=index;" class="fa fa-star" [ngClass]="{'active': (i < value)}" (click)="setValue(i)"></span>
-    </span>
-    <div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.css.error">{{errorMessage}}</div>
-</div>
+<span class="rating">
+    <input type="hidden" [id]="key" [name]="key" [formControl]="formControl" />
+    <span *ngFor="let star of stars; let i=index;" class="fa fa-star" [ngClass]="{'active': (i < value)}" (click)="setValue(i)"></span>
+</span>

@@ -1,9 +1,5 @@
-<div [ngClass]="css.group || config.getFieldForTag(metadata.tag).css.group || config.css.group">
-	<label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.getFieldForTag(metadata.tag).css.label || config.css.label">{{label}}</label>
-	<span [ngSwitch]="type">
-		<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.getFieldForTag(metadata.tag).css.field || config.css.field" type="range" [placeholder]="placeholder" />
-		<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.getFieldForTag(metadata.tag).css.field || config.css.field" type="number" [placeholder]="placeholder" />
-		<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="css.field || config.getFieldForTag(metadata.tag).css.field || config.css.field" [placeholder]="placeholder" />
-	</span>
-	<div [ngClass]="css.error || config.getFieldForTag(metadata.tag).css.error || config.css.error" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
-</div>
+<span [ngSwitch]="type">
+	<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss" type="range" [placeholder]="placeholder" />
+	<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss" type="number" [placeholder]="placeholder" />
+	<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="fieldCss" [placeholder]="placeholder" />
+</span>

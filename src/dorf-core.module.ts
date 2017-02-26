@@ -53,7 +53,7 @@ export * from './dorf-config.service';
  * @description
  * This module exports `FormsModule` and `ReactiveFormsModule`. This version of DORF module, requires additional components,
  * like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`. You can define them on your own or add following DORF declarations:
- * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldWrapperComponent]`
+ * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent]`
  * to your module.
  *
  * @stable

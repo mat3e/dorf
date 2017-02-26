@@ -6,7 +6,7 @@ import { DorfModule } from 'dorf';
 import { AppComponent } from './app.component';
 
 import {
-    STAR_TAG,
+    STAR_RATING,
     StarRatingDefinition,
     StarRatingMetadata,
     StarRatingComponent
@@ -25,7 +25,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
                 group: 'pure-controls'
             }
         },
-        dorfFields: [STAR_TAG]
+        dorfFields: [STAR_RATING]
     })],
     declarations: [AppComponent, StarRatingComponent, PersonDetailComponent],
     bootstrap: [AppComponent]
