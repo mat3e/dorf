@@ -105,7 +105,8 @@ export function DorfObjectInput() {
 }
 
 /**
- * @whatItDoes Defines options which should be passed to {@link DorfForm} annotation.
+ * @whatItDoes Defines options which should be passed to {@link DorfForm} annotation
+ * in order to modify the default rendering mechanism.
  *
  * @experimental
  */
@@ -116,13 +117,19 @@ export interface IDorfFormOptions {
     fieldsInSection?: number;
 
     /**
-     * Additional fields or a piece of HTML, which should be used within a particular form (inside `dorf-field` template).
+     * Additional fields represented as tags or DorfFields or a simple piece of HTML,
+     * which should be used within a particular form (inside `dorf-field` template).
      */
-    additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+    additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+
+    /**
+     * Indicates if there should be a fieldset around all the fields or not.
+     */
+    fieldsetAroundFields?: boolean;
 }
 
 /**
- * @whatItDoes Superior of {@link AbstractDorfFormComponent}.
+ * @whatItDoes Superior of {@link AbstractDorfFormComponent}. Allows to render DORF form which matches provided options.
  *
  * @howToUse Add `@DorfForm()` annotation over `@Component()` one for the class which should control the form.
  *
@@ -222,9 +229,7 @@ export function DorfForm(options?: IDorfFormOptions) {
             if (noTemplateExists && components[0]) {
                 components[0].template = `
                 <form [ngClass]="config.css.form">
-                    <fieldset [ngClass]="config.css.fieldset">
                     ${parseOptionsToTemplate(options)}
-                    </fieldset>
                     <dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>
                     <ng-content></ng-content>
                 </form>
@@ -240,8 +245,14 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
     let md = `<dorf-field [metadata]="fieldMeta">${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}</dorf-field>`;
     let end = '</section>';
 
-    if (options && options.fieldsInSection > 1) {
-        md = parseForMultipleFieldsInSection(options.additionalTags);
+    if (options) {
+        if (options.fieldsetAroundFields) {
+            start = `<fieldset [ngClass]="config.css.fieldset">${start}`;
+            end += '</fieldset>';
+        }
+        if (options.fieldsInSection > 1) {
+            md = parseForMultipleFieldsInSection(options.additionalTags);
+        }
     }
 
     return `${start}${md}${end}`;
@@ -249,26 +260,40 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
 
 /** @internal */
 // tslint:disable-next-line:max-line-length
-function parseForMultipleFieldsInSection(additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+function parseForMultipleFieldsInSection(additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
     return `<dorf-field *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field>`;
 }
 
 /** @internal */
 // tslint:disable-next-line:max-line-length
-function parseAdditionalTags(metaName?: string, additionalTags?: string | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
+function parseAdditionalTags(metaName?: string, additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
     let result = '';
 
     if (additionalTags) {
         if (typeof additionalTags === 'string') {
             result += additionalTags;
+        } else if (isStringArray(additionalTags)) {
+            for (let dorfField of additionalTags) {
+                result += parseAdditionalTag(dorfField, metaName);
+            }
         } else {
             for (let dorfField of additionalTags) {
-                result += `<${dorfField.tag} *ngIf="${metaName}.tag=='${dorfField.tag}'" [metadata]="${metaName}"></${dorfField.tag}>`;
+                result += parseAdditionalTag(dorfField.tag, metaName);
             }
         }
     }
 
     return result;
+}
+
+/** @internal */
+function parseAdditionalTag(tagName: string, metaName: string) {
+    return `<${tagName} *ngIf="${metaName}.tag=='${tagName}'" [metadata]="${metaName}"></${tagName}>`
+}
+
+/** @internal */
+function isStringArray(obj: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): obj is string[] {
+    return obj instanceof Array && typeof obj[0] === 'string';
 }
 
 /** @internal */
@@ -312,13 +337,6 @@ function initMetaForAllFields(dorfForm: ExtendedDorfForm, options?: IDorfFormOpt
             dorfForm._dividedFieldsMetadata.push(setOfFields);
         }
     }
-};
-
-/** @internal */
-function throwNoObject() {
-    // tslint:disable-next-line:no-console
-    console.info('@DorfObjectInput() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()');
-    throw new Error('DorfForm has to contain DorfObject annotated as @DorfObjectInput()');
 }
 
 /** @internal */
@@ -336,5 +354,11 @@ function initFormGroup(dorfForm: ExtendedDorfForm) {
     });
 
     dorfForm._form = new FormGroup(group, dorfForm.validator);
-};
+}
 
+/** @internal */
+function throwNoObject() {
+    // tslint:disable-next-line:no-console
+    console.info('@DorfObjectInput() has to be either DorfDomainObject or its class has to be annotated as @DorfObject()');
+    throw new Error('DorfForm has to contain DorfObject annotated as @DorfObjectInput()');
+}

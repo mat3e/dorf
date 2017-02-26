@@ -97,6 +97,15 @@ export class DorfConfigService implements IDorfService {
         }
     }
 
+    setFieldForTag(tag: string, field: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>) {
+        let fieldToReplace = this.getFieldForTag(tag);
+        if (fieldToReplace) {
+            fieldToReplace.css = new DorfFieldCssClasses(field.css);
+            fieldToReplace.definition = field.definition || fieldToReplace.definition;
+            fieldToReplace.metadata = field.metadata || fieldToReplace.metadata;
+        }
+    }
+
     getFieldForTag(tag: string) {
         for (let currField of this.dorfFields) {
             if (currField.tag === tag) {

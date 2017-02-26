@@ -82,4 +82,4 @@ export const BUILT_IN_FIELDS: DorfField<typeof DorfFieldDefinition, typeof DorfF
     definition: DorfCheckboxDefinition,
     metadata: DorfCheckboxMetadata,
     css: {}
-}]
+}];

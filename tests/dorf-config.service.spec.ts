@@ -30,6 +30,25 @@ describe('DorfConfigService', () => {
         expect(result).toEqual(BUILT_IN_FIELDS[0]);
     });
 
+    it('allows replacing DorfField for a given tag', () => {
+        // GIVEN
+        let service = new DorfConfigService();
+
+        let replacement = {
+            tag: DorfField.INPUT,
+            css: {
+                field: 'changed-class'
+            }
+        } as DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>;
+        expect(service.dorfFields[0].css.field).toBeUndefined();
+
+        // WHEN
+        service.setFieldForTag(DorfField.INPUT, replacement);
+
+        // THEN
+        expect(service.dorfFields[0].css.field).toEqual(replacement.css.field);
+    });
+
     it('should get values from the provided config', () => {
         // GIVEN
         let i = 1;
