@@ -20,6 +20,7 @@
     "@types/node": "^6.0.45",
     "@types/jasmine": "^2.5.35",
     "@types/selenium-webdriver": "^2.53.33",
+    "angular2-template-loader": "~0.6.2",
     "angular-in-memory-web-api": "~0.1.13",
     "canonical-path": "0.0.2",
     "concurrently": "^3.1.0",
