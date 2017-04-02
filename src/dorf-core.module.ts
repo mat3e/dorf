@@ -16,11 +16,11 @@ export * from './base/dorf-css-classes';
 export * from './base/abstract-dorf-form.component';
 
 export * from './fields/base/dorf-field';
-export * from './fields/base/dorf-field.definition';
-export * from './fields/base/dorf-field.metadata';
+export * from './fields/base/abstract-dorf-field.definition';
+export * from './fields/base/abstract-dorf-field.metadata';
 export * from './fields/base/abstract-dorf-field.component';
-export * from './fields/base/dorf-choose.definition';
-export * from './fields/base/dorf-choose.metadata';
+export * from './fields/base/abstract-dorf-choose.definition';
+export * from './fields/base/abstract-dorf-choose.metadata';
 export * from './fields/base/abstract-dorf-choose.component';
 
 export * from './base/dorf-mapper';

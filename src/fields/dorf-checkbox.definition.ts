@@ -1,5 +1,6 @@
-import { IDorfFieldDefinition, DorfFieldDefinition } from './base/dorf-field.definition';
-import { supportEmbeddedLabel } from './base/dorf-embedded-label.definition';
+import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
+
+import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-field.definition';
 import { DorfField } from './base/dorf-field';
 
 /**
@@ -51,10 +52,19 @@ export interface ICheckboxMapping<T> {
  * @stable
  */
 export interface IDorfCheckboxDefinition<T> extends IDorfFieldDefinition<T> {
+    // more precise type
+    css?: IDorfMultipleLabelsCssClasses;
+
     /**
      * Indicates how to map true and false checkbox values.
      */
     mapping?: ICheckboxMapping<T>;
+
+    /**
+     * Label around the field. Checkbox has 2 labels. First standard, as for all other fields; second - around, e.g. as for radio button.
+     * It's usually not needed to show both of them.
+     */
+    innerLabel?: string;
 }
 
 /**
@@ -65,16 +75,19 @@ export interface IDorfCheckboxDefinition<T> extends IDorfFieldDefinition<T> {
 export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements IDorfCheckboxDefinition<T> {
 
     private _mapping: ICheckboxMapping<T>;
+    private _innerLabel: string;
 
     constructor(options?: IDorfCheckboxDefinition<T>) {
-        super(supportEmbeddedLabel(options));
+        super(options);
 
         if (options) {
             this._mapping = options.mapping;
+            this._innerLabel = options.innerLabel;
         }
     }
 
     get mapping() { return this._mapping; }
+    get innerLabel() { return this._innerLabel; }
 
     get tag() { return DorfField.CHECKBOX; }
 }

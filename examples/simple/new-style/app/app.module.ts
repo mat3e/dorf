@@ -22,8 +22,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
         dorfFields: [{
             tag: DorfField.CHECKBOX,
             css: {
-                label: 'pure-checkbox',
-                group: 'pure-controls'
+                innerLabel: 'pure-checkbox'
             }
         }]
     })],

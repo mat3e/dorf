@@ -1,4 +1,6 @@
-import { IDorfChooseDefinition, DorfChooseDefinition } from './base/dorf-choose.definition';
+import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
+
+import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dorf-choose.definition';
 import { DorfField } from './base/dorf-field';
 
 /**
@@ -9,7 +11,10 @@ import { DorfField } from './base/dorf-field';
  *
  * @stable
  */
-export interface IDorfRadioDefinition<T> extends IDorfChooseDefinition<T> { }
+export interface IDorfRadioDefinition<T> extends IDorfChooseDefinition<T> {
+    // more precise type
+    css?: IDorfMultipleLabelsCssClasses;
+}
 
 /**
  * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the radio field.

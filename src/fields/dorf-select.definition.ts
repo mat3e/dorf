@@ -1,4 +1,4 @@
-import { IDorfChooseDefinition, DorfChooseDefinition } from './base/dorf-choose.definition';
+import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dorf-choose.definition';
 import { DorfField } from './base/dorf-field';
 
 /**

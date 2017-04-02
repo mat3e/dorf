@@ -4,8 +4,8 @@ import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms'
 import { DorfConfigService } from '../dorf-config.service';
 import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../base/dorf-mapper';
 
-import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
-import { DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { DorfField } from '../fields/base/dorf-field';
 
 /**
@@ -223,7 +223,7 @@ export function DorfForm(options?: IDorfFormOptions) {
             }
         });
 
-        let annotations = (Reflect as any).getMetadata('annotations', targetConstructor) as any[];
+        let annotations = (window as any).Reflect.getMetadata('annotations', targetConstructor) as any[];
         if (annotations && annotations.length) {
             let components = annotations.filter((annotation: any) => {
                 return annotation.__proto__ && annotation.__proto__.toString() === '@Component';

@@ -45,6 +45,7 @@ import { PropertiesToDorfDefinitionsMap } from './dorf-mapper';
  *
  * @stable
  */
+// TODO: function for modifying definition after the object is created, like updateDefinition(propName, newDef);
 export abstract class DorfDomainObject {
     /**
      * Used in {@link DorfMapper} called from {@link AbstractDorfFormComponent} to create metadata for all the form fields.

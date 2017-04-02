@@ -1,4 +1,4 @@
-<label [attr.for]="key" [ngClass]="labelCss">
-	<input #view [id]="key" [ngClass]="fieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{label}}
+<label [attr.for]="key" [ngClass]="innerLabelCss">
+	<input #view [id]="key" [ngClass]="fieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{innerLabel}}
 </label>
 <input [name]="key" [formControl]="formControl" type="hidden" />

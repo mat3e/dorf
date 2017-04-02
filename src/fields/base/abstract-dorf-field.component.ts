@@ -1,8 +1,8 @@
 import { Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { DorfFieldMetadata } from './dorf-field.metadata';
-import { DorfFieldDefinition } from './dorf-field.definition';
+import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
+import { DorfFieldDefinition } from './abstract-dorf-field.definition';
 import { IDorfFieldCssClasses, IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
 import { DorfConfigService } from '../../dorf-config.service';
 
@@ -62,13 +62,9 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     get labelCss() { return this.directCss.label || this.cssFromFieldConfig.label || this.cssFromConfig.label; }
 
     // TODO: is there a way for `touch`? FormControl.markAsTouched is triggered on blur on elemenent with formControl directive
-    get invalid() {
-        return this.metadata.invalid;
-    }
+    get invalid() { return this.metadata.invalid; }
 
-    get formControl() {
-        return this.metadata.formControl;
-    }
+    get formControl() { return this.metadata.formControl; }
 
     protected get directCss() { return this.metadata.css; }
     protected get cssFromFieldConfig() { return this.config.getFieldForTag(this.metadata.tag).css; }

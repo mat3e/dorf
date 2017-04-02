@@ -51,4 +51,7 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
             this.formControl.setValue(value);
         }
     }
+
+    get innerLabel() { return this.metadata.innerLabel; }
+    get innerLabelCss() { return this.directCss.innerLabel || this.cssFromFieldConfig.innerLabel || this.cssFromConfig.innerLabel; }
 }

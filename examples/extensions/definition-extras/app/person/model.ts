@@ -176,7 +176,7 @@ export class Person extends DorfDomainObject implements IPerson {
 
     private get smartDef(): DorfCheckboxDefinition<string> {
         return new DorfCheckboxDefinition<string>({
-            label: 'Is smart?',
+            innerLabel: 'Is smart?',
             mapping: {
                 trueValue: 'yes',
                 falseValue: 'no'

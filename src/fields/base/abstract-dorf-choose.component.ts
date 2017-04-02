@@ -1,5 +1,5 @@
-import { OptionType, IDorfChooseDefinition, DorfChooseDefinition } from './dorf-choose.definition';
-import { DorfChooseMetadata } from './dorf-choose.metadata';
+import { OptionType, IDorfChooseDefinition, DorfChooseDefinition } from './abstract-dorf-choose.definition';
+import { DorfChooseMetadata } from './abstract-dorf-choose.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 
 import { DorfConfigService } from '../../dorf-config.service';

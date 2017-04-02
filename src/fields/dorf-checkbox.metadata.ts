@@ -1,5 +1,5 @@
 import { ICheckboxMapping, IDorfCheckboxDefinition, DorfCheckboxDefinition } from './dorf-checkbox.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from './base/dorf-field.metadata';
+import { IDorfFieldMetadata, DorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 
 /**
  * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the checkbox field.
@@ -18,4 +18,5 @@ export class DorfCheckboxMetadata<T> extends DorfFieldMetadata<T, DorfCheckboxDe
     }
 
     get mapping() { return this.definition.mapping; }
+    get innerLabel() { return this.definition.innerLabel; }
 }

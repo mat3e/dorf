@@ -33,7 +33,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
             tag: DorfField.CHECKBOX,
             css: {
                 group: 'pure-controls',
-                label: 'pure-checkbox'
+                innerLabel: 'pure-checkbox'
             }
         }]
     })],

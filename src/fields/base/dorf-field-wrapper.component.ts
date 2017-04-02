@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-import { DorfFieldDefinition } from './dorf-field.definition';
-import { DorfFieldMetadata } from './dorf-field.metadata';
+import { DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
 
@@ -30,7 +30,6 @@ export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFie
     }
 
     get errorMessage() { return this.metadata.errorMessage; }
-    get labelAlreadyInField() { return this.metadata['embeddedLabel']; }
 
     get groupCss() { return this.directCss.group || this.cssFromFieldConfig.group || this.cssFromConfig.group; }
     get errorCss() { return this.directCss.error || this.cssFromFieldConfig.error || this.cssFromConfig.error; }

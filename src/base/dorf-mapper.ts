@@ -1,7 +1,7 @@
 import { DorfConfigService } from '../dorf-config.service';
 
-import { IDorfFieldDefinition, DorfFieldDefinition } from '../fields/base/dorf-field.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { IDorfFieldDefinition, DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { DorfInputDefinition } from '../fields/dorf-input.definition';
 import { DorfInputMetadata } from '../fields/dorf-input.metadata';
 import { DorfRadioDefinition } from '../fields/dorf-radio.definition';

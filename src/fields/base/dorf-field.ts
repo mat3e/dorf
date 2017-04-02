@@ -1,10 +1,10 @@
-import { IDorfFieldCssClasses } from '../../base/dorf-css-classes';
-import { IDorfFieldDefinition, DorfFieldDefinition } from './dorf-field.definition';
+import { IDorfFieldCssClasses, IDorfMultipleLabelsCssClasses } from '../../base/dorf-css-classes';
+import { IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../dorf-input.definition';
 import { DorfRadioDefinition } from '../dorf-radio.definition';
 import { DorfSelectDefinition } from '../dorf-select.definition';
 import { DorfCheckboxDefinition } from '../dorf-checkbox.definition';
-import { DorfFieldMetadata } from './dorf-field.metadata';
+import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../dorf-input.metadata';
 import { DorfRadioMetadata } from '../dorf-radio.metadata';
 import { DorfSelectMetadata } from '../dorf-select.metadata';
@@ -71,7 +71,7 @@ export const BUILT_IN_FIELDS: DorfField<typeof DorfFieldDefinition, typeof DorfF
     tag: RADIO,
     definition: DorfRadioDefinition,
     metadata: DorfRadioMetadata,
-    css: {}
+    css: {} as IDorfMultipleLabelsCssClasses
 }, {
     tag: SELECT,
     definition: DorfSelectDefinition,
@@ -81,5 +81,5 @@ export const BUILT_IN_FIELDS: DorfField<typeof DorfFieldDefinition, typeof DorfF
     tag: CHECKBOX,
     definition: DorfCheckboxDefinition,
     metadata: DorfCheckboxMetadata,
-    css: {}
+    css: {} as IDorfMultipleLabelsCssClasses
 }];

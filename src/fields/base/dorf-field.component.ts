@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-import { DorfFieldDefinition } from './dorf-field.definition';
-import { DorfFieldMetadata } from './dorf-field.metadata';
+import { DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
 
 /**
- * @whatItDoes Component which switch between all DORF fields.
+ * @whatItDoes Component which switch between all built-in DORF fields.
  *
  * @howToUse
  * It is used within all the default form templates.

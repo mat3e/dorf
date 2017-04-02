@@ -12,6 +12,7 @@ import { ICheckboxMapping, DorfCheckboxDefinition } from '../../src/fields/dorf-
 import { DorfCheckboxMetadata } from '../../src/fields/dorf-checkbox.metadata';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 
+// TODO: innerLabel tests
 describe('DorfCheckboxComponent', () => {
 
     // depends on the test we have either a boolean or a number value

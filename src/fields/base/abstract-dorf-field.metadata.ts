@@ -1,7 +1,7 @@
 import 'rxjs/add/operator/debounceTime';
 
 import { FormControl } from '@angular/forms';
-import { DorfFieldDefinition } from './dorf-field.definition';
+import { DorfFieldDefinition } from './abstract-dorf-field.definition';
 
 /**
  * @whatItDoes Defines things existing in metadata, which don't exist directly in the definition.

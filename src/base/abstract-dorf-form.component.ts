@@ -2,8 +2,8 @@ import { OnChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 
 import { DorfConfigService } from '../dorf-config.service';
-import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
-import { DorfFieldMetadata } from '../fields/base/dorf-field.metadata';
+import { DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from './dorf-mapper';
 
 /**

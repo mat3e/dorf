@@ -5,7 +5,7 @@ import { DorfFieldComponent } from '../src/fields/base/dorf-field.component';
 describe('DorfFielWrapperComponent', () => {
     it('should support built in tags', () => {
         // GIVEN
-        let testData = [
+        let testData: any[] = [
             // metaWithTag, input, radio, select, checkbox
             [DorfInputMetadata, true, false, false, false],
             [DorfSelectMetadata, false, false, true, false]

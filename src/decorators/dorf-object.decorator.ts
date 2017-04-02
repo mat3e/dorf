@@ -1,4 +1,4 @@
-import { DorfFieldDefinition } from '../fields/base/dorf-field.definition';
+import { DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
 import { IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../fields/dorf-checkbox.definition';
 import { IDorfSelectDefinition, DorfSelectDefinition } from '../fields/dorf-select.definition';
 import { IDorfRadioDefinition, DorfRadioDefinition } from '../fields/dorf-radio.definition';

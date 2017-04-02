@@ -1,5 +1,5 @@
 import { DorfField } from '../src/fields/base/dorf-field';
-import { OptionType } from '../src/fields/base/dorf-choose.definition';
+import { OptionType } from '../src/fields/base/abstract-dorf-choose.definition';
 import { DorfSelectDefinition } from './../src/fields/dorf-select.definition';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 

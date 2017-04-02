@@ -3,8 +3,8 @@ import { Injectable, Optional } from '@angular/core';
 import { DorfFieldCssClasses, IDorfGeneralCssClasses, DorfGeneralCssClasses } from './base/dorf-css-classes';
 
 import { BUILT_IN_FIELDS, DorfField } from './fields/base/dorf-field';
-import { DorfFieldDefinition } from './fields/base/dorf-field.definition';
-import { DorfFieldMetadata } from './fields/base/dorf-field.metadata';
+import { DorfFieldDefinition } from './fields/base/abstract-dorf-field.definition';
+import { DorfFieldMetadata } from './fields/base/abstract-dorf-field.metadata';
 
 /**
  * @whatItDoes It is a base for {@link DorfModule} configuration.
@@ -33,7 +33,7 @@ import { DorfFieldMetadata } from './fields/base/dorf-field.metadata';
  */
 export interface IDorfService {
     /**
-     * List of supproted fields defined by {@link DorfFieldDefinition}, {@link DofrFieldMetadata}, css and tags.
+     * List of supproted fields defined by {@link DorfFieldDefinition}, {@link DorfFieldMetadata}, css and tags.
      */
     dorfFields?: DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
 

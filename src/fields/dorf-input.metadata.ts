@@ -1,5 +1,5 @@
 import { IDorfInputDefinition, DorfInputDefinition } from './dorf-input.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from './base/dorf-field.metadata';
+import { IDorfFieldMetadata, DorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 
 /**
  * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the input field.

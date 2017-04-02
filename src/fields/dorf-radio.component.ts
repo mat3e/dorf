@@ -25,4 +25,6 @@ export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetad
     constructor(config: DorfConfigService) {
         super(config);
     }
+
+    get innerLabelCss() { return this.directCss.innerLabel || this.cssFromFieldConfig.innerLabel || this.cssFromConfig.innerLabel; }
 }

@@ -1,8 +1,8 @@
 import { DorfGeneralCssClasses } from '../src/base/dorf-css-classes';
 import { DorfConfigService } from '../src/dorf-config.service';
 
-import { DorfFieldDefinition } from '../src/fields/base/dorf-field.definition';
-import { DorfFieldMetadata } from '../src/fields/base/dorf-field.metadata';
+import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
+import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
 import { BUILT_IN_FIELDS, DorfField } from '../src/fields/base/dorf-field';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';

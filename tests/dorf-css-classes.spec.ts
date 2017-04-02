@@ -1,4 +1,10 @@
-import { DorfFieldCssClasses, DorfButtonsCssClasses, IDorfGeneralCssClasses, DorfGeneralCssClasses } from '../src/base/dorf-css-classes';
+import {
+    DorfFieldCssClasses,
+    DorfButtonsCssClasses,
+    IDorfGeneralCssClasses,
+    DorfMultipleLabelsCssClasses,
+    DorfGeneralCssClasses
+} from '../src/base/dorf-css-classes';
 
 describe('DorfFieldCssClasses', () => {
     it('sets no classes by default', () => {
@@ -25,10 +31,24 @@ describe('DorfButtonsCssClasses', () => {
     });
 });
 
+describe('DorfMultipleLabelsCssClasses', () => {
+    it('sets no classes by default', () => {
+        // GIVEN + WHEN
+        let classes = new DorfMultipleLabelsCssClasses();
+
+        // THEN
+        expect(classes.error).toEqual('');
+        expect(classes.field).toEqual('');
+        expect(classes.group).toEqual('');
+        expect(classes.label).toEqual('');
+        expect(classes.innerLabel).toEqual('');
+    });
+});
+
 describe('DorfGeneralCssClasses', () => {
     it('sets no classes by default', () => {
         // GIVEN
-        let general: IDorfGeneralCssClasses = new DorfFieldCssClasses(); // empty
+        let general: IDorfGeneralCssClasses = new DorfMultipleLabelsCssClasses(); // empty
         general.form = '';
         general.fieldset = '';
         general.section = '';
@@ -49,6 +69,7 @@ describe('DorfGeneralCssClasses', () => {
         expect(css.form).toEqual(general.form);
         expect(css.group).toEqual(general.group);
         expect(css.label).toEqual(general.label);
+        expect(css.innerLabel).toEqual(general.innerLabel);
         expect(css.section).toEqual(general.section);
     });
 });

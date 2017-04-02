@@ -2,10 +2,10 @@ import { Validators } from '@angular/forms';
 
 import { DorfFieldCssClasses } from '../src/base/dorf-css-classes';
 
-import { DorfFieldDefinition } from '../src/fields/base/dorf-field.definition';
+import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
-import { DorfFieldMetadata } from '../src/fields/base/dorf-field.metadata';
+import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 import { DorfField } from '../src/fields/base/dorf-field';

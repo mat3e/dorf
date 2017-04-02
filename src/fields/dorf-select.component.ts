@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { IDorfFieldMetadata } from './base/dorf-field.metadata';
+import { IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 import { IDorfSelectDefinition } from './dorf-select.definition';
 import { DorfSelectMetadata } from './dorf-select.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';

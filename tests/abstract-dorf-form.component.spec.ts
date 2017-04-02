@@ -1,7 +1,7 @@
 import { FormControl } from '@angular/forms';
 
 import { DorfConfigService } from '../src/dorf-config.service';
-import { DorfFieldMetadata } from '../src/fields/base/dorf-field.metadata';
+import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
 import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../src/base/dorf-mapper';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
@@ -61,7 +61,7 @@ describe('AbstractDorfFormComponent', () => {
             mocks.metadataElements[propertiesNum] = new DorfInputMetadata(new DorfInputDefinition<any>(), { key: prop });
 
             spies.formControls[propertiesNum] = spyOn(mocks.formControls[propertiesNum], 'disable').and.stub();
-            spies.metadataElements[propertiesNum] = spyOn(mocks.metadataElements[propertiesNum], 'extractFormControl').and.returnValue(mocks.formControls[propertiesNum]);
+            spies.metadataElements[propertiesNum] = spyOn(mocks.metadataElements[propertiesNum] as any, 'extractFormControl').and.returnValue(mocks.formControls[propertiesNum]);
 
             ++propertiesNum;
         }

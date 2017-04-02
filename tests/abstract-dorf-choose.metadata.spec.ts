@@ -1,5 +1,5 @@
-import { OptionType, DorfChooseDefinition } from '../src/fields/base/dorf-choose.definition';
-import { DorfChooseMetadata } from '../src/fields/base/dorf-choose.metadata';
+import { OptionType, DorfChooseDefinition } from '../src/fields/base/abstract-dorf-choose.definition';
+import { DorfChooseMetadata } from '../src/fields/base/abstract-dorf-choose.metadata';
 import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
 import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';

@@ -29,5 +29,5 @@ export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInp
     get type() { return this.metadata.type; }
     get isRange() { return this.type === 'range' as InputType; }
     get isNumber() { return this.type === 'number' as InputType; }
-    get isFreeType() { return !this.isRange && !this.isNumber; }
+    get isOtherType() { return !this.isRange && !this.isNumber; }
 }

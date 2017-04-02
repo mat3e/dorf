@@ -22,6 +22,9 @@ import { DorfForm } from '../../src/decorators/dorf-form.decorator';
 // TODO: tests for custom config and mapper, test for fieldDefinitions from 2 sources
 describe('DorfForm', () => {
 
+    // TODO: like in Angular - #9100
+    const Reflect = (window as any).Reflect;
+
     let SUT1: Person1DetailComponent;
     let SUT2: Person2DetailComponent;
 
@@ -105,8 +108,8 @@ describe('DorfForm', () => {
 
             expect((SUT1 as any).ngOnChanges).toBeDefined();
 
-            expect((Reflect as any).getMetadata('annotations', SUT1.constructor).length).toEqual(1);
-            expect((Reflect as any).getMetadata('annotations', SUT1.constructor)[0].template).toBeDefined();
+            expect(Reflect.getMetadata('annotations', SUT1.constructor).length).toEqual(1);
+            expect(Reflect.getMetadata('annotations', SUT1.constructor)[0].template).toBeDefined();
 
             // template
             fixture1.detectChanges();
@@ -146,8 +149,8 @@ describe('DorfForm', () => {
 
             expect((SUT2 as any).ngOnChanges).toBeDefined();
 
-            expect((Reflect as any).getMetadata('annotations', SUT2.constructor).length).toEqual(1);
-            expect((Reflect as any).getMetadata('annotations', SUT2.constructor)[0].template).toBeDefined();
+            expect(Reflect.getMetadata('annotations', SUT2.constructor).length).toEqual(1);
+            expect(Reflect.getMetadata('annotations', SUT2.constructor)[0].template).toBeDefined();
 
             // template
             fixture2.detectChanges();

@@ -2,7 +2,7 @@ import { Validators } from '@angular/forms';
 
 import { DorfFieldCssClasses } from '../src/base/dorf-css-classes';
 
-import { DorfFieldDefinition } from '../src/fields/base/dorf-field.definition';
+import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 

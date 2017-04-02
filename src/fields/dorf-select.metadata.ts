@@ -1,6 +1,6 @@
 import { IDorfSelectDefinition, DorfSelectDefinition } from './dorf-select.definition';
-import { IDorfFieldMetadata } from './base/dorf-field.metadata';
-import { DorfChooseMetadata } from './base/dorf-choose.metadata';
+import { IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
+import { DorfChooseMetadata } from './base/abstract-dorf-choose.metadata';
 
 /**
  * @whatItDoes Represents a [metadata]{@link DorfFieldMetadata} for the select field.

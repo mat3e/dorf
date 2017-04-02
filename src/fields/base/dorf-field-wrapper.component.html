@@ -1,5 +1,5 @@
 <div [ngClass]="groupCss">
-    <label *ngIf="label && !labelAlreadyInField" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
+    <label *ngIf="label" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
     <dorf-field [metadata]="metadata">
         <ng-content></ng-content>
     </dorf-field>
