@@ -30,7 +30,8 @@ export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFie
     }
 
     get errorMessage() { return this.metadata.errorMessage; }
-
-    get groupCss() { return this.directCss.group || this.cssFromFieldConfig.group || this.cssFromConfig.group; }
     get errorCss() { return this.directCss.error || this.cssFromFieldConfig.error || this.cssFromConfig.error; }
+    get fieldGeneralizationCss() {
+        return this.directCss.fieldGeneralization || this.cssFromFieldConfig.fieldGeneralization || this.cssFromConfig.fieldGeneralization;
+    }
 }

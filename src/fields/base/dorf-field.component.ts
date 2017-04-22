@@ -20,8 +20,9 @@ import { DorfField } from './dorf-field';
  * ```
  *
  * @description
- * There are 4 base fields + additional ones, passed with {@link DorfConfigService}.
- * This component groups all those fields in order to speed up HTML creation. It is possible to include custom HTML code between tags.
+ * There are 4 base fields + additional ones, passed with {@link DorfConfigService}. This component groups all those fields
+ * in order to speed up HTML template creation. Only one field will be visible at a time.
+ * It is possible to include custom HTML code between component's tags. CSS Classes should be handled manually then.
  *
  * @stable
  */
@@ -36,23 +37,11 @@ export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefin
         super(config);
     }
 
-    get isDorfInput() {
-        return this.isDorfTag(DorfField.INPUT);
-    }
+    get dorfFieldCss() { return this.directCss.dorfField || this.cssFromFieldConfig.dorfField || this.cssFromConfig.dorfField; }
 
-    get isDorfRadio() {
-        return this.isDorfTag(DorfField.RADIO);
-    }
-
-    get isDorfSelect() {
-        return this.isDorfTag(DorfField.SELECT);
-    }
-
-    get isDorfCheckbox() {
-        return this.isDorfTag(DorfField.CHECKBOX);
-    }
-
-    protected isDorfTag(tag: string) {
-        return this.metadata.tag === tag;
-    }
+    get isDorfInput() { return this.isDorfTag(DorfField.INPUT); }
+    get isDorfRadio() { return this.isDorfTag(DorfField.RADIO); }
+    get isDorfSelect() { return this.isDorfTag(DorfField.SELECT); }
+    get isDorfCheckbox() { return this.isDorfTag(DorfField.CHECKBOX); }
+    protected isDorfTag(tag: string) { return this.metadata.tag === tag; }
 }

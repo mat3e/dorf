@@ -35,7 +35,7 @@ describe('DorfInputComponent', () => {
             dorfFields: [{
                 tag: DorfField.INPUT,
                 css: {
-                    field: 'sut',
+                    htmlField: 'sut',
                     error: 'error'
                 }
             }]

@@ -1,7 +1,8 @@
 <form [ngClass]="config.css.form">
 	<fieldset [ngClass]="config.css.fieldset">
-		<section *ngFor="let fieldMeta of fieldsMetadata">
-			<dorf-field-wrapper [metadata]="fieldMeta"></dorf-field-wrapper>
+		<section *ngFor="let fieldMeta of fieldsMetadata" [ngClass]="config.css.section">
+			<dorf-field-wrapper [metadata]="fieldMeta" [ngClass]="fieldMeta.css.group || config.getFieldForTag(fieldMeta.tag).css.group || config.css.group">
+			</dorf-field-wrapper>
 		</section>
 	</fieldset>
 

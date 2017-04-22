@@ -41,7 +41,7 @@ describe('DorfSelectComponent', () => {
             dorfFields: [{
                 tag: DorfField.SELECT,
                 css: {
-                    field: 'sut'
+                    htmlField: 'sut'
                 }
             }]
         });

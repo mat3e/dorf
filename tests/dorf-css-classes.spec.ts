@@ -13,7 +13,9 @@ describe('DorfFieldCssClasses', () => {
 
         // THEN
         expect(classes.error).toEqual('');
-        expect(classes.field).toEqual('');
+        expect(classes.fieldGeneralization).toEqual('');
+        expect(classes.dorfField).toEqual('');
+        expect(classes.htmlField).toEqual('');
         expect(classes.group).toEqual('');
         expect(classes.label).toEqual('');
     });
@@ -38,7 +40,9 @@ describe('DorfMultipleLabelsCssClasses', () => {
 
         // THEN
         expect(classes.error).toEqual('');
-        expect(classes.field).toEqual('');
+        expect(classes.fieldGeneralization).toEqual('');
+        expect(classes.dorfField).toEqual('');
+        expect(classes.htmlField).toEqual('');
         expect(classes.group).toEqual('');
         expect(classes.label).toEqual('');
         expect(classes.innerLabel).toEqual('');
@@ -64,7 +68,9 @@ describe('DorfGeneralCssClasses', () => {
         // THEN
         expect(css.buttons).toEqual(general.buttons);
         expect(css.error).toEqual(general.error);
-        expect(css.field).toEqual(general.field);
+        expect(css.fieldGeneralization).toEqual(general.fieldGeneralization);
+        expect(css.dorfField).toEqual(general.dorfField);
+        expect(css.htmlField).toEqual(general.htmlField);
         expect(css.fieldset).toEqual(general.fieldset);
         expect(css.form).toEqual(general.form);
         expect(css.group).toEqual(general.group);

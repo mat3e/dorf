@@ -1,6 +1,6 @@
-<select *ngIf="!multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss">
+<select *ngIf="!multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss">
     <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
 </select>
-<select *ngIf="multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss" multiple>
+<select *ngIf="multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" multiple>
     <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
 </select>

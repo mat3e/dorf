@@ -1,5 +1,5 @@
 <span [ngSwitch]="type">
-	<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss" type="range" [placeholder]="placeholder" />
-	<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="fieldCss" type="number" [placeholder]="placeholder" />
-	<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="fieldCss" [placeholder]="placeholder" />
+	<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="range" [placeholder]="placeholder" />
+	<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="number" [placeholder]="placeholder" />
+	<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="htmlFieldCss" [placeholder]="placeholder" />
 </span>

@@ -1,7 +1,5 @@
-<div [ngClass]="groupCss">
-    <label *ngIf="label" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
-    <dorf-field [metadata]="metadata">
-        <ng-content></ng-content>
-    </dorf-field>
-    <div *ngIf="invalid && errorMessage" [ngClass]="errorCss">{{errorMessage}}</div>
-</div>
+<label *ngIf="label" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
+<dorf-field [metadata]="metadata" [ngClass]="fieldGeneralizationCss">
+    <ng-content></ng-content>
+</dorf-field>
+<div *ngIf="invalid && errorMessage" [ngClass]="errorCss">{{errorMessage}}</div>

@@ -33,7 +33,7 @@ describe('DorfCheckboxComponent', () => {
             dorfFields: [{
                 tag: DorfField.CHECKBOX,
                 css: {
-                    field: 'sut'
+                    htmlField: 'sut'
                 }
             }]
         });

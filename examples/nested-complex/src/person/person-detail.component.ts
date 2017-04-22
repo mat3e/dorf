@@ -9,7 +9,9 @@ import { IPerson, Person } from './model';
  *
  * It's important to pass config in the constructor and define onDorfSubmit method.
  */
-@DorfForm()
+@DorfForm({
+    fieldsInSection: 2
+})
 @Component({
     moduleId: module.id,
     selector: 'person-details'

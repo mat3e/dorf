@@ -1,6 +1,7 @@
 /**
  * Possible class types - from Angular's NgClass.
  */
+// TODO: objects support as in NgClass from Angular - allowing objects to be passed
 export type NgDorfClassType = string | string[] | Set<string> | { [klass: string]: any };
 
 /**
@@ -77,18 +78,18 @@ export class DorfButtonsCssClasses implements IDorfButtonsCssClasses {
  *     group: "form-group",
  *     error: "error-message",
  *     label: "control-label",
- *     field: "form-control"
+ *     htmlField: "form-control"
  *   },
  *   dorfFields: [{
  *     tag: DorfField.CHECKBOX,
  *     css: {
- *       field: "no-class",
+ *       htmlField: "no-class",
  *       label: "checkbox-inline"
  *     }
  *   }, {
  *     tag: DorfField.RADIO,
  *     css: {
- *       field: "radio-inline",
+ *       htmlField: "radio-inline",
  *       label: "checkbox-inline"
  *     }
  *   }]
@@ -112,9 +113,19 @@ export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     label?: NgDorfClassType;
 
     /**
-     * Classes for the field.
+     * Classes assigned to the [dorf-field]{@link DorfFieldComponent}, which stores one of the DORF fields at a time.
      */
-    field?: NgDorfClassType;
+    fieldGeneralization?: NgDorfClassType;
+
+    /**
+     * Classes assigned to the concrete field component, under [dorf-field]{@link DorfFieldComponent}.
+     */
+    dorfField?: NgDorfClassType;
+
+    /**
+     * Classes for the HTML control.
+     */
+    htmlField?: NgDorfClassType;
 
     /**
      * Classes for the error, below the field.
@@ -130,7 +141,9 @@ export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
 export class DorfFieldCssClasses implements IDorfFieldCssClasses {
     group: NgDorfClassType = '';
     label: NgDorfClassType = '';
-    field: NgDorfClassType = '';
+    fieldGeneralization: NgDorfClassType = '';
+    dorfField: NgDorfClassType = '';
+    htmlField: NgDorfClassType = '';
     error: NgDorfClassType = '';
     [key: string]: NgDorfClassType;
 
@@ -138,7 +151,9 @@ export class DorfFieldCssClasses implements IDorfFieldCssClasses {
         if (options) {
             this.group = options.group || this.group;
             this.label = options.label || this.label;
-            this.field = options.field || this.field;
+            this.fieldGeneralization = options.fieldGeneralization || this.fieldGeneralization;
+            this.dorfField = options.dorfField || this.dorfField;
+            this.htmlField = options.htmlField || this.htmlField;
             this.error = options.error || this.error;
 
             for (let cls in options) {
@@ -152,7 +167,7 @@ export class DorfFieldCssClasses implements IDorfFieldCssClasses {
 
 export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
     /**
-     * Classes for a label which is next to (around) the field. Used especially with a checkbox or radio buttons.
+     * Classes for a label which is around the field. Used especially with a checkbox or radio buttons.
      */
     innerLabel?: NgDorfClassType;
 }
@@ -187,7 +202,7 @@ export class DorfMultipleLabelsCssClasses extends DorfFieldCssClasses implements
  *     group: "form-group",
  *     error: "error-message",
  *     label: "control-label",
- *     field: "form-control",
+ *     htmlField: "form-control",
  *     form: 'pure-form pure-form-aligned',
  *     buttons: {
  *       save: 'pure-button pure-button-primary',
@@ -198,13 +213,13 @@ export class DorfMultipleLabelsCssClasses extends DorfFieldCssClasses implements
  *   dorfFields: [{
  *     tag: DorfField.CHECKBOX,
  *     css: {
- *       field: "no-class",
+ *       htmlField: "no-class",
  *       label: "checkbox-inline"
  *     }
  *   }, {
  *     tag: DorfField.RADIO,
  *     css: {
- *       field: "radio-inline",
+ *       htmlField: "radio-inline",
  *       label: "checkbox-inline"
  *     }
  *   }]
@@ -225,7 +240,7 @@ export interface IDorfGeneralCssClasses extends IDorfMultipleLabelsCssClasses {
     fieldset?: NgDorfClassType;
 
     /**
-     * CSS classes for a group of DORF grouping divs (each grouping div contains field, label and error).
+     * CSS classes for a group of DORF grouping/wrapping divs (each grouping div contains HTML field, label and error).
      * Classes assigned here are usually connected with a grid system (e.g. `'row'` class from Bootstrap).
      */
     section?: NgDorfClassType;

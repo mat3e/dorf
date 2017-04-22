@@ -63,7 +63,7 @@ describe('DorfFieldWrapperComponent', () => {
             validator: Validators.required,
             errorMessage: errorMsg,
             css: {
-                field: 'sut',
+                htmlField: 'sut',
                 error: 'error'
             }
         });

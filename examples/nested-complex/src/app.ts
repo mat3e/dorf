@@ -1,10 +1,7 @@
 import { Component, NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 
-import {
-    DorfModule,
-    DorfField
-} from 'dorf'
+import { DorfField, DorfModule } from 'dorf'
 
 import { IPerson, Person } from './person/model'
 import { PersonDetailComponent } from './person/person-detail.component'
@@ -18,7 +15,7 @@ import { PersonDetailComponent } from './person/person-detail.component'
     <table class="table table-striped">
     <tbody>
         <tr *ngFor="let p of people; let i = index;">
-            <td>{{p.fullname}}</td><td><button (click)=onClick(i)>edit</button></td>
+            <td>{{p.fullname}}</td><td><button (click)=onClick(i) class="btn btn-secondary">edit</button></td>
         </tr>
     </tbody>
     </table>
@@ -54,10 +51,11 @@ export class App {
 
         DorfModule.forRoot({
             css: {
-                //section: 'row',
-                group: 'form-group row',
+                section: 'row',
+                group: 'form-group col-6 row',
                 label: 'col-2 col-form-label',
-                field: 'form-control', // div around should have col-10; probably dorf-field
+                fieldGeneralization: 'col-10',
+                htmlField: 'form-control',
                 error: 'form-control-feedback',
                 buttons: {
                     save: 'btn btn-primary',
@@ -67,16 +65,16 @@ export class App {
             dorfFields: [{
                 tag: DorfField.CHECKBOX,
                 css: {
-                    group: 'form-check',
+                    dorfField: 'form-check',
                     innerLabel: 'form-check-label',
-                    field: 'form-check-input'
+                    htmlField: 'form-check-input'
                 }
             }, {
                 tag: DorfField.RADIO,
                 css: {
-                    group: 'form-check form-check-inline row',
-                    field: 'form-check-input',
-                    innerLabel: 'form-check-label'
+                    dorfField: 'form-check',
+                    innerLabel: 'form-check-label form-check-inline',
+                    htmlField: 'form-check-input'
                 }
             }]
         })

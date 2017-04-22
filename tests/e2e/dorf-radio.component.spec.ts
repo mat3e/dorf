@@ -38,7 +38,7 @@ describe('DorfRadioComponent', () => {
             dorfFields: [{
                 tag: DorfField.RADIO,
                 css: {
-                    field: 'sut'
+                    htmlField: 'sut'
                 }
             }]
         });

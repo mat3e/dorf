@@ -22,7 +22,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
     imports: [BrowserModule, DorfCoreModule.forRoot({
         css: {
             form: 'pure-form pure-form-aligned',
-            group: 'pure-control-group',
+            section: 'pure-control-group',
             buttons: {
                 save: 'pure-button pure-button-primary',
                 reset: 'hidden',
@@ -32,7 +32,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
         dorfFields: [{
             tag: DorfField.CHECKBOX,
             css: {
-                group: 'pure-controls',
+                section: 'pure-controls',
                 innerLabel: 'pure-checkbox'
             }
         }]

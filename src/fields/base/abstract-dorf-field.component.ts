@@ -58,7 +58,7 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
 
     get key() { return this.metadata.key; }
     get label() { return this.metadata.label; }
-    get fieldCss() { return this.directCss.field || this.cssFromFieldConfig.field || this.cssFromConfig.field; }
+    get htmlFieldCss() { return this.directCss.htmlField || this.cssFromFieldConfig.htmlField || this.cssFromConfig.htmlField; }
     get labelCss() { return this.directCss.label || this.cssFromFieldConfig.label || this.cssFromConfig.label; }
 
     // TODO: is there a way for `touch`? FormControl.markAsTouched is triggered on blur on elemenent with formControl directive

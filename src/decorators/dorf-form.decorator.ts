@@ -245,9 +245,13 @@ export function DorfForm(options?: IDorfFormOptions) {
 
 /** @internal */
 function parseOptionsToTemplate(options?: IDorfFormOptions): string {
-    let start = '<section *ngFor="let fieldMeta of fieldsMetadata">';
+    let start = '<section *ngFor="let fieldMeta of fieldsMetadata" [ngClass]="config.css.section">';
     // tslint:disable-next-line:max-line-length
-    let md = `<dorf-field-wrapper [metadata]="fieldMeta">${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}</dorf-field-wrapper>`;
+    let md = `
+    <dorf-field-wrapper [metadata]="fieldMeta" ${parseNgClassForMetaAndCss('fieldMeta', 'group')}>
+        ${options ? parseAdditionalTags('fieldMeta', options.additionalTags) : ''}
+    </dorf-field-wrapper>
+    `;
     let end = '</section>';
 
     if (options) {
@@ -269,7 +273,11 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
 /** @internal */
 // tslint:disable-next-line:max-line-length
 function parseForMultipleFieldsInSection(additionalTags?: string | string[] | DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[]): string {
-    return `<dorf-field-wrapper *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta">${parseAdditionalTags('meta', additionalTags)}</dorf-field-wrapper>`;
+    return `
+    <dorf-field-wrapper *ngFor="let meta of fieldMeta; let idx = index" [metadata]="meta" ${parseNgClassForMetaAndCss('meta', 'group')}>
+        ${parseAdditionalTags('meta', additionalTags)}
+    </dorf-field-wrapper>
+    `;
 }
 
 /** @internal */
@@ -295,8 +303,15 @@ function parseAdditionalTags(metaName?: string, additionalTags?: string | string
 }
 
 /** @internal */
+// tslint:disable-next-line:max-line-length
 function parseAdditionalTag(tagName: string, metaName: string) {
-    return `<${tagName} *ngIf="${metaName}.tag=='${tagName}'" [metadata]="${metaName}"></${tagName}>`
+    return `<${tagName} *ngIf="${metaName}.tag==='${tagName}'" [metadata]="${metaName}" ${parseNgClassForMetaAndCss(metaName, 'dorfField')}></${tagName}>`;
+}
+
+/** @internal */
+function parseNgClassForMetaAndCss(metaName: string, css: string) {
+    let fullCss = `css.${css}`;
+    return `[ngClass]="${metaName}.${fullCss} || config.getFieldForTag(${metaName}.tag).${fullCss} || config.${fullCss}"`;
 }
 
 /** @internal */
