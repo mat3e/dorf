@@ -1,8 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { IDorfForm, DorfForm, DorfMapper, DorfObjectInput, DorfConfigService } from 'dorf';
 
-import { CustomMapper } from '../ext/custom-mapper'
-
 import { IPerson, Person } from './model';
 
 /**
@@ -17,14 +15,10 @@ import { IPerson, Person } from './model';
     selector: 'person-details'
 })
 export class PersonDetailComponent implements IDorfForm {
-    _mapper: DorfMapper;
-
     @DorfObjectInput() domainObject: Person;
     @Output() createUpdate = new EventEmitter<IPerson>();
 
-    constructor(public config: DorfConfigService) {
-        this._mapper = new CustomMapper(config);
-    }
+    constructor(public config: DorfConfigService) { }
 
     onDorfSubmit() {
         let result = this['form'].value as IPerson;

@@ -46,6 +46,7 @@ export class DorfMapper {
         DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
 
         let fields: DorfFieldMetadata<any, DorfFieldDefinition<any>>[] = [];
+        let order = 0;
 
         // tslint:disable-next-line:forin
         for (let key in fieldDefinitions) {
@@ -54,11 +55,15 @@ export class DorfMapper {
             let metaOptions = this.getMetadataOptions(key, domainObject);
 
             let metadata = new (this.getMetadataForTag(definition.tag))(definition, metaOptions);
+            if (metadata.order === undefined || metadata.order === null) {
+                metadata.order = order;
+            }
+            ++order;
 
             fields.push(metadata);
         }
 
-        return fields;
+        return fields.sort((a, b) => a.order - b.order);
     }
 
     /**

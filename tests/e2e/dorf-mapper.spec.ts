@@ -35,7 +35,8 @@ describe('DorfMapper', () => {
             return new DorfInputDefinition<number>({
                 type: 'number',
                 label: 'Unique ID',
-                validator: Validators.pattern('[0-9]{3}')
+                validator: Validators.pattern('[0-9]{3}'),
+                order: 2
             })
         }
 
@@ -50,7 +51,8 @@ describe('DorfMapper', () => {
 
             return new DorfSelectDefinition({
                 label: 'Job',
-                optionsToSelect: opts
+                optionsToSelect: opts,
+                order: 1
             });
         }
     }
@@ -66,8 +68,9 @@ describe('DorfMapper', () => {
         // THEN
         expect(result.length).toEqual(2);
 
-        let idMeta = result[0];
-        let jobMeta = result[1];
+        // according to the ordering:
+        let idMeta = result[1];
+        let jobMeta = result[0];
 
         expect(idMeta instanceof DorfInputMetadata).toBeTruthy();
         expect((idMeta as DorfInputMetadata<number>).type).toEqual('number');

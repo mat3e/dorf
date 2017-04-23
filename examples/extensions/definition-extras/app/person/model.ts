@@ -89,9 +89,9 @@ export class Person extends DorfDomainObject implements IPerson {
             type: 'text',
             validator: Validators.required,
             errorMessage: 'Name is required',
+            order: 2,
             extras: {
-                placeholder: 'Name...',
-                order: 2
+                placeholder: 'Name...'
             }
         });
     }
@@ -102,9 +102,7 @@ export class Person extends DorfDomainObject implements IPerson {
             type: 'text',
             validator: Validators.required,
             errorMessage: 'Surname is required',
-            extras: {
-                order: 1
-            }
+            order: 1
         });
     }
 
@@ -120,9 +118,7 @@ export class Person extends DorfDomainObject implements IPerson {
             }],
             validator: Validators.required,
             errorMessage: 'Gender is required',
-            extras: {
-                order: 5
-            }
+            order: 5
         });
     }
 
@@ -130,9 +126,9 @@ export class Person extends DorfDomainObject implements IPerson {
         return new DorfInputDefinition({
             label: 'Age',
             type: 'number',
+            order: 3,
             extras: {
-                placeholder: '18 years or not?',
-                order: 3
+                placeholder: '18 years or not?'
             }
         });
     }
@@ -143,9 +139,7 @@ export class Person extends DorfDomainObject implements IPerson {
             type: 'password',
             validator: Validators.pattern('[0-9]{4}'),
             errorMessage: 'PIN should contain just 4 digits',
-            extras: {
-                order: 4
-            }
+            order: 4
         });
     }
 
@@ -168,9 +162,7 @@ export class Person extends DorfDomainObject implements IPerson {
                 key: '#0000ff',
                 value: 'blue'
             }],
-            extras: {
-                order: 6
-            }
+            order: 6
         });
     }
 
@@ -181,9 +173,7 @@ export class Person extends DorfDomainObject implements IPerson {
                 trueValue: 'yes',
                 falseValue: 'no'
             },
-            extras: {
-                order: 0
-            }
+            order: 0
         });
     }
 }

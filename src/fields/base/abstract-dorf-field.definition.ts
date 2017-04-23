@@ -70,6 +70,11 @@ export interface IDorfFieldDefinition<T> {
      * Behavior is similar to `NgModel`'s one.
      */
     updateModelOnChange?: boolean;
+
+    /**
+     * Represents element index in the form.
+     */
+    order?: number;
 }
 
 /**
@@ -85,11 +90,13 @@ export interface IDorfFieldDefinition<T> {
  * @stable
  */
 export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> {
+    public order: number;
+
     private _label: string;
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
     private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
     private _errorMessage: string;
-    private _isListField: boolean = false;
+    private _onSummary: boolean;
     private _css: IDorfFieldCssClasses = new DorfFieldCssClasses();
     private _extras: { [propertyName: string]: any };
     private _debounce: number;
@@ -101,11 +108,12 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
             this._validator = options.validator || this._validator;
             this._asyncValidator = options.asyncValidator || this._asyncValidator;
             this._errorMessage = options.errorMessage;
-            this._isListField = options.onSummary || this._isListField;
+            this._onSummary = options.onSummary;
             this._css = options.css ? new DorfFieldCssClasses(options.css) : this._css;
             this._extras = options.extras;
             this._debounce = options.debounce;
             this._updateModelOnChange = options.updateModelOnChange;
+            this.order = options.order;
         }
     }
 
@@ -118,7 +126,7 @@ export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> 
     get validator() { return this._validator; }
     get asyncValidator() { return this._asyncValidator; }
     get errorMessage() { return this._errorMessage; }
-    get onSummary() { return this._isListField; }
+    get onSummary() { return this._onSummary; }
     get css() { return this._css; }
     get extras() { return this._extras; }
     get debounce() { return this._debounce; }
