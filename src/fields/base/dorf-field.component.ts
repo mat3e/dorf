@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-import { DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { IDorfCommonCssClasses } from '../../base/dorf-css-classes';
+import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
@@ -31,13 +32,13 @@ import { DorfField } from './dorf-field';
     selector: 'dorf-field',
     templateUrl: './dorf-field.component.html'
 })
-export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
+export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
 
     constructor(config: DorfConfigService) {
         super(config);
     }
 
-    get dorfFieldCss() { return this.directCss.dorfField || this.cssFromFieldConfig.dorfField || this.cssFromConfig.dorfField; }
+    get dorfFieldCss() { return this.getCss('dorfField'); }
 
     get isDorfInput() { return this.isDorfTag(DorfField.INPUT); }
     get isDorfRadio() { return this.isDorfTag(DorfField.RADIO); }

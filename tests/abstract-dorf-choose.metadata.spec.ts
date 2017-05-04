@@ -1,4 +1,4 @@
-import { OptionType, DorfChooseDefinition } from '../src/fields/base/abstract-dorf-choose.definition';
+import { OptionType, IDorfChooseDefinition } from '../src/fields/base/abstract-dorf-choose.definition';
 import { DorfChooseMetadata } from '../src/fields/base/abstract-dorf-choose.metadata';
 import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
 import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
@@ -14,8 +14,8 @@ describe('DorfChooseMetadata', () => {
         let def2 = new DorfSelectDefinition<number>({ optionsToSelect: opts2 });
 
         // WHEN
-        let meta1: DorfChooseMetadata<string, DorfChooseDefinition<string>> = new DorfRadioMetadata<string>(def1);
-        let meta2: DorfChooseMetadata<number, DorfChooseDefinition<number>> = new DorfSelectMetadata<number>(def2);
+        let meta1: DorfChooseMetadata<string, IDorfChooseDefinition<string>> = new DorfRadioMetadata<string>(def1);
+        let meta2: DorfChooseMetadata<number, IDorfChooseDefinition<number>> = new DorfSelectMetadata<number>(def2);
 
         // THEN
         expect(meta1.optionsToSelect).toEqual(opts1);

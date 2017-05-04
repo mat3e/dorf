@@ -1,4 +1,6 @@
 import { PropertiesToDorfDefinitionsMap } from './dorf-mapper';
+import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
+import { IDorfChooseDefinition, DorfChooseDefinition } from '../fields/base/abstract-dorf-choose.definition';
 
 /**
  * @whatItDoes Defines a Domain Object. Enfoces the existence of field definitions.
@@ -57,5 +59,16 @@ export abstract class DorfDomainObject {
      */
     get isDorfObject() {
         return true;
+    }
+
+    /**
+     * Allows changing the definition e.g. inside the form component.
+     * Support is very limited here. For now it is allowed only for {@link DorfChooseDefinition} - for its async options.
+     */
+    updateDefinition(fieldName: string, def: IDorfDefinitionBase<any>) {
+        let oldDef = this.fieldDefinitions[fieldName];
+        if (oldDef instanceof DorfChooseDefinition) {
+            oldDef.asyncOptionsToSelect = (def as IDorfChooseDefinition<any>).asyncOptionsToSelect;
+        }
     }
 }

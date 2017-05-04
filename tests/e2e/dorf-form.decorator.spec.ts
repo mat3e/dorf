@@ -9,6 +9,7 @@ import { Person1, Person2, Person1DetailComponent, Person2DetailComponent } from
 import { DorfButtonsComponent } from '../../src/base/dorf-buttons.component';
 import { DorfFieldComponent } from '../../src/fields/base/dorf-field.component';
 import { DorfFieldWrapperComponent } from '../../src/fields/base/dorf-field-wrapper.component';
+import { DorfGroupWrapperComponent } from '../../src/fields/base/dorf-group-wrapper.component';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 import { DorfSelectComponent } from '../../src/fields/dorf-select.component';
 import { DorfRadioComponent } from '../../src/fields/dorf-radio.component';
@@ -45,6 +46,7 @@ describe('DorfForm', () => {
             declarations: [
                 DorfFieldComponent,
                 DorfFieldWrapperComponent,
+                DorfGroupWrapperComponent,
                 DorfInputComponent,
                 DorfSelectComponent,
                 DorfRadioComponent,
@@ -100,8 +102,8 @@ describe('DorfForm', () => {
             expect((SUT1 as any).validator).toBeDefined();
             expect((SUT1 as any).validator).toEqual(Validators.nullValidator);
 
-            expect((SUT1 as any).fieldsMetadata).toBeDefined();
-            expect((SUT1 as any).fieldsMetadata.length).toEqual(2);
+            expect((SUT1 as any).groupedFieldsMetadata).toBeDefined();
+            expect((SUT1 as any).groupedFieldsMetadata.length).toEqual(2);
 
             expect((SUT1 as any).form).toBeDefined();
             expect(Object.keys((SUT1 as any).form.controls).length).toEqual(2);
@@ -139,10 +141,8 @@ describe('DorfForm', () => {
 
             expect((SUT2 as any)._fieldsMetadata).toBeDefined();
             expect((SUT2 as any)._fieldsMetadata.length).toEqual(2);
-            expect((SUT2 as any)._multipleFieldsInSection).toBeTruthy();
-            expect((SUT2 as any)._dividedFieldsMetadata).toBeDefined();
-            expect((SUT2 as any)._dividedFieldsMetadata.length).toEqual(1);
-            expect((SUT2 as any).fieldsMetadata.length).toEqual(1);
+            expect((SUT2 as any).groupedFieldsMetadata).toBeDefined();
+            expect((SUT2 as any).groupedFieldsMetadata.length).toEqual(2);
 
             expect((SUT2 as any).form).toBeDefined();
             expect(Object.keys((SUT2 as any).form.controls).length).toEqual(2);

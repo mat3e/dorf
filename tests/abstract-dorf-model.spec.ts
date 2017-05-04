@@ -12,6 +12,7 @@ describe('DorfDomainObject', () => {
         let obj = new Test();
 
         // THEN
+        expect(obj.updateDefinition).toBeDefined();
         expect(obj.isDorfObject).toBeTruthy();
     });
 });

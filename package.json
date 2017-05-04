@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "decorator",
@@ -27,13 +27,12 @@
     "build": "tsc",
     "build-all": "npm run build && npm run build-examples",
     "build-examples": "npm run build-old-examples && npm run build-new-examples",
-    "build-old-examples": "npm run simple-example-old && npm run field-example && npm run extras-example && npm run definition-example",
-    "simple-example-old": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/simple/old-style/node_modules/dorf/",
+    "build-old-examples": "npm run field-example && npm run extras-example && npm run definition-example",
     "field-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/new-field/node_modules/dorf/",
     "extras-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/definition-extras/node_modules/dorf/",
     "definition-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/extensions/different-definition/node_modules/dorf/",
     "build-new-examples": "npm run simple-example-new && npm run nested-complex-example",
-    "simple-example-new": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/simple/new-style/node_modules/dorf/",
+    "simple-example-new": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/simple/node_modules/dorf/",
     "nested-complex-example": "copyfiles ./src/**/*.js ./src/**/*.html ./src/**/*.d.ts ./examples/nested-complex/node_modules/dorf/",
     "build-webpack": "webpack --progress --profile --bail --config config/webpack/lib.js"
   },

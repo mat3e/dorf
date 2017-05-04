@@ -10,7 +10,7 @@ describe('DorfObject', () => {
 
     let obj = new TestDomainObject();
 
-    it('adds \'isDorfObject\' and \'fieldDefinitions\' to annotated object', () => {
+    it('adds "isDorfObject" and "fieldDefinitions" to annotated object', () => {
         expect(obj['isDorfObject']).toBeDefined();
         expect(obj['isDorfObject']).toBeTruthy();
         expect(obj['fieldDefinitions']).toBeDefined();
@@ -37,7 +37,7 @@ describe('DorfInput', () => {
 
     let obj = new TestDomainObject();
 
-    it('adds definitions to a \'fieldDefinitions\' map', () => {
+    it('adds definitions to a "fieldDefinitions" map', () => {
         expect(obj['fieldDefinitions']._name).toBeDefined();
         expect(obj['fieldDefinitions']._name).toEqual(new DorfInputDefinition<string>(def1));
         expect(obj['fieldDefinitions']._surname).toBeDefined();
@@ -62,7 +62,7 @@ describe('DorfSelect', () => {
 
     let obj = new TestDomainObject();
 
-    it('adds definitions to a \'fieldDefinitions\' map', () => {
+    it('adds definitions to a "fieldDefinitions" map', () => {
         expect(obj['fieldDefinitions']._favColor).toBeDefined();
         expect(obj['fieldDefinitions']._favColor).toEqual(new DorfSelectDefinition<number>(def));
     });
@@ -82,7 +82,7 @@ describe('DorfCheckbox', () => {
 
     let obj = new TestDomainObject();
 
-    it('adds definitions to a \'fieldDefinitions\' map', () => {
+    it('adds definitions to a "fieldDefinitions" map', () => {
         expect(obj['fieldDefinitions']._smart).toBeDefined();
     });
 });
@@ -101,7 +101,7 @@ describe('DorfRadio', () => {
 
     let obj = new TestDomainObject();
 
-    it('adds definitions to a \'fieldDefinitions\' map', () => {
+    it('adds definitions to a "fieldDefinitions" map', () => {
         expect(obj['fieldDefinitions']._gender).toBeDefined();
     });
 });

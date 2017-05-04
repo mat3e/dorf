@@ -76,4 +76,9 @@ export abstract class DorfChooseDefinition<T> extends DorfFieldDefinition<T> imp
         }
         return this._optionsToSelect;
     }
+
+    set asyncOptionsToSelect(asyncOpts: Promise<OptionType<T>[]> | Observable<OptionType<T>[]>) {
+        this._optionsToSelect = null;
+        this._asyncOptionsToSelect = asyncOpts;
+    }
 }

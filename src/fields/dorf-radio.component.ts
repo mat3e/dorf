@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
 import { IDorfRadioDefinition } from './dorf-radio.definition';
 import { DorfRadioMetadata } from './dorf-radio.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';
@@ -26,5 +27,5 @@ export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetad
         super(config);
     }
 
-    get innerLabelCss() { return this.directCss.innerLabel || this.cssFromFieldConfig.innerLabel || this.cssFromConfig.innerLabel; }
+    get innerLabelCss() { return this.getCss('innerLabel'); }
 }

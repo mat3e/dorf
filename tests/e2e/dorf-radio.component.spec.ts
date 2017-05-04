@@ -72,7 +72,7 @@ describe('DorfRadioComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should support defined \'optionsToSelect\'', async(() => {
+    it('should support defined "optionsToSelect"', async(() => {
         fixture.whenStable().then(() => {
 
             // radios

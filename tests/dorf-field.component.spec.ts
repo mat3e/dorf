@@ -2,7 +2,7 @@ import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 import { DorfFieldComponent } from '../src/fields/base/dorf-field.component';
 
-describe('DorfFielWrapperComponent', () => {
+describe('DorfFieldComponent', () => {
     it('should support built in tags', () => {
         // GIVEN
         let testData: any[] = [

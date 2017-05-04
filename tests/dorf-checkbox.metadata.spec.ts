@@ -3,7 +3,7 @@ import { ICheckboxMapping, DorfCheckboxDefinition } from '../src/fields/dorf-che
 import { DorfCheckboxMetadata } from '../src/fields/dorf-checkbox.metadata';
 
 describe('DorfCheckboxMetadata', () => {
-    it('should get values from the definition', () => {
+    it('should get "mapping" and "innerLabel" values from the definition', () => {
         // GIVEN
         let innerLabel = 'test';
         let mapping: ICheckboxMapping<number> = {
@@ -19,7 +19,6 @@ describe('DorfCheckboxMetadata', () => {
         let meta = new DorfCheckboxMetadata<number>(def);
 
         // THEN
-        expect(meta.tag).toEqual(DorfField.CHECKBOX);
         expect(meta.mapping).toEqual(mapping);
         expect(meta.innerLabel).toEqual(innerLabel);
     });

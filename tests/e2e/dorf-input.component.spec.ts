@@ -118,7 +118,7 @@ describe('DorfInputComponent', () => {
         });
     }));
 
-    it('should support \'required\' validator', async(() => {
+    it('should support "required" validator', async(() => {
         fixture.whenStable().then(() => {
 
             // WHEN
@@ -134,7 +134,7 @@ describe('DorfInputComponent', () => {
         });
     }));
 
-    it('should support \'updateModelOnChange\'', () => {
+    it('should support "updateModelOnChange"', () => {
         fixture.whenStable().then(() => {
 
             // WHEN

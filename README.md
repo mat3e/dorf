@@ -6,7 +6,6 @@ Angular's [Reactive Forms](https://angular.io/docs/ts/latest/cookbook/dynamic-fo
 
 This library is about taking them to the next level by coupling with _Domain Objects_.
 
-#### [Live example](https://embed.plnkr.co/6H2jto/)
 #### [3.0.0-beta example](http://embed.plnkr.co/fhEfqD/)
 
 ### Want to create a form for an object?
@@ -61,10 +60,12 @@ The aim of this library is to speed up boring things like a creation of the ordi
 
 Future plans include:
 
- - More online examples, more tests, a nice documentation and step by step tutorial on building with DORF
+ - More tests, a nice documentation and step by step tutorial on building with DORF
+ - UX improvements - aria support, styles prepared for most common libraries
+ - Reactive grids. It is another boring, ordinary thing (and `onSummary` is already presented in the `field definition`)
+ - Angular Material module
+ - Form arrays
  - Methods for speeding up the creation of custom fields (even more)
- - Nested groups and form arrays [v3]
- - Reactive grids. It is another boring, ordinary thing (and `onSummary` is already presented in the `field definition`) [v4 or greater]
 
 ### List of the online examples
  - [Simple example](http://embed.plnkr.co/6H2jto/)

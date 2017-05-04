@@ -1,14 +1,72 @@
-import { Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
-import { DorfFieldCssClasses } from '../src/base/dorf-css-classes';
+import { DorfCssClasses } from '../src/base/dorf-css-classes';
 
-import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
+import { IDorfDefinitionBase, IDorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
-import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
+import { DorfMetadataBase, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 import { DorfField } from '../src/fields/base/dorf-field';
+
+describe('DorfMetadataBase', () => {
+    it('gets the values from options and definition', () => {
+        // GIVEN
+        let def = new DorfSelectDefinition();
+
+        // WHEN
+        let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def, { key: 'abc' });
+
+        // THEN
+        expect(meta.tag).toEqual(DorfField.SELECT);
+        expect(meta.key).toEqual('abc');
+    });
+
+    it('supports additional properties, from definition "extras"', () => {
+        // GIVEN
+        let VAL = 'bar';
+        let def = new DorfSelectDefinition({ extras: { foo: VAL } });
+
+        // WHEN
+        let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def);
+
+        // THEN
+        expect((meta as any).foo).toEqual(VAL);
+    });
+
+    it('uses "parentCss" to determine style and "isNested"', () => {
+        // GIVEN
+        let CLASS = 'xyz';
+        let def = new DorfSelectDefinition();
+        let options = { key: 'xx', parentCss: { htmlField: CLASS } };
+
+        // WHEN
+        let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def, options);
+
+        // THEN
+        expect(meta.isNested).toBeTruthy();
+        expect(meta.getCss('htmlField')).toEqual(CLASS);
+    });
+
+    it('returns direct css class before "parentCss"', () => {
+        // GIVEN
+        let CLASS1 = 'xyz';
+        let CLASS2 = 'abc';
+        let def = new DorfSelectDefinition({
+            css: {
+                htmlField: CLASS1
+            }
+        });
+        let options = { key: 'xx', parentCss: { htmlField: CLASS2 } };
+
+        // WHEN
+        let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def, options);
+
+        // THEN
+        expect(meta.getCss('htmlField')).toEqual(CLASS1);
+    });
+})
 
 describe('DorfFieldMetadata', () => {
     it('should get values from the definition', () => {
@@ -17,40 +75,43 @@ describe('DorfFieldMetadata', () => {
         let def2 = new DorfSelectDefinition();
 
         // WHEN
-        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1);
-        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2);
+        let meta1: DorfFieldMetadata<any, IDorfFieldDefinition<any>> = new DorfInputMetadata(def1);
+        let meta2: DorfFieldMetadata<any, IDorfFieldDefinition<any>> = new DorfSelectMetadata(def2);
 
         // THEN
-        expect(meta1.tag).toEqual(DorfField.INPUT);
-        expect(meta2.tag).toEqual(DorfField.SELECT);
-        expect(meta1.validator).toEqual(Validators.nullValidator);
-        expect(meta2.validator).toEqual(Validators.nullValidator);
-        expect(meta1.asyncValidator).toBeNull();
-        expect(meta2.asyncValidator).toBeNull();
         expect(meta1.onSummary).toBeFalsy();
         expect(meta2.onSummary).toBeFalsy();
-        expect(meta1.css).toEqual(new DorfFieldCssClasses());
-        expect(meta2.css).toEqual(new DorfFieldCssClasses());
     });
 
     it('should get values from the provided options', () => {
         // GIVEN
-        let def1 = new DorfInputDefinition();
-        let def2 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: true });
-        let def3 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: false });
+        let def1 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: true });
+        let def2 = new DorfSelectDefinition({ optionsToSelect: null, updateModelOnChange: false });
         let setter = (val: any) => { console.log(val); };
 
         // WHEN
-        let meta1: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfInputMetadata(def1, { key: 'aaa', value: null });
-        let meta2: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def2, { key: 'bbb', setDomainObjValue: setter });
-        let meta3: DorfFieldMetadata<any, DorfFieldDefinition<any>> = new DorfSelectMetadata(def3, { key: 'ccc', setDomainObjValue: setter });
+        let meta1: DorfFieldMetadata<any, IDorfFieldDefinition<any>>
+            = new DorfSelectMetadata(def1, { key: 'bbb', setDomainObjValue: setter });
+        let meta2: DorfFieldMetadata<any, IDorfFieldDefinition<any>>
+            = new DorfSelectMetadata(def2, { key: 'ccc', setDomainObjValue: setter });
 
         // THEN
-        expect(meta1.key).toEqual('aaa');
-        expect(meta2.key).toEqual('bbb');
-        expect(meta2['_setDomainObjValue']).toEqual(setter);
-        expect(meta3.key).toEqual('ccc');
+        expect(meta1['_setDomainObjValue']).toEqual(setter);
         // without `updateModelOnChange` here should be a noop setter
-        expect(meta3['_setDomainObjValue']).not.toEqual(setter);
+        expect(meta2['_setDomainObjValue']).not.toEqual(setter);
+    });
+
+    it('generates formControl and caches the value', () => {
+        // GIVEN
+        let def = new DorfInputDefinition();
+        let meta: DorfFieldMetadata<any, IDorfFieldDefinition<any>> = new DorfInputMetadata(def);
+        let extractor = spyOn(meta as any, 'extractFormControl').and.returnValue(new FormControl());
+
+        // WHEN
+        let called = meta.formControl;
+        called = meta.formControl;
+
+        // THEN
+        expect(extractor).toHaveBeenCalledTimes(1);
     });
 });

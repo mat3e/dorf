@@ -1,7 +1,8 @@
 import { Component, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { ICheckboxMapping, IDorfCheckboxDefinition, DorfCheckboxDefinition } from './dorf-checkbox.definition';
+import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
+import { ICheckboxMapping, IDorfCheckboxDefinition } from './dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from './dorf-checkbox.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
 import { DorfField } from './base/dorf-field';
@@ -53,5 +54,5 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
     }
 
     get innerLabel() { return this.metadata.innerLabel; }
-    get innerLabelCss() { return this.directCss.innerLabel || this.cssFromFieldConfig.innerLabel || this.cssFromConfig.innerLabel; }
+    get innerLabelCss() { return this.getCss('innerLabel'); }
 }

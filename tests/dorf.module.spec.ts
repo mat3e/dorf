@@ -4,7 +4,7 @@ import { DorfModule } from '../src/dorf.module';
 import { DorfSupportingService } from '../src/dorf-config.service';
 
 describe('DorfModule', () => {
-    it('supports parametrized DorfConfigService in forRoot method', () => {
+    it('supports parametrized DorfConfigService in "forRoot" method', () => {
         // GIVEN
         let opts = {
             css: { general: { form: 'test' } }

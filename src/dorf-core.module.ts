@@ -3,7 +3,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IDorfService, DorfConfigService, DorfSupportingService } from './dorf-config.service';
-import { DorfMapper } from './base/dorf-mapper';
 
 /*
 Typescript files which should be exported.
@@ -13,7 +12,6 @@ export * from './decorators/dorf-object.decorator';
 
 export * from './base/abstract-dorf.model';
 export * from './base/dorf-css-classes';
-export * from './base/abstract-dorf-form.component';
 
 export * from './fields/base/dorf-field';
 export * from './fields/base/abstract-dorf-field.definition';
@@ -22,6 +20,8 @@ export * from './fields/base/abstract-dorf-field.component';
 export * from './fields/base/abstract-dorf-choose.definition';
 export * from './fields/base/abstract-dorf-choose.metadata';
 export * from './fields/base/abstract-dorf-choose.component';
+export * from './fields/base/dorf-nested.definition';
+export * from './fields/base/dorf-nested.metadata';
 
 export * from './base/dorf-mapper';
 export * from './dorf-config.service';
@@ -54,7 +54,7 @@ export * from './dorf-config.service';
  * This module exports `FormsModule` and `ReactiveFormsModule`. This version of DORF module, requires additional components,
  * like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`. Those can be defined on their own
  * or add through the following DORF declarations:
- * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent]`.
+ * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent, DorfGroupWrapperComponent]`.
  *
  * @stable
  */

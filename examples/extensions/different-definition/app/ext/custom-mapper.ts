@@ -12,7 +12,8 @@ import {
     IDorfSelectDefinition,
     DorfSelectDefinition,
     IDorfFieldMetadata,
-    DorfFieldMetadata
+    DorfFieldMetadata,
+    DorfNestedMetadata
 } from 'dorf';
 
 import { IBackendDefinition } from '../person/backend-definition';
@@ -22,8 +23,12 @@ export class CustomMapper extends DorfMapper {
         super(config);
     }
 
-    mapObjectWithDefinitionsToFieldsMetadata<T>(domainObject: T, fieldDefinitions: PropertiesToDorfDefinitionsMap<T>): DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
-        return super.mapObjectWithDefinitionsToFieldsMetadata(domainObject, this.fixDefinitions(fieldDefinitions));
+    mapObjectWithDefinitionsToFieldsMetadata<T>(
+        domainObject: T,
+        fieldDefinitions: PropertiesToDorfDefinitionsMap<T>,
+        parent: DorfNestedMetadata<any> = undefined
+    ): IDorfFieldMetadata<any>[] {
+        return super.mapObjectWithDefinitionsToFieldsMetadata(domainObject, this.fixDefinitions(fieldDefinitions), parent);
     }
 
     // @Override

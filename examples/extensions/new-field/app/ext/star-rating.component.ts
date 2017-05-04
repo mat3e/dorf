@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import {
-    DorfField,
+    IDorfField,
     DorfConfigService,
     IDorfFieldDefinition,
     IDorfFieldMetadata,
@@ -66,8 +66,8 @@ export class StarRatingComponent extends AbstractDorfFieldComponent<number, Star
     get value() { return this.formControl.value; }
 }
 
-export const STAR_RATING: DorfField<typeof StarRatingDefinition, typeof StarRatingMetadata> = {
+export const STAR_RATING: IDorfField<typeof StarRatingDefinition, typeof StarRatingMetadata> = {
     tag: StarRatingDefinition.TAG,
     definition: StarRatingDefinition,
     metadata: StarRatingMetadata
-}
+};

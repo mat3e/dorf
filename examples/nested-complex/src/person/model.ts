@@ -1,6 +1,8 @@
 import { Validators } from '@angular/forms';
 
-import { DorfObject, DorfInput, DorfRadio, DorfSelect, DorfCheckbox } from 'dorf';
+import { DorfObject, DorfNestedObject, DorfInput, DorfRadio, DorfSelect, DorfCheckbox } from 'dorf';
+
+import { IContactData, ContactData } from '../contact/model';
 
 /**
  * Reactive Form will return set of properties, not a class with methods.
@@ -11,9 +13,7 @@ export interface IPerson {
     surname: string;
     gender: string;
     age: number;
-    cardCode: number;
-    favColor: string;
-    smart: string;
+    contact: IContactData;
 }
 
 /**
@@ -29,16 +29,13 @@ export class Person implements IPerson {
      */
     @DorfInput({
         label: 'Name', type: 'text',
-        validator: Validators.required, errorMessage: 'Name is required',
-        updateModelOnChange: true
+        validator: Validators.required, errorMessage: 'Name is required'
     })
     name: string;
 
     @DorfInput({
         label: 'Surname', type: 'text',
-        validator: Validators.required, errorMessage: 'Surname is required',
-        debounce: 1000,
-        updateModelOnChange: true
+        validator: Validators.required, errorMessage: 'Surname is required'
     })
     surname: string;
 
@@ -52,30 +49,8 @@ export class Person implements IPerson {
     @DorfInput({ label: 'Age', type: 'number' })
     age: number;
 
-    @DorfInput({
-        label: 'Credit card PIN', type: 'password',
-        debounce: 1000,
-        validator: Validators.pattern('[0-9]{4}'), errorMessage: 'PIN should contain just 4 digits'
-    })
-    cardCode: number;
-
-    @DorfSelect({
-        label: 'Favourite color',
-        optionsToSelect: [
-            { key: '#fff', value: 'white' },
-            { key: '#000', value: 'black' },
-            { key: '#ff0000', value: 'red' },
-            { key: '#00ff00', value: 'green' },
-            { key: '#0000ff', value: 'blue' }
-        ]
-    })
-    favColor: string;
-
-    @DorfCheckbox({
-        innerLabel: 'Is smart?',
-        mapping: { trueValue: 'yes', falseValue: 'no' }
-    })
-    smart: string;
+    @DorfNestedObject({ label: 'Contact', /*transparentFlow: true*/columnsNumber: 3 })
+    contact: ContactData = new ContactData();
 
     /**
      * Shortcut for getting name and surname pair.
@@ -93,9 +68,7 @@ export class Person implements IPerson {
             this.surname = base.surname;
             this.gender = base.gender;
             this.age = base.age;
-            this.cardCode = base.cardCode;
-            this.favColor = base.favColor;
-            this.smart = base.smart;
+            this.contact = new ContactData(base.contact);
         }
     }
 }

@@ -69,8 +69,8 @@ describe('DorfMapper', () => {
         expect(result.length).toEqual(2);
 
         // according to the ordering:
-        let idMeta = result[1];
-        let jobMeta = result[0];
+        let idMeta = result[1] as DorfInputMetadata<number>;
+        let jobMeta = result[0] as DorfSelectMetadata<number>;
 
         expect(idMeta instanceof DorfInputMetadata).toBeTruthy();
         expect((idMeta as DorfInputMetadata<number>).type).toEqual('number');

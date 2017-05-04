@@ -6,7 +6,9 @@ import { DorfFieldsModule } from './dorf-fields.module';
 import { DorfButtonsComponent } from './base/dorf-buttons.component';
 import { IDorfService, DorfSupportingService } from './dorf-config.service';
 import { DorfFieldWrapperComponent } from './fields/base/dorf-field-wrapper.component';
+import { DorfGroupWrapperComponent } from './fields/base/dorf-group-wrapper.component';
 
+export * from './fields/base/dorf-group-wrapper.component';
 export * from './fields/base/dorf-field-wrapper.component';
 export * from './base/dorf-buttons.component';
 
@@ -43,12 +45,14 @@ export * from './base/dorf-buttons.component';
     imports: [CommonModule, DorfFieldsModule],
     declarations: [
         DorfButtonsComponent,
-        DorfFieldWrapperComponent
+        DorfFieldWrapperComponent,
+        DorfGroupWrapperComponent
     ],
     exports: [
         DorfFieldsModule,
         DorfButtonsComponent,
-        DorfFieldWrapperComponent
+        DorfFieldWrapperComponent,
+        DorfGroupWrapperComponent
     ]
 })
 export class DorfModule {

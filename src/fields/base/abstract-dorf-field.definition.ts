@@ -1,12 +1,47 @@
 import { Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 
-import { IDorfFieldCssClasses, DorfFieldCssClasses } from '../../base/dorf-css-classes';
+import { IDorfFieldCssClasses, DorfCssClasses } from '../../base/dorf-css-classes';
 
 /**
- * @whatItDoes Basic definition type.
+ * @whatItDoes The simplest definition, used for fields and for nested objects from Domain Object.
+ *
+ * @stable
+ */
+export interface IDorfDefinitionBase<T> {
+    /**
+     * Label which should describe the field.
+     */
+    label?: string;
+
+    /**
+     * [CSS classes]{@link IDorfFieldCssClasses} which should be assigned to this field.
+     */
+    css?: IDorfFieldCssClasses;
+
+    /**
+     * Represents element index in the form.
+     */
+    order?: number;
+
+    /**
+     * Tag is de facto a selector for the component. It allows to identify a particular component in HTML form.
+     */
+    tag?: string;
+
+    /**
+     * Additional properties which can be defined on the fly.
+     * Each property from this object would be presented directly on [field metadata]{@link DorfFieldMetadata}.
+     * Accessing them should be implemented separately, e.g. in [DorfMapper extension]{@link DorfMapper}.
+     */
+    extras?: { [propertyName: string]: any };
+}
+
+/**
+ * @whatItDoes Basic definition type for a property from Domain Object.
  *
  * @howToUse
- * Each custom field should be built starting from the extension of this interface.
+ * Each custom field should be built starting from the extension of this interface. It contains parameters to be defined for a field,
+ * when using DORF.
  *
  * ### Example
  *
@@ -21,12 +56,7 @@ import { IDorfFieldCssClasses, DorfFieldCssClasses } from '../../base/dorf-css-c
  *
  * @stable
  */
-export interface IDorfFieldDefinition<T> {
-    /**
-     * Label which should describe the field.
-     */
-    label?: string;
-
+export interface IDorfFieldDefinition<T> extends IDorfDefinitionBase<T> {
     /**
      * Value checker.
      */
@@ -48,18 +78,6 @@ export interface IDorfFieldDefinition<T> {
     onSummary?: boolean;
 
     /**
-     * [CSS classes]{@link IDorfFieldCssClasses} which should be assigned to this field.
-     */
-    css?: IDorfFieldCssClasses;
-
-    /**
-     * Additional properties which can be defined on the fly.
-     * Each property from this object would be presented directly on [field metadata]{@link DorfFieldMetadata}.
-     * Accessing them should be implemented separately, e.g. in [DorfMapper extension]{@link DorfMapper}.
-     */
-    extras?: { [propertyName: string]: any };
-
-    /**
      * Property known from `ng-model-options` from Angular 1.3.
      * Defines time (in milliseconds) which should pass before updating a field value.
      */
@@ -70,11 +88,35 @@ export interface IDorfFieldDefinition<T> {
      * Behavior is similar to `NgModel`'s one.
      */
     updateModelOnChange?: boolean;
+}
 
-    /**
-     * Represents element index in the form.
-     */
-    order?: number;
+/**
+ * @whatItDoes Common part for fields and nested objects.
+ *
+ * @stable
+ */
+export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
+    public order: number;
+
+    private _css: IDorfFieldCssClasses = new DorfCssClasses();
+    private _label: string;
+    private _extras: { [propertyName: string]: any };
+
+    abstract get tag(): string;
+
+    constructor(options?: IDorfDefinitionBase<T>) {
+        if (options) {
+            this.order = options.order;
+
+            this._css = options.css ? new DorfCssClasses(options.css) : this._css;
+            this._label = options.label;
+            this._extras = options.extras;
+        }
+    }
+
+    get css() { return this._css; }
+    get label() { return this._label; }
+    get extras() { return this._extras; }
 }
 
 /**
@@ -89,46 +131,31 @@ export interface IDorfFieldDefinition<T> {
  *
  * @stable
  */
-export abstract class DorfFieldDefinition<T> implements IDorfFieldDefinition<T> {
-    public order: number;
-
-    private _label: string;
+export abstract class DorfFieldDefinition<T> extends DorfDefinitionBase<T> implements IDorfFieldDefinition<T> {
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
     private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
     private _errorMessage: string;
     private _onSummary: boolean;
-    private _css: IDorfFieldCssClasses = new DorfFieldCssClasses();
-    private _extras: { [propertyName: string]: any };
     private _debounce: number;
     private _updateModelOnChange: boolean;
 
     constructor(options?: IDorfFieldDefinition<T>) {
+        super(options);
+
         if (options) {
-            this._label = options.label;
             this._validator = options.validator || this._validator;
             this._asyncValidator = options.asyncValidator || this._asyncValidator;
             this._errorMessage = options.errorMessage;
             this._onSummary = options.onSummary;
-            this._css = options.css ? new DorfFieldCssClasses(options.css) : this._css;
-            this._extras = options.extras;
             this._debounce = options.debounce;
             this._updateModelOnChange = options.updateModelOnChange;
-            this.order = options.order;
         }
     }
 
-    /**
-     * Tag is de facto a selector for the component. It allows to identify a particular component in HTML form.
-     */
-    abstract get tag(): string;
-
-    get label() { return this._label; }
     get validator() { return this._validator; }
     get asyncValidator() { return this._asyncValidator; }
     get errorMessage() { return this._errorMessage; }
     get onSummary() { return this._onSummary; }
-    get css() { return this._css; }
-    get extras() { return this._extras; }
     get debounce() { return this._debounce; }
     get updateModelOnChange() { return this._updateModelOnChange; }
 }

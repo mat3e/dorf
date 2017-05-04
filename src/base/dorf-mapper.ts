@@ -1,7 +1,8 @@
 import { DorfConfigService } from '../dorf-config.service';
 
-import { IDorfFieldDefinition, DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
 import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
+import { DorfNestedMetadata } from '../fields/base/dorf-nested.metadata';
 import { DorfInputDefinition } from '../fields/dorf-input.definition';
 import { DorfInputMetadata } from '../fields/dorf-input.metadata';
 import { DorfRadioDefinition } from '../fields/dorf-radio.definition';
@@ -23,7 +24,7 @@ import { DorfField } from '../fields/base/dorf-field';
  * @stable
  */
 export interface PropertiesToDorfDefinitionsMap<DorfObj> {
-    [propertyName: string]: DorfFieldDefinition<any>;
+    [propertyName: string]: IDorfDefinitionBase<any>;
 }
 
 /**
@@ -42,23 +43,31 @@ export class DorfMapper {
     /**
      * Main method for transpiling.
      */
-    mapObjectWithDefinitionsToFieldsMetadata<DomObj>(domainObject: DomObj, fieldDefinitions: PropertiesToDorfDefinitionsMap<DomObj>):
-        DorfFieldMetadata<any, DorfFieldDefinition<any>>[] {
+    mapObjectWithDefinitionsToFieldsMetadata<DomObj>(
+        domainObject: DomObj,
+        fieldDefinitions: PropertiesToDorfDefinitionsMap<DomObj>,
+        parent: DorfNestedMetadata<any> = undefined
+    ): IDorfFieldMetadata<any>[] {
 
-        let fields: DorfFieldMetadata<any, DorfFieldDefinition<any>>[] = [];
+        let fields: DorfFieldMetadata<any, IDorfDefinitionBase<any>>[] = [];
         let order = 0;
 
         // tslint:disable-next-line:forin
         for (let key in fieldDefinitions) {
 
             let definition = fieldDefinitions[key];
-            let metaOptions = this.getMetadataOptions(key, domainObject);
+            let metaOptions = this.getMetadataOptions(key, domainObject, parent);
 
             let metadata = new (this.getMetadataForTag(definition.tag))(definition, metaOptions);
             if (metadata.order === undefined || metadata.order === null) {
                 metadata.order = order;
             }
             ++order;
+
+            if (metadata instanceof DorfNestedMetadata) {
+                metadata.nestedFieldsMetadata
+                    = this.mapObjectWithDefinitionsToFieldsMetadata(metadata.value, metadata.definitionsForNestedObject, metadata);
+            }
 
             fields.push(metadata);
         }
@@ -70,11 +79,12 @@ export class DorfMapper {
      * Creates {@link IDorfFieldMetadata} for the particular property, identified by `propertyName`.
      * Property comes from domain object, passed as `obj`.
      */
-    protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj): IDorfFieldMetadata<any> {
+    protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj, parent: DorfNestedMetadata<any>): IDorfFieldMetadata<any> {
         return {
             key: propertyName,
             value: obj[propertyName],
-            setDomainObjValue: (val: DomObj[keyof DomObj]) => { obj[propertyName] = val; }
+            setDomainObjValue: (val: DomObj[keyof DomObj]) => { obj[propertyName] = val; },
+            parentCss: parent && parent.css
         };
     }
 

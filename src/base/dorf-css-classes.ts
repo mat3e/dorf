@@ -1,8 +1,11 @@
+import { DorfConfigService } from '../dorf-config.service';
+import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
+
 /**
  * Possible class types - from Angular's NgClass.
  */
 // TODO: objects support as in NgClass from Angular - allowing objects to be passed
-export type NgDorfClassType = string | string[] | Set<string> | { [klass: string]: any };
+export type NgDorfClassType = string | IDorfCommonCssClasses;
 
 /**
  * @whatItDoes Common part of CSS classes.
@@ -10,11 +13,6 @@ export type NgDorfClassType = string | string[] | Set<string> | { [klass: string
  * @stable
  */
 export interface IDorfCommonCssClasses {
-    /**
-     * Classes for a section which groups all the buttons/field elements (label, control, error).
-     */
-    group?: NgDorfClassType;
-
     /**
      * Classes to be used with custom templates.
      */
@@ -28,6 +26,11 @@ export interface IDorfCommonCssClasses {
  */
 export interface IDorfButtonsCssClasses extends IDorfCommonCssClasses {
     /**
+     * Classes for a section which groups all the buttons.
+     */
+    group?: NgDorfClassType;
+
+    /**
      * Classes for 'Save' button.
      */
     save?: NgDorfClassType;
@@ -36,32 +39,6 @@ export interface IDorfButtonsCssClasses extends IDorfCommonCssClasses {
      * Classes for 'Reset' button.
      */
     reset?: NgDorfClassType;
-}
-
-/**
- * @whatItDoes Implementation of {@link IDorfFieldCssClasses} for a fast creation with an empty values.
- *
- * @stable
- */
-export class DorfButtonsCssClasses implements IDorfButtonsCssClasses {
-    save: NgDorfClassType = '';
-    reset: NgDorfClassType = '';
-    group: NgDorfClassType = '';
-    [key: string]: NgDorfClassType;
-
-    constructor(options?: IDorfButtonsCssClasses) {
-        if (options) {
-            this.save = options.save || this.save;
-            this.reset = options.reset || this.reset;
-            this.group = options.group || this.group;
-
-            for (let cls in options) {
-                if (!this.hasOwnProperty(cls)) {
-                    this[cls] = options[cls];
-                }
-            }
-        }
-    }
 }
 
 /**
@@ -75,7 +52,7 @@ export class DorfButtonsCssClasses implements IDorfButtonsCssClasses {
  * ```
  * DorfModule.forRoot({
  *   css: {
- *     group: "form-group",
+ *     wrapper: "form-group",
  *     error: "error-message",
  *     label: "control-label",
  *     htmlField: "form-control"
@@ -108,6 +85,11 @@ export class DorfButtonsCssClasses implements IDorfButtonsCssClasses {
  */
 export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     /**
+     * Classes for what groups all field elements (label, control, error).
+     */
+    wrapper?: NgDorfClassType;
+
+    /**
      * Classes for a label.
      */
     label?: NgDorfClassType;
@@ -133,38 +115,6 @@ export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     error?: NgDorfClassType;
 }
 
-/**
- * @whatItDoes Implementation of {@link IDorfFieldCssClasses} for a fast creation with an empty values.
- *
- * @stable
- */
-export class DorfFieldCssClasses implements IDorfFieldCssClasses {
-    group: NgDorfClassType = '';
-    label: NgDorfClassType = '';
-    fieldGeneralization: NgDorfClassType = '';
-    dorfField: NgDorfClassType = '';
-    htmlField: NgDorfClassType = '';
-    error: NgDorfClassType = '';
-    [key: string]: NgDorfClassType;
-
-    constructor(options?: IDorfFieldCssClasses) {
-        if (options) {
-            this.group = options.group || this.group;
-            this.label = options.label || this.label;
-            this.fieldGeneralization = options.fieldGeneralization || this.fieldGeneralization;
-            this.dorfField = options.dorfField || this.dorfField;
-            this.htmlField = options.htmlField || this.htmlField;
-            this.error = options.error || this.error;
-
-            for (let cls in options) {
-                if (!this.hasOwnProperty(cls)) {
-                    this[cls] = options[cls];
-                }
-            }
-        }
-    }
-}
-
 export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
     /**
      * Classes for a label which is around the field. Used especially with a checkbox or radio buttons.
@@ -173,19 +123,31 @@ export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
 }
 
 /**
- * @whatItDoes Implementation of {@link IDorfMultipleLabelsCssClasses} for a fast creation with an empty values.
+ * @whatItDoes Extends {@link IDorfFieldCssClasses} to provide some additional classes and fallback, default ones for fields.
  *
  * @stable
  */
-export class DorfMultipleLabelsCssClasses extends DorfFieldCssClasses implements IDorfMultipleLabelsCssClasses {
-    innerLabel: NgDorfClassType = '';
+export interface IDorfGeneralCssClasses extends IDorfMultipleLabelsCssClasses {
+    /**
+     * CSS classes for a whole form.
+     */
+    form?: NgDorfClassType;
 
-    constructor(options?: IDorfFieldCssClasses) {
-        super(options);
-        if (options) {
-            this.innerLabel = options.innerLabel || this.innerLabel;
-        }
-    }
+    /**
+     * CSS classes for a fieldset around all the form fields.
+     */
+    fieldset?: NgDorfClassType;
+
+    /**
+     * CSS classes for a legend under the fieldset.
+     */
+    legend?: NgDorfClassType;
+
+    /**
+     * CSS classes for a group of DORF grouping/wrapping divs (each grouping div contains HTML field, label and error).
+     * Classes assigned here are usually connected with a grid system (e.g. `'row'` class from Bootstrap).
+     */
+    section?: NgDorfClassType;
 }
 
 /**
@@ -199,7 +161,7 @@ export class DorfMultipleLabelsCssClasses extends DorfFieldCssClasses implements
  * ```
  * DorfModule.forRoot({
  *   css: {
- *     group: "form-group",
+ *     wrapper: "form-group",
  *     error: "error-message",
  *     label: "control-label",
  *     htmlField: "form-control",
@@ -228,23 +190,7 @@ export class DorfMultipleLabelsCssClasses extends DorfFieldCssClasses implements
  *
  * @stable
  */
-export interface IDorfGeneralCssClasses extends IDorfMultipleLabelsCssClasses {
-    /**
-     * CSS classes for a whole form.
-     */
-    form?: NgDorfClassType;
-
-    /**
-     * CSS classes for a fieldset around all the form fields.
-     */
-    fieldset?: NgDorfClassType;
-
-    /**
-     * CSS classes for a group of DORF grouping/wrapping divs (each grouping div contains HTML field, label and error).
-     * Classes assigned here are usually connected with a grid system (e.g. `'row'` class from Bootstrap).
-     */
-    section?: NgDorfClassType;
-
+export interface IDorfGeneralWithButtonsCssClasses extends IDorfGeneralCssClasses {
     /**
      * CSS classes for various buttons connected with form.
      */
@@ -252,24 +198,30 @@ export interface IDorfGeneralCssClasses extends IDorfMultipleLabelsCssClasses {
 }
 
 /**
- * @whatItDoes Implementation of {@link IDorfGeneralCssClasses} for a fast creation with an empty values.
+ * @whatItDoes Implementation of {@link IDorfCommonCssClasses} for a fast creation with an empty values.
  *
  * @stable
  */
-export class DorfGeneralCssClasses extends DorfMultipleLabelsCssClasses implements IDorfGeneralCssClasses {
-    form: NgDorfClassType = '';
-    fieldset: NgDorfClassType = '';
-    section: NgDorfClassType = '';
-    buttons: IDorfButtonsCssClasses = new DorfButtonsCssClasses();
+export class DorfCssClasses implements IDorfCommonCssClasses {
+    [key: string]: NgDorfClassType;
 
-    constructor(options?: IDorfGeneralCssClasses) {
-        super(options);
+    constructor(options?: IDorfCommonCssClasses) {
+        let populateOptions = (opts: IDorfCommonCssClasses, target: IDorfCommonCssClasses) => {
+            for (let cls in opts) {
+                if (!target.hasOwnProperty(cls)) {
+                    let val = opts[cls];
+                    if (typeof val === 'string') {
+                        target[cls] = val;
+                    } else {
+                        target[cls] = {};
+                        populateOptions(val, target[cls] as IDorfCommonCssClasses);
+                    }
+                }
+            }
+        }
 
         if (options) {
-            this.form = options.form || this.form;
-            this.fieldset = options.fieldset || this.fieldset;
-            this.section = options.section || this.section;
-            this.buttons = new DorfButtonsCssClasses(options.buttons);
+            populateOptions(options, this);
         }
     }
 }

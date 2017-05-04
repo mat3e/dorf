@@ -1,4 +1,4 @@
-<section [ngClass]="config.css.buttons.group">
-    <button (click)="submit()" [ngClass]="config.css.buttons.save" [disabled]="!form || !form.valid">Save</button>
-    <button (click)="reset()" [ngClass]="config.css.buttons.reset">Reset</button>
+<section [ngClass]="config.css.buttons?.group">
+    <button (click)="submit()" [ngClass]="config.css.buttons?.save" [disabled]="!form || !form.valid">Save</button>
+    <button (click)="reset()" [ngClass]="config.css.buttons?.reset">Reset</button>
 </section>

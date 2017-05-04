@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { PropertiesToDorfDefinitionsMap, IDorfForm, DorfForm, DorfObjectInput, DorfConfigService } from 'dorf';
 
 import { IPerson, Person } from './model';
-import { StarRatingDefinition } from '../ext/star-rating.component';
+import { STAR_RATING } from '../ext/star-rating.component';
 
 /**
  * Lightweight class which creates a form.
@@ -11,7 +11,7 @@ import { StarRatingDefinition } from '../ext/star-rating.component';
  * It's important to pass config in the constructor and define onDorfSubmit method.
  */
 @DorfForm({
-    additionalTags: [StarRatingDefinition.TAG] // array of the selectors of the fields we want to render
+    additionalTags: [STAR_RATING] // array of the selectors of the fields we want to render
 })
 @Component({
     moduleId: module.id,

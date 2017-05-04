@@ -7,9 +7,9 @@ import { DorfChooseMetadata } from './base/abstract-dorf-choose.metadata';
  *
  * @stable
  */
-export class DorfSelectMetadata<T> extends DorfChooseMetadata<T, DorfSelectDefinition<T>> implements IDorfSelectDefinition<T> {
+export class DorfSelectMetadata<T> extends DorfChooseMetadata<T, IDorfSelectDefinition<T>> implements IDorfSelectDefinition<T> {
 
-    constructor(definition = new DorfSelectDefinition<T>(), options?: IDorfFieldMetadata<T>) {
+    constructor(definition: IDorfSelectDefinition<T> = new DorfSelectDefinition<T>(), options?: IDorfFieldMetadata<T>) {
         super(definition, options);
     }
 

@@ -81,7 +81,7 @@ describe('DorfSelectComponent', () => {
         });
     });
 
-    it('should support defined \'optionsToSelect\'', async(() => {
+    it('should support defined "optionsToSelect"', async(() => {
         fixture.whenStable().then(() => {
 
             let elements: DebugElement[] = fixture.debugElement.queryAll(By.css('option'));
@@ -96,7 +96,7 @@ describe('DorfSelectComponent', () => {
         });
     }));
 
-    it('should support \'multiple\' option', async(() => {
+    it('should support "multiple" option', async(() => {
         fixture.whenStable().then(() => {
             expect(htmlElem.multiple).toBeTruthy();
         });

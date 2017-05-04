@@ -52,7 +52,7 @@ export class App {
         DorfModule.forRoot({
             css: {
                 section: 'row',
-                group: 'form-group col-6 row',
+                wrapper: 'form-group col-6 row',
                 label: 'col-2 col-form-label',
                 fieldGeneralization: 'col-10',
                 htmlField: 'form-control',
@@ -76,7 +76,13 @@ export class App {
                     innerLabel: 'form-check-label form-check-inline',
                     htmlField: 'form-check-input'
                 }
-            }]
+            }, {
+                tag: DorfField.NESTED,
+                css: {
+                    wrapper: 'form-group col-4 row'
+                }
+            }],
+            columnsNumber: 2
         })
     ],
     declarations: [

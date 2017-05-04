@@ -2,7 +2,7 @@ import { DorfField } from '../src/fields/base/dorf-field';
 import { DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.definition';
 
 describe('DorfCheckboxDefinition', () => {
-    it('should have default value for tag property and no other properties set', () => {
+    it('should have default value for "tag" property', () => {
         // GIVEN + WHEN
         let def = new DorfCheckboxDefinition();
 

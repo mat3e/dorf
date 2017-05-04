@@ -1,4 +1,4 @@
-import { OptionType, IDorfChooseDefinition, DorfChooseDefinition } from './abstract-dorf-choose.definition';
+import { OptionType, IDorfChooseDefinition } from './abstract-dorf-choose.definition';
 import { DorfChooseMetadata } from './abstract-dorf-choose.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 
@@ -10,7 +10,7 @@ import { DorfConfigService } from '../../dorf-config.service';
  * @stable
  */
 // tslint:disable-next-line:max-line-length
-export abstract class DorfChooseComponent<T, M extends DorfChooseMetadata<T, DorfChooseDefinition<T>>> extends AbstractDorfFieldComponent<T, M> implements IDorfChooseDefinition<T> {
+export abstract class DorfChooseComponent<T, M extends DorfChooseMetadata<T, IDorfChooseDefinition<T>>> extends AbstractDorfFieldComponent<T, M> implements IDorfChooseDefinition<T> {
 
     constructor(config: DorfConfigService) {
         super(config);

@@ -7,9 +7,9 @@ import { DorfChooseMetadata } from './base/abstract-dorf-choose.metadata';
  *
  * @stable
  */
-export class DorfRadioMetadata<T> extends DorfChooseMetadata<T, DorfRadioDefinition<T>> implements IDorfRadioDefinition<T> {
+export class DorfRadioMetadata<T> extends DorfChooseMetadata<T, IDorfRadioDefinition<T>> implements IDorfRadioDefinition<T> {
 
-    constructor(definition = new DorfRadioDefinition<T>(), options?: IDorfFieldMetadata<T>) {
+    constructor(definition: IDorfRadioDefinition<T> = new DorfRadioDefinition<T>(), options?: IDorfFieldMetadata<T>) {
         super(definition, options);
     }
 }

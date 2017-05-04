@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-import { DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { IDorfCommonCssClasses, DorfCssClasses } from '../../base/dorf-css-classes';
+import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
@@ -23,15 +24,14 @@ import { DorfField } from './dorf-field';
     selector: 'dorf-field-wrapper',
     templateUrl: './dorf-field-wrapper.component.html'
 })
-export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, DorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
+export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>>
+    extends AbstractDorfFieldComponent<T, M> {
 
     constructor(config: DorfConfigService) {
         super(config);
     }
 
     get errorMessage() { return this.metadata.errorMessage; }
-    get errorCss() { return this.directCss.error || this.cssFromFieldConfig.error || this.cssFromConfig.error; }
-    get fieldGeneralizationCss() {
-        return this.directCss.fieldGeneralization || this.cssFromFieldConfig.fieldGeneralization || this.cssFromConfig.fieldGeneralization;
-    }
+    get errorCss() { return this.getCss('error'); }
+    get fieldGeneralizationCss() { return this.getCss('fieldGeneralization'); }
 }
