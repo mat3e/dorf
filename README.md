@@ -7,6 +7,7 @@ Angular's [Reactive Forms](https://angular.io/docs/ts/latest/cookbook/dynamic-fo
 This library is about taking them to the next level by coupling with _Domain Objects_.
 
 #### [Live example](https://embed.plnkr.co/6H2jto/)
+#### [3.0.0-beta example](http://embed.plnkr.co/fhEfqD/)
 
 ### Want to create a form for an object?
 1. Add some annotations to the object.
@@ -68,3 +69,4 @@ Future plans include:
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
  - [New field example](http://embed.plnkr.co/q4EEDa/)
  - [Bootstrap example](http://embed.plnkr.co/K1IVvZ/)
+ - [3.0.0-beta example](http://embed.plnkr.co/fhEfqD/)
