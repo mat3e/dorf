@@ -1,4 +1,4 @@
-import { PropertiesToDorfDefinitionsMap } from '../src/dorf-mapper';
+import { PropertiesToDorfDefinitionsMap } from '../src/base/dorf-mapper';
 
 import { DorfDomainObject } from '../src/base/abstract-dorf.model';
 
@@ -12,6 +12,7 @@ describe('DorfDomainObject', () => {
         let obj = new Test();
 
         // THEN
+        expect(obj.updateDefinition).toBeDefined();
         expect(obj.isDorfObject).toBeTruthy();
     });
 });

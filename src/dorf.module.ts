@@ -1,21 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
-import { DorfCoreModule } from './dorf-core.module';
+import { DorfFieldsModule } from './dorf-fields.module';
 
 import { DorfButtonsComponent } from './base/dorf-buttons.component';
 import { IDorfService, DorfSupportingService } from './dorf-config.service';
+import { DorfFieldWrapperComponent } from './fields/base/dorf-field-wrapper.component';
+import { DorfGroupWrapperComponent } from './fields/base/dorf-group-wrapper.component';
 
-import { DorfInputComponent } from './fields/dorf-input.component';
-import { DorfRadioComponent } from './fields/dorf-radio.component';
-import { DorfSelectComponent } from './fields/dorf-select.component';
-import { DorfCheckboxComponent } from './fields/dorf-checkbox.component';
-import { DorfFieldWrapperComponent } from './fields/base/abstract-dorf-field.component';
-
-export * from './fields/dorf-checkbox.component';
-export * from './fields/dorf-input.component';
-export * from './fields/dorf-radio.component';
-export * from './fields/dorf-select.component';
+export * from './fields/base/dorf-group-wrapper.component';
+export * from './fields/base/dorf-field-wrapper.component';
 export * from './base/dorf-buttons.component';
 
 /**
@@ -34,7 +28,7 @@ export * from './base/dorf-buttons.component';
  *       error: "error-message"
  *     }
  *   },
- *   additionalMetadataKinds: [{
+ *   additionalFields: [{
  *     tag: StarRatingDefinition.TAG,
  *     definition: StarRatingDefinition,
  *     metadata: StarRatingMetadata
@@ -43,28 +37,22 @@ export * from './base/dorf-buttons.component';
  * ```
  *
  * @description
- * This module exports `FormsModule` and `ReactiveFormsModule` and all the predefined DORF field components.
+ * This module exports `FormsModule` and `ReactiveFormsModule` and all the predefined DORF components.
  *
  * @stable
  */
 @NgModule({
-    imports: [CommonModule, DorfCoreModule],
+    imports: [CommonModule, DorfFieldsModule],
     declarations: [
         DorfButtonsComponent,
-        DorfInputComponent,
-        DorfRadioComponent,
-        DorfSelectComponent,
-        DorfCheckboxComponent,
-        DorfFieldWrapperComponent
+        DorfFieldWrapperComponent,
+        DorfGroupWrapperComponent
     ],
     exports: [
-        DorfCoreModule,
-        DorfInputComponent,
-        DorfRadioComponent,
-        DorfSelectComponent,
-        DorfCheckboxComponent,
+        DorfFieldsModule,
         DorfButtonsComponent,
-        DorfFieldWrapperComponent
+        DorfFieldWrapperComponent,
+        DorfGroupWrapperComponent
     ]
 })
 export class DorfModule {

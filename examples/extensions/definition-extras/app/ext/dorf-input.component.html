@@ -1,9 +1,5 @@
-<div [ngClass]="css.group || config.css.input.group || config.css.general.group">
-	<label *ngIf="label" [attr.for]="key" [ngClass]="css.label || config.css.input.label || config.css.general.label">{{label}}</label>
-	<span [ngSwitch]="type">
-		<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.css.input.field || config.css.general.field" type="range" [placeholder]="placeholder" />
-		<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="css.field || config.css.input.field || config.css.general.field" type="number" [placeholder]="placeholder" />
-		<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="css.field || config.css.input.field || config.css.general.field" [placeholder]="placeholder" />
-	</span>
-	<div [ngClass]="css.error || config.css.input.error || config.css.general.error" *ngIf="invalid && errorMessage">{{errorMessage}}</div>
-</div>
+<span [ngSwitch]="type">
+	<input *ngSwitchCase="'range'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="range" [placeholder]="placeholder" />
+	<input *ngSwitchCase="'number'" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="number" [placeholder]="placeholder" />
+	<input *ngSwitchDefault [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="htmlFieldCss" [placeholder]="placeholder" />
+</span>

@@ -1,20 +1,19 @@
-[![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf)
+[![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf) [![Build Status](https://travis-ci.org/mat3e/dorf.svg?branch=master)](https://travis-ci.org/mat3e/dorf)
 
-## Domain Object Reactive Forms
+# Domain Object Reactive Forms
+
+### Model-driven forms within the model! [[example]](http://embed.plnkr.co/fhEfqD/)
 
 Angular's [Reactive Forms](https://angular.io/docs/ts/latest/cookbook/dynamic-form.html) (a.k.a. _Dynamic_ or _Model-driven Forms_) are great.
 
 This library is about taking them to the next level by coupling with _Domain Objects_.
 
-#### [Live example](https://embed.plnkr.co/6H2jto/)
-#### [3.0.0-beta example](http://embed.plnkr.co/fhEfqD/)
-
-### Want to create a form for an object?
+## Want to create a form for an object?
 1. Add some annotations to the object.
     ```typescript
     @DorfObject()
     export class Person {
-        @DorfInput<string>({
+        @DorfInput({
             label: "Name", 
             type: "text",
             validator: Validators.required, 
@@ -23,7 +22,7 @@ This library is about taking them to the next level by coupling with _Domain Obj
         })
         name: string;
 
-        @DorfInput<string>({
+        @DorfInput({
             label: "Surname", 
             type: "text",
             validator: Validators.required, 
@@ -54,19 +53,26 @@ This library is about taking them to the next level by coupling with _Domain Obj
     ```
 3. You are done! **Really!** Enjoy your _Reactive Form_.
 
-### Vision
+## Detailed step-by-step tutorial
+soon
+
+## Documentation
+[Compodoc](https://compodoc.github.io/website/) - soon
+
+## Vision
 The aim of this library is to speed up boring things like a creation of the ordinary forms and styling them. Library is not strictly connected with any CSS framework. You can just pass the classes as `DorfConfigService` parameters. 
 
 Future plans include:
 
- - More online examples, more tests, a nice documentation and step by step tutorial on building with DORF
+ - More tests, a nice documentation and step by step tutorial on building with DORF
+ - UX improvements - aria support, styles prepared for most common libraries
+ - Reactive grids. It is another boring, ordinary thing (and `onSummary` is already presented in the `field definition`)
+ - Angular Material module
+ - Form arrays
  - Methods for speeding up the creation of custom fields (even more)
- - Nested groups and form arrays [v3]
- - Reactive grids. _Seriously?_ Who knows, it is another boring, ordinary thing (and `isListField` is already presented in the `field definition` ;)) [v4 or greater]
 
 ### List of the online examples
  - [Simple example](http://embed.plnkr.co/6H2jto/)
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
  - [New field example](http://embed.plnkr.co/q4EEDa/)
- - [Bootstrap example](http://embed.plnkr.co/K1IVvZ/)
- - [3.0.0-beta example](http://embed.plnkr.co/fhEfqD/)
+ - [3.0.0 example](http://embed.plnkr.co/fhEfqD/)

@@ -7,7 +7,10 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { InputType, DorfInputDefinition, DorfInputMetadata, DorfInputComponent } from '../../src/fields/dorf-input.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { InputType, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
+import { DorfInputComponent } from '../../src/fields/dorf-input.component';
 
 describe('DorfInputComponent', () => {
 
@@ -29,12 +32,13 @@ describe('DorfInputComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: {
-                input: {
-                    field: 'sut',
+            dorfFields: [{
+                tag: DorfField.INPUT,
+                css: {
+                    htmlField: 'sut',
                     error: 'error'
                 }
-            }
+            }]
         });
 
         TestBed.configureTestingModule({
@@ -114,7 +118,7 @@ describe('DorfInputComponent', () => {
         });
     }));
 
-    it('should support \'required\' validator', async(() => {
+    it('should support "required" validator', async(() => {
         fixture.whenStable().then(() => {
 
             // WHEN
@@ -126,13 +130,11 @@ describe('DorfInputComponent', () => {
 
             // THEN
             fixture.detectChanges();
-            let errorElem: HTMLDivElement = fixture.debugElement.query(By.css('.error')).nativeElement;
             expect(inputMeta.formControl.valid).toBeFalsy();
-            expect(errorElem.textContent).toBe(errorMsg);
         });
     }));
 
-    it('should support \'updateModelOnChange\'', () => {
+    it('should support "updateModelOnChange"', () => {
         fixture.whenStable().then(() => {
 
             // WHEN

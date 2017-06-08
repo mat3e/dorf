@@ -1,7 +1,18 @@
 import { Injectable, Optional } from '@angular/core';
 
-import { IDorfServiceCss, DorfServiceCss } from './base/dorf-css-classes.model';
-import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/abstract-dorf-field.component';
+import { IDorfCommonCssClasses, IDorfGeneralWithButtonsCssClasses, DorfCssClasses } from './base/dorf-css-classes';
+
+import {
+    IDorfField,
+    DorfField,
+    IDorfNestedField,
+    DorfNestedField,
+    setFieldInArray,
+    getFieldForTagFromArray,
+    getBuiltInFields
+} from './fields/base/dorf-field';
+import { IDorfFieldDefinition } from './fields/base/abstract-dorf-field.definition';
+import { DorfMetadataBase } from './fields/base/abstract-dorf-field.metadata';
 
 /**
  * @whatItDoes It is a base for {@link DorfModule} configuration.
@@ -18,7 +29,7 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/a
  *       error: "error-message"
  *     }
  *   },
- *   additionalMetadataKinds: [{
+ *   additionalFields: [{
  *     tag: StarRatingDefinition.TAG,
  *     definition: StarRatingDefinition,
  *     metadata: StarRatingMetadata
@@ -30,15 +41,19 @@ import { DorfTag, DorfFieldDefinition, DorfFieldMetadata } from './fields/base/a
  */
 export interface IDorfService {
     /**
-     * List of additional supproted kinds of {@link DorfFieldDefinition}, {@link DofrFieldMetadata} and their tags.
+     * List of supproted fields defined by {@link DorfFieldDefinition}, {@link DorfFieldMetadata}, css and tags.
      */
-    // TODO: additionalTags/additionalFields
-    additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
+    dorfFields?: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[];
 
     /**
      * General and field-specific CSS classes.
      */
-    css?: IDorfServiceCss;
+    css?: IDorfGeneralWithButtonsCssClasses;
+
+    /**
+     * Form can be rendered with multiple columns. Number of fields within the section should be specified here.
+     */
+    columnsNumber?: number;
 }
 
 /**
@@ -50,42 +65,96 @@ export interface IDorfService {
  * @stable
  */
 export class DorfSupportingService implements IDorfService {
-    additionalMetadataKinds?: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[];
-    css?: IDorfServiceCss;
+    dorfFields?: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[];
+    css?: IDorfGeneralWithButtonsCssClasses;
+    columnsNumber?: number;
 
-    constructor(options: IDorfService) {
+    constructor(options?: IDorfService) {
         if (options) {
-            this.additionalMetadataKinds = options.additionalMetadataKinds;
+            this.dorfFields = options.dorfFields;
             this.css = options.css;
+            this.columnsNumber = options.columnsNumber;
         }
     }
 }
 
 /**
- * @whatItDoes It is used in all HTML templates for DORF.
+ * @whatItDoes It is used in all DORF HTML templates for modyfing fields behavior.
  *
  * @description
- * It specifies CSS classes for all important elements. Can also disable forms and prevent their submitting.
+ * It specifies CSS classes for all important elements. It can also disable forms and this is an entry point
+ * where additional fields needs to be specified.
  *
  * @stable
  */
 @Injectable()
 export class DorfConfigService implements IDorfService {
-    additionalMetadataKinds: DorfTag<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [];
-    css: IDorfServiceCss = new DorfServiceCss();
+    dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]
+    = getBuiltInFields() as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    css: IDorfGeneralWithButtonsCssClasses = new DorfCssClasses();
+    columnsNumber: number = 1;
 
     isDisabled: boolean = false;
 
-    /**
-     * @deprecated
-     * Buttons should be managed by {@link DorfButtonsComponent} and/or [CSS]{@link DorfConfigService#css}.
-     */
-    isButtonVisible: boolean = true;
-
     constructor( @Optional() config?: DorfSupportingService) {
         if (config) {
-            this.additionalMetadataKinds = config.additionalMetadataKinds || this.additionalMetadataKinds;
-            this.css = config.css ? new DorfServiceCss(config.css) : this.css;
+            this.css = config.css ? new DorfCssClasses(config.css) : this.css;
+            this.columnsNumber = config.columnsNumber || this.columnsNumber;
+
+            if (config.dorfFields) {
+                config.dorfFields.forEach((field) => {
+                    this.setField(field);
+                })
+            }
         }
+    }
+
+    /**
+     * Returns the css classes from the service perspective, when tag is nested in group.
+     * Priority of classes is always the same:
+     * <ol>
+     * <li>direct css from metadata</li>
+     * <li>css from group</li>
+     * <li>css from field definition within the group in config service</li>
+     * <li>css from group in config service</li>
+     * <li>css from field definition in config service</li>
+     * <li>css from config service</li>
+     * </ol>
+     */
+    getCssClassForNestedTag(tag: string, cssClass: string) {
+        let nested = this.getFieldForTag(DorfField.NESTED) as DorfNestedField;
+        let tagCssInNested = nested.dorfFields.find((field) => field.tag === tag).css;
+        return tagCssInNested[cssClass] || nested.css[cssClass] || this.getCssClassForTag(tag, cssClass);
+    }
+
+    /**
+     * Returns the css classes from the service perspective for a given tag.
+     * Priority of classes is always the same:
+     * <ol>
+     * <li>direct css from metadata</li>
+     * <li>css from group</li>
+     * <li>css from field definition within the group in config service</li>
+     * <li>css from group in config service</li>
+     * <li>css from field definition in config service</li>
+     * <li>css from config service</li>
+     * </ol>
+     */
+    getCssClassForTag(tag: string, cssClass: string) {
+        return this.getFieldForTag(tag).css[cssClass] || this.css[cssClass];
+    }
+
+    /**
+     * Method for overriding existing DORF field or for adding a totally new one.
+     */
+    // TODO: verify possibility of overriding metadata and definition
+    setField(field: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>) {
+        setFieldInArray(field, this.dorfFields);
+    }
+
+    /**
+     * Method for retrieving DORF field from the built in and registered ones.
+     */
+    getFieldForTag(tag: string) {
+        return getFieldForTagFromArray(tag, this.dorfFields);
     }
 }

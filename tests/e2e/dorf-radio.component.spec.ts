@@ -5,8 +5,11 @@ import { DebugElement } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
-import { DorfRadioDefinition, DorfRadioMetadata, DorfRadioComponent } from '../../src/fields/dorf-radio.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { OptionType } from '../../src/fields/base/abstract-dorf-choose.definition';
+import { DorfRadioDefinition } from '../../src/fields/dorf-radio.definition';
+import { DorfRadioMetadata } from '../../src/fields/dorf-radio.metadata';
+import { DorfRadioComponent } from '../../src/fields/dorf-radio.component';
 
 describe('DorfRadioComponent', () => {
 
@@ -32,7 +35,12 @@ describe('DorfRadioComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { radio: { field: 'sut' } }
+            dorfFields: [{
+                tag: DorfField.RADIO,
+                css: {
+                    htmlField: 'sut'
+                }
+            }]
         });
 
         TestBed.configureTestingModule({
@@ -64,7 +72,7 @@ describe('DorfRadioComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should support defined \'optionsToSelect\'', async(() => {
+    it('should support defined "optionsToSelect"', async(() => {
         fixture.whenStable().then(() => {
 
             // radios

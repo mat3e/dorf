@@ -2,12 +2,15 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import {
+    DorfField,
     DorfCoreModule,
     DorfRadioComponent,
     DorfSelectComponent,
     DorfCheckboxComponent,
     DorfButtonsComponent,
-    DorfFieldWrapperComponent
+    DorfFieldComponent,
+    DorfFieldWrapperComponent,
+    DorfGroupWrapperComponent
 } from 'dorf';
 
 import { AppComponent } from './app.component';
@@ -19,22 +22,30 @@ import { PersonDetailComponent } from './person/person-detail.component';
 @NgModule({
     imports: [BrowserModule, DorfCoreModule.forRoot({
         css: {
-            general: {
-                form: 'pure-form pure-form-aligned',
-                group: 'pure-control-group'
-            },
-            checkbox: {
-                group: 'pure-controls',
-                label: 'pure-checkbox'
+            form: 'pure-form pure-form-aligned',
+            wrapper: 'pure-control-group',
+            buttons: {
+                save: 'pure-button pure-button-primary',
+                reset: 'hidden',
+                group: 'pure-controls'
             }
-        }
+        },
+        dorfFields: [{
+            tag: DorfField.CHECKBOX,
+            css: {
+                section: 'pure-controls',
+                innerLabel: 'pure-checkbox'
+            }
+        }]
     })],
     declarations: [
         DorfRadioComponent,
         DorfSelectComponent,
         DorfCheckboxComponent,
         DorfButtonsComponent,
+        DorfFieldComponent,
         DorfFieldWrapperComponent,
+        DorfGroupWrapperComponent,
         AppComponent,
         CustomDorfInputComponent,
         PersonDetailComponent

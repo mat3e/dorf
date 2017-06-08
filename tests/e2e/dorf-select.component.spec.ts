@@ -5,8 +5,11 @@ import { DebugElement } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
-import { DorfSelectDefinition, DorfSelectMetadata, DorfSelectComponent } from '../../src/fields/dorf-select.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { OptionType } from '../../src/fields/base/abstract-dorf-choose.definition';
+import { DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
+import { DorfSelectMetadata } from '../../src/fields/dorf-select.metadata';
+import { DorfSelectComponent } from '../../src/fields/dorf-select.component';
 
 describe('DorfSelectComponent', () => {
 
@@ -35,7 +38,12 @@ describe('DorfSelectComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { select: { field: 'sut' } }
+            dorfFields: [{
+                tag: DorfField.SELECT,
+                css: {
+                    htmlField: 'sut'
+                }
+            }]
         });
 
         TestBed.configureTestingModule({
@@ -73,7 +81,7 @@ describe('DorfSelectComponent', () => {
         });
     });
 
-    it('should support defined \'optionsToSelect\'', async(() => {
+    it('should support defined "optionsToSelect"', async(() => {
         fixture.whenStable().then(() => {
 
             let elements: DebugElement[] = fixture.debugElement.queryAll(By.css('option'));
@@ -88,7 +96,7 @@ describe('DorfSelectComponent', () => {
         });
     }));
 
-    it('should support \'multiple\' option', async(() => {
+    it('should support "multiple" option', async(() => {
         fixture.whenStable().then(() => {
             expect(htmlElem.multiple).toBeTruthy();
         });

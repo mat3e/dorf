@@ -3,7 +3,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IDorfService, DorfConfigService, DorfSupportingService } from './dorf-config.service';
-import { DorfMapper } from './dorf-mapper';
 
 /*
 Typescript files which should be exported.
@@ -12,13 +11,19 @@ export * from './decorators/dorf-form.decorator';
 export * from './decorators/dorf-object.decorator';
 
 export * from './base/abstract-dorf.model';
-export * from './base/dorf-css-classes.model';
-export * from './base/abstract-dorf-form.component';
+export * from './base/dorf-css-classes';
 
+export * from './fields/base/dorf-field';
+export * from './fields/base/abstract-dorf-field.definition';
+export * from './fields/base/abstract-dorf-field.metadata';
 export * from './fields/base/abstract-dorf-field.component';
+export * from './fields/base/abstract-dorf-choose.definition';
+export * from './fields/base/abstract-dorf-choose.metadata';
 export * from './fields/base/abstract-dorf-choose.component';
+export * from './fields/base/dorf-nested.definition';
+export * from './fields/base/dorf-nested.metadata';
 
-export * from './dorf-mapper';
+export * from './base/dorf-mapper';
 export * from './dorf-config.service';
 
 /**
@@ -37,7 +42,7 @@ export * from './dorf-config.service';
  *       error: "error-message"
  *     }
  *   },
- *   additionalMetadataKinds: [{
+ *   additionalFields: [{
  *     tag: StarRatingDefinition.TAG,
  *     definition: StarRatingDefinition,
  *     metadata: StarRatingMetadata
@@ -47,9 +52,9 @@ export * from './dorf-config.service';
  *
  * @description
  * This module exports `FormsModule` and `ReactiveFormsModule`. This version of DORF module, requires additional components,
- * like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`. You can define them on your own or add following DORF declarations:
- * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldWrapperComponent]`
- * to your module.
+ * like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`. Those can be defined on their own
+ * or add through the following DORF declarations:
+ * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent, DorfGroupWrapperComponent]`.
  *
  * @stable
  */

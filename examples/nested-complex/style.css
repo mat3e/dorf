@@ -1,0 +1,13 @@
+.hidden {
+    display: none;
+}
+
+.red {
+    color: red;
+}
+
+.fieldset {
+  border: solid 1px grey;
+  border-radius: .3em;
+  margin-bottom: 1em;
+}

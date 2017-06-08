@@ -1,7 +1,5 @@
-<dorf-input *ngIf="isDorfInput" [metadata]="metadata"></dorf-input>
-<dorf-radio *ngIf="isDorfRadio" [metadata]="metadata"></dorf-radio>
-<dorf-select *ngIf="isDorfSelect" [metadata]="metadata"></dorf-select>
-<dorf-checkbox *ngIf="isDorfCheckbox" [metadata]="metadata"></dorf-checkbox>
-
-<!-- Fields defined by the user. -->
-<ng-content></ng-content>
+<label *ngIf="label" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
+<dorf-field [metadata]="metadata" [ngClass]="fieldGeneralizationCss">
+    <ng-content></ng-content>
+</dorf-field>
+<div *ngIf="invalid && errorMessage" [ngClass]="errorCss">{{errorMessage}}</div>

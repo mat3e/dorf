@@ -3,12 +3,14 @@ import { Validators } from '@angular/forms';
 import { DorfConfigService } from '../../src/dorf-config.service';
 
 import { DorfDomainObject } from '../../src/base/abstract-dorf.model';
-import { OptionType } from '../../src/fields/base/abstract-dorf-choose.component';
-import { DorfInputDefinition, DorfInputMetadata } from '../../src/fields/dorf-input.component';
-import { DorfSelectDefinition, DorfSelectMetadata } from '../../src/fields/dorf-select.component';
-import { DorfFieldDefinition } from '../../src/fields/base/abstract-dorf-field.component';
+import { OptionType } from '../../src/fields/base/abstract-dorf-choose.definition';
+import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
+import { DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
+import { DorfSelectMetadata } from '../../src/fields/dorf-select.metadata';
+import { DorfFieldDefinition } from '../../src/fields/base/abstract-dorf-field.definition';
 
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/dorf-mapper';
+import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/base/dorf-mapper';
 
 describe('DorfMapper', () => {
 
@@ -33,7 +35,8 @@ describe('DorfMapper', () => {
             return new DorfInputDefinition<number>({
                 type: 'number',
                 label: 'Unique ID',
-                validator: Validators.pattern('[0-9]{3}')
+                validator: Validators.pattern('[0-9]{3}'),
+                order: 2
             })
         }
 
@@ -48,7 +51,8 @@ describe('DorfMapper', () => {
 
             return new DorfSelectDefinition({
                 label: 'Job',
-                optionsToSelect: opts
+                optionsToSelect: opts,
+                order: 1
             });
         }
     }
@@ -64,8 +68,9 @@ describe('DorfMapper', () => {
         // THEN
         expect(result.length).toEqual(2);
 
-        let idMeta = result[0];
-        let jobMeta = result[1];
+        // according to the ordering:
+        let idMeta = result[1] as DorfInputMetadata<number>;
+        let jobMeta = result[0] as DorfSelectMetadata<number>;
 
         expect(idMeta instanceof DorfInputMetadata).toBeTruthy();
         expect((idMeta as DorfInputMetadata<number>).type).toEqual('number');

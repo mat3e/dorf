@@ -1,8 +1,12 @@
-<form [ngClass]="config.css.general.form">
-	<fieldset [ngClass]="config.css.general.fieldset">
-		<section *ngFor="let fieldMeta of fieldsMetadata">
-			<dorf-field [metadata]="fieldMeta"></dorf-field>
-		</section>
+<form [ngClass]="config.css.form">
+	<fieldset [ngClass]="config.css.fieldset">
+		<ng-container *ngFor="let group of groupedFieldsMetadata">
+			<section *ngIf="!group.isGroupingNested" [ngClass]="config.css.section">
+				<dorf-field-wrapper *ngFor="let fieldMeta of group" [metadata]="fieldMeta" [ngClass]="fieldMeta.getCss('wrapper') || config.getCssClassForTag(fieldMeta.tag, 'wrapper')">
+				</dorf-field-wrapper>
+			</section>
+			<dorf-group-wrapper *ngIf="group.isGroupingNested" [group]="group"></dorf-group-wrapper>
+		</ng-container>
 	</fieldset>
 
 	<dorf-buttons [form]="form" (onDorfSubmit)="onDorfSubmit()" (onDorfReset)="onDorfReset()"></dorf-buttons>

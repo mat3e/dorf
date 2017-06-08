@@ -7,17 +7,15 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import {
-    ICheckboxMapping,
-    DorfCheckboxDefinition,
-    DorfCheckboxMetadata,
-    DorfCheckboxComponent
-} from '../../src/fields/dorf-checkbox.component';
+import { DorfField } from '../../src/fields/base/dorf-field';
+import { ICheckboxMapping, IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../../src/fields/dorf-checkbox.definition';
+import { DorfCheckboxMetadata } from '../../src/fields/dorf-checkbox.metadata';
+import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 
 describe('DorfCheckboxComponent', () => {
 
     // depends on the test we have either a boolean or a number value
-    let inputDef: DorfCheckboxDefinition<boolean | number>;
+    let inputDef: IDorfCheckboxDefinition<boolean | number>;
     let inputMeta: DorfCheckboxMetadata<boolean | number>;
 
     /**
@@ -31,7 +29,12 @@ describe('DorfCheckboxComponent', () => {
 
     beforeEach(async(() => {
         let dorfConfigServiceStub = new DorfConfigService({
-            css: { checkbox: { field: 'sut' } }
+            dorfFields: [{
+                tag: DorfField.CHECKBOX,
+                css: {
+                    htmlField: 'sut'
+                }
+            }]
         });
 
         TestBed.configureTestingModule({
@@ -60,8 +63,10 @@ describe('DorfCheckboxComponent', () => {
         fixture.whenStable().then(() => {
 
             changeComponent({
-                trueValue: 1,
-                falseValue: -1
+                mapping: {
+                    trueValue: 1,
+                    falseValue: -1
+                }
             });
 
             expect(htmlElem.checked).toBeTruthy();
@@ -79,17 +84,37 @@ describe('DorfCheckboxComponent', () => {
         });
     }));
 
-    function changeComponent(mapping: ICheckboxMapping<boolean | number> = null) {
-        if (mapping) {
-            inputDef = new DorfCheckboxDefinition<boolean | number>({
-                mapping
+    it('should support innerLabel', async(() => {
+        fixture.whenStable().then(() => {
+            let innerLabel = 'inner!';
+            changeComponent({
+                innerLabel
             });
+
+            expect(htmlElem.parentElement.innerText.trim()).toEqual(innerLabel);
+        });
+    }));
+
+    it('should support standard label', async(() => {
+        fixture.whenStable().then(() => {
+            let label = 'not inner!';
+            changeComponent({
+                label
+            });
+
+            expect(htmlElem.parentElement.innerText.trim()).toEqual(''); // label outside test context
+        });
+    }));
+
+    function changeComponent(def: IDorfCheckboxDefinition<boolean | number> = null) {
+        if (def && def.mapping) {
+            inputDef = new DorfCheckboxDefinition<boolean | number>(def);
             inputMeta = new DorfCheckboxMetadata<boolean | number>(inputDef, {
                 key: 'tested',
-                value: mapping.trueValue
+                value: def.mapping.trueValue
             });
         } else {
-            inputDef = new DorfCheckboxDefinition<boolean | number>();
+            inputDef = new DorfCheckboxDefinition<boolean | number>(def);
             inputMeta = new DorfCheckboxMetadata<boolean | number>(inputDef, {
                 key: 'tested',
                 value: true

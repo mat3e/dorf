@@ -1,8 +1,3 @@
-<div [ngClass]="css.group || config.css.radio.group || config.css.general.group">
-    <label *ngIf="label" [ngClass]="css.label || config.css.radio.label || config.css.general.label">{{label}}</label>
-    <label *ngFor="let opt of optionsToSelect; let idx = index" [ngClass]="css.field || config.css.radio.field || config.css.general.field">
-        <input type="radio" [value]="opt.key" id="{{key}}-{{idx}}" [name]="key" [formControl]="formControl">
-        {{opt.value}}
-    </label>
-    <div *ngIf="invalid && errorMessage" [ngClass]="css.error || config.css.radio.error || config.css.general.error">{{errorMessage}}</div>
-</div>
+<label *ngFor="let opt of optionsToSelect; let idx = index" [ngClass]="innerLabelCss">
+    <input type="radio" [value]="opt.key" id="{{key}}-{{idx}}" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss"> {{opt.value}}
+</label>
