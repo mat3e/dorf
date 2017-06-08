@@ -52,9 +52,9 @@ export class App {
         DorfModule.forRoot({
             css: {
                 section: 'row',
-                wrapper: 'form-group col-6 row',
-                label: 'col-2 col-form-label',
-                fieldGeneralization: 'col-10',
+                wrapper: 'form-group col-md-6 col-sm-12 row',
+                label: 'col-sm-12 col-lg-2 col-form-label',
+                fieldGeneralization: 'col-sm-12 col-lg-10',
                 htmlField: 'form-control',
                 error: 'form-control-feedback',
                 buttons: {
@@ -79,7 +79,10 @@ export class App {
             }, {
                 tag: DorfField.NESTED,
                 css: {
-                    wrapper: 'form-group col-4 row'
+                    label: 'col-sm-12 col-form-label',
+                    fieldGeneralization: 'col-sm-12',
+                    wrapper: 'form-group col-sm-12 col-md-4 row',
+                    fieldset: 'fieldset'
                 }
             }],
             columnsNumber: 2

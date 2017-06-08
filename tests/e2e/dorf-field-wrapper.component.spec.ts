@@ -20,7 +20,7 @@ import { DorfFieldWrapperComponent } from '../../src/fields/base/dorf-field-wrap
 describe('DorfFieldWrapperComponent', () => {
 
     /**
-     * System Under Test - DorfInputComponent with the numeric value.
+     * System Under Test - DorfWrapperComponent with the numeric value.
      */
     let SUT: DorfFieldWrapperComponent<number, DorfInputMetadata<number>>;
     let type = 'number' as InputType;

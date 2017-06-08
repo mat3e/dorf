@@ -46,7 +46,6 @@ import { IDorfField, DorfField } from '../fields/base/dorf-field';
  *
  * @stable
  */
-// TODO: inject dedicated for tests or @Inject or Reflect.metadata with "design:paramtypes" (Injectable) for passing config with @DorfForm
 export interface IDorfForm {
     /**
      * Potential, extended [mapper]{@DorfMapper} which will be used for building a form.
@@ -56,6 +55,7 @@ export interface IDorfForm {
     /**
      * Mandatory service, which should be included in a form component built with DORF.
      */
+    // TODO: inject from tests or @Inject or Reflect.metadata with "design:paramtypes" (Injectable) for passing config with @DorfForm
     config: DorfConfigService;
 
     /**
@@ -161,7 +161,6 @@ export interface IDorfFormOptions {
  * @Annotation
  */
 // TODO: mixin from TS 2.2 or Object Spread and Rest from 2.1; hopefuly will give this.form instead of this['form'] in the decorated classes
-// TODO: unit tests for nested
 export function DorfForm(options?: IDorfFormOptions) {
     return function <D extends Function>(targetConstructor: D) {
 

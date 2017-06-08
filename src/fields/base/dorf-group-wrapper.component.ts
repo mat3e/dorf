@@ -21,7 +21,6 @@ import { DorfNestedMetadata } from './dorf-nested.metadata';
  * @stable
  */
 // TODO: reconsider using DorfForm annotation here
-// TODO: unit tests
 @Component({
     moduleId: `${module.id}`,
     selector: 'dorf-group-wrapper',
@@ -32,8 +31,6 @@ export class DorfGroupWrapperComponent<T> implements OnChanges {
     meta: DorfNestedMetadata<any>;
 
     groupedFieldsMetadata: (IDorfFieldMetadata<any>[] | DorfNestedMetadata<any>)[];
-
-    private _breakingIndexes: number[];
 
     constructor(public config: DorfConfigService) { }
 

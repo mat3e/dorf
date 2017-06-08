@@ -5,7 +5,6 @@ import { DorfNestedMetadata } from '../../src/fields/base/dorf-nested.metadata';
 import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
 
-// TODO: group tests in loops - without groups, with transparent, with not transparent, 3 last cases separately
 let def = new DorfInputDefinition();
 
 /**
