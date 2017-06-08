@@ -17,7 +17,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
     imports: [BrowserModule, DorfModule.forRoot({
         css: {
             form: 'pure-form pure-form-aligned',
-            section: 'pure-control-group',
+            wrapper: 'pure-control-group',
             error: 'error-message',
             buttons: {
                 save: 'pure-button pure-button-primary',

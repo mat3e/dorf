@@ -23,7 +23,7 @@ import { PersonDetailComponent } from './person/person-detail.component';
     imports: [BrowserModule, DorfCoreModule.forRoot({
         css: {
             form: 'pure-form pure-form-aligned',
-            section: 'pure-control-group',
+            wrapper: 'pure-control-group',
             buttons: {
                 save: 'pure-button pure-button-primary',
                 reset: 'hidden',
