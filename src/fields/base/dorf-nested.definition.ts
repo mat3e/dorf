@@ -3,14 +3,13 @@ import { DorfField } from './dorf-field';
 import { IDorfDefinitionBase, DorfDefinitionBase } from './abstract-dorf-field.definition';
 
 /**
- * @whatItDoes Definition type for the nested DORF object.
- *
- * @description
+ * Definition type for the nested DORF object.
  * Specifies how the group for the nested object should be rendered.
  *
  * @stable
  */
 export interface IDorfNestedDefinition<T> extends IDorfDefinitionBase<T> {
+    /** @inheritdoc */
     css?: IDorfGeneralCssClasses;
 
     /**
@@ -25,7 +24,9 @@ export interface IDorfNestedDefinition<T> extends IDorfDefinitionBase<T> {
 }
 
 /**
- * @whatItDoes Nested field definition implementation.
+ * Nested field definition implementation.
+ *
+ * @stable
  */
 export class DorfNestedDefinition<T> extends DorfDefinitionBase<T> implements IDorfNestedDefinition<T> {
     private _transparentFlow: boolean;
@@ -40,8 +41,11 @@ export class DorfNestedDefinition<T> extends DorfDefinitionBase<T> implements ID
         }
     }
 
+    /** @inheritdoc */
     get tag() { return DorfField.NESTED; }
 
+    /** @inheritdoc */
     get transparentFlow() { return this._transparentFlow; }
+    /** @inheritdoc */
     get columnsNumber() { return this._columnsNumber; }
 }

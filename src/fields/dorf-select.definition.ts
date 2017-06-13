@@ -2,10 +2,8 @@ import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dor
 import { DorfField } from './base/dorf-field';
 
 /**
- * @whatItDoes Represents constructor parameter for {@link DorfSelectDefinition}.
- *
- * @description
- * Definition for radio is an extension of {@link IDorfChooseDefinition}. It contains also a `multiple` flag.
+ * Represents constructor parameter for {@link DorfSelectDefinition}.
+ * Definition for select is an extension of {@link IDorfChooseDefinition}. It contains also a `multiple` flag.
  *
  * @stable
  */
@@ -18,7 +16,7 @@ export interface IDorfSelectDefinition<T> extends IDorfChooseDefinition<T> {
 }
 
 /**
- * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the select field.
+ * Represents a [definition]{@link DorfFieldDefinition} for the select field.
  *
  * @stable
  */
@@ -26,6 +24,7 @@ export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements 
 
     private _multiple: boolean = false;
 
+    /** @inheritdoc */
     constructor(options?: IDorfSelectDefinition<T>) {
         super(options);
 
@@ -34,7 +33,9 @@ export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements 
         }
     }
 
+    /** @inheritdoc */
     get multiple() { return this._multiple; }
 
+    /** @inheritdoc */
     get tag() { return DorfField.SELECT; }
 }

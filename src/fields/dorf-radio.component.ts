@@ -9,9 +9,7 @@ import { DorfField } from './base/dorf-field';
 import { DorfConfigService } from '../dorf-config.service';
 
 /**
- * @whatItDoes DORF radio field which consumes {@link DorfRadioMetadata} for rendering.
- *
- * @description
+ * DORF radio field which consumes {@link DorfRadioMetadata} for rendering.
  * One of the predefined DORF fields.
  *
  * @stable
@@ -22,7 +20,7 @@ import { DorfConfigService } from '../dorf-config.service';
     templateUrl: './dorf-radio.component.html'
 })
 export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetadata<T>> implements IDorfRadioDefinition<T> {
-
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }

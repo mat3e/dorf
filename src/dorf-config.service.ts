@@ -15,26 +15,27 @@ import { IDorfFieldDefinition } from './fields/base/abstract-dorf-field.definiti
 import { DorfMetadataBase } from './fields/base/abstract-dorf-field.metadata';
 
 /**
- * @whatItDoes It is a base for {@link DorfModule} configuration.
+ * It is a base for {@link DorfModule} configuration.
+ * Parameters should be provided in [forRoot]{@link DorfModule#forRoot} method from the {@link DorfModule}.
  *
- * @howToUse Those parameters should be defined in [forRoot]{@link DorfModule#forRoot} method from the {@link DorfModule}.
- *
- * ### Example
+ * @example
  * ```
- * DorfModule.forRoot({
- *   css: {
- *     general: {
- *       form: "pure-form pure-form-aligned",
- *       group: "pure-control-group",
- *       error: "error-message"
- *     }
- *   },
- *   additionalFields: [{
- *     tag: StarRatingDefinition.TAG,
- *     definition: StarRatingDefinition,
- *     metadata: StarRatingMetadata
- *   }]
- * })],
+ *
+ *  //
+ *  DorfModule.forRoot({
+ *    css: {
+ *      general: {
+ *        form: "pure-form pure-form-aligned",
+ *        group: "pure-control-group",
+ *        error: "error-message"
+ *      }
+ *    },
+ *    additionalFields: [{
+ *      tag: StarRatingDefinition.TAG,
+ *      definition: StarRatingDefinition,
+ *      metadata: StarRatingMetadata
+ *    }]
+ *  })],
  * ```
  *
  * @stable
@@ -57,16 +58,17 @@ export interface IDorfService {
 }
 
 /**
- * @whatItDoes Injectable instance with parameters from {@link IDorfService}.
- *
- * @description
+ * Injectable instance with parameters from {@link IDorfService}.
  * It is an `@Optional()`, injectable constructor parameter for {@link DorfConfigService}.
  *
  * @stable
  */
 export class DorfSupportingService implements IDorfService {
+    /** @inheritdoc */
     dorfFields?: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[];
+    /** @inheritdoc */
     css?: IDorfGeneralWithButtonsCssClasses;
+    /** @inheritdoc */
     columnsNumber?: number;
 
     constructor(options?: IDorfService) {
@@ -79,21 +81,25 @@ export class DorfSupportingService implements IDorfService {
 }
 
 /**
- * @whatItDoes It is used in all DORF HTML templates for modyfing fields behavior.
- *
- * @description
- * It specifies CSS classes for all important elements. It can also disable forms and this is an entry point
- * where additional fields needs to be specified.
+ * It is used in all DORF HTML templates and field compoenents for modyfing fields behavior.
+ * Specifies CSS classes for all important elements.
+ * It can also disable forms and this is an entry point where additional fields needs to be specified.
  *
  * @stable
  */
 @Injectable()
 export class DorfConfigService implements IDorfService {
+    /** @inheritdoc */
     dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]
     = getBuiltInFields() as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    /** @inheritdoc */
     css: IDorfGeneralWithButtonsCssClasses = new DorfCssClasses();
+    /** @inheritdoc */
     columnsNumber: number = 1;
 
+    /**
+     * Allows changing form state to disable. Should be set inside field component's constructor.
+     */
     isDisabled: boolean = false;
 
     constructor( @Optional() config?: DorfSupportingService) {

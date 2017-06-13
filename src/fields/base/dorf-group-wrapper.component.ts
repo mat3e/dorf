@@ -9,14 +9,7 @@ import { IDorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { DorfNestedMetadata } from './dorf-nested.metadata';
 
 /**
- * @whatItDoes Group which wraps label, dorf-field and error.
- *
- * @howToUse
- * In order to use different field components (e.g. from Angular's material) this component should be one of the changed ones.
- *
- * @description
- * This component is used in default templates. It abstracts DORF group. It contains a common part for all the fields and the fields
- * themselves, by using [DorfFieldComponent abstraction]{@link DorfFieldComponent}.
+ * Group - nested DORF object in practice.
  *
  * @stable
  */
@@ -27,6 +20,9 @@ import { DorfNestedMetadata } from './dorf-nested.metadata';
     templateUrl: './dorf-group-wrapper.component.html'
 })
 export class DorfGroupWrapperComponent<T> implements OnChanges {
+    /**
+     * Differs from standard DORF field - {@link DorfNestedMetadata} is needed here.
+     */
     @Input('group')
     meta: DorfNestedMetadata<any>;
 

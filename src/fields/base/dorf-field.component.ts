@@ -8,22 +8,19 @@ import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
 
 /**
- * @whatItDoes Component which switch between all built-in DORF fields.
- *
- * @howToUse
- * It is used within all the default form templates.
- *
- * ##Example
- * ```
- * <dorf-field [metadata]="fieldMeta">
- *   <star-rating *ngIf="fieldMeta.tag === 'star-rating'" [metadata]="fieldMeta"></star-rating>
- * </dorf-field>
- * ```
- *
- * @description
+ * Component which switch between all built-in DORF fields.
  * There are 4 base fields + additional ones, passed with {@link DorfConfigService}. This component groups all those fields
  * in order to speed up HTML template creation. Only one field will be visible at a time.
- * It is possible to include custom HTML code between component's tags. CSS Classes should be handled manually then.
+ * It is possible to include custom HTML code between component's tags.
+ *
+ * @example
+ * ```
+ *
+ *
+ *  <dorf-field [metadata]="fieldMeta">
+ *    <star-rating *ngIf="fieldMeta.tag === 'star-rating'" [metadata]="fieldMeta"></star-rating>
+ *  </dorf-field>
+ * ```
  *
  * @stable
  */
@@ -34,6 +31,7 @@ import { DorfField } from './dorf-field';
 })
 export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }

@@ -4,30 +4,25 @@ import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-
 import { DorfField } from './base/dorf-field';
 
 /**
- * @whatItDoes Represents true and false values for checkbox.
+ * Represents true and false values for checkbox. Should be used when we don't want standard boolean values for the object's property.
  *
- * @howToUse
- * You should define those values when specifying checkbox definition.
- *
- * ### Example
- *
- * ```
- * @DorfObject()
- * class TestDomainObject {
- *   @DorfCheckbox<string>({
- *     label: "Is smart?",
- *     mapping: {
- *       trueValue: "yes",
- *       falseValue: "no"
- *     },
- *     updateModelOnChange: true
- *   })
- *   private _smart: string;
- * }
+ * @example
  * ```
  *
- * @description
- * Mapping should be used when we don't want standard boolean values for the object's property.
+ *  //
+ *  @DorfObject()
+ *  class TestDomainObject {
+ *    @DorfCheckbox<string>({
+ *      label: "Is smart?",
+ *      mapping: {
+ *        trueValue: "yes",
+ *        falseValue: "no"
+ *      },
+ *      updateModelOnChange: true
+ *    })
+ *    private _smart: string;
+ *  }
+ * ```
  *
  * @stable
  */
@@ -44,15 +39,14 @@ export interface ICheckboxMapping<T> {
 }
 
 /**
- * @whatItDoes Represents constructor parameter for {@link DorfCheckboxDefinition}.
- *
- * @description
+ * Represents constructor parameter for {@link DorfCheckboxDefinition}.
  * Checkbox has an optional [mapping]{@link ICheckboxMapping} property.
  *
  * @stable
  */
 export interface IDorfCheckboxDefinition<T> extends IDorfFieldDefinition<T> {
     // more precise type
+    /** @inheritdoc */
     css?: IDorfMultipleLabelsCssClasses;
 
     /**
@@ -68,7 +62,7 @@ export interface IDorfCheckboxDefinition<T> extends IDorfFieldDefinition<T> {
 }
 
 /**
- * @whatItDoes Represents a [definition]{@link DorfFieldDefinition} for the checkbox field.
+ * Represents a [definition]{@link DorfFieldDefinition} for the checkbox field.
  *
  * @stable
  */
@@ -77,6 +71,7 @@ export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements
     private _mapping: ICheckboxMapping<T>;
     private _innerLabel: string;
 
+    /** @inheritdoc */
     constructor(options?: IDorfCheckboxDefinition<T>) {
         super(options);
 
@@ -86,8 +81,11 @@ export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements
         }
     }
 
+    /** @inheritdoc */
     get mapping() { return this._mapping; }
+    /** @inheritdoc */
     get innerLabel() { return this._innerLabel; }
 
+    /** @inheritdoc */
     get tag() { return DorfField.CHECKBOX; }
 }

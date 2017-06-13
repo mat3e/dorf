@@ -10,9 +10,7 @@ import { DorfField } from './base/dorf-field';
 import { DorfConfigService } from '../dorf-config.service';
 
 /**
- * @whatItDoes DORF checkbox field which consumes {@link DorfCheckboxMetadata} for rendering.
- *
- * @description
+ * DORF checkbox field which consumes {@link DorfCheckboxMetadata} for rendering.
  * One of the predefined DORF fields.
  *
  * @stable
@@ -30,10 +28,12 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
      */
     checkboxValue: boolean;
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }
 
+    /** @inheritdoc */
     ngOnChanges() {
         if (this.metadata.mapping) {
             this.checkboxValue = this.formControl.value === this.metadata.mapping.trueValue;
@@ -53,6 +53,9 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
         }
     }
 
+    /**
+     * Checkbox has a label around it, which is independent from the label from wrapper.
+     */
     get innerLabel() { return this.metadata.innerLabel; }
     get innerLabelCss() { return this.getCss('innerLabel'); }
 }

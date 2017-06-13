@@ -41,7 +41,7 @@ const CHECKBOX: string = 'dorf-checkbox';
 const NESTED: string = 'dorf-nested-object';
 
 /**
- * @whatItDoes Represents a field in a [mapper]{@link DorfMapper}-friendly form. Defined for all DORF tags.
+ * Represents a field in a [mapper]{@link DorfMapper}-friendly form. Defined for all DORF tags.
  *
  * @stable
  */
@@ -55,22 +55,34 @@ export interface IDorfField<D extends IDorfFieldDefinition<any>, M extends typeo
     definition?: D;
     metadata?: M;
 
+    /**
+     * Classes for the current field, to be used in templates.
+     */
     css?: IDorfFieldCssClasses | IDorfMultipleLabelsCssClasses;
 }
 
 /**
- * @whatItDoes Represents a nested field in a [mapper]{@link DorfMapper}-friendly form.
+ * Represents a nested field in a [mapper]{@link DorfMapper}-friendly form.
  *
  * @stable
  */
 export interface IDorfNestedField extends IDorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata> {
+    /**
+     * Nested group may contain e.g. CSS styles specified for internal fields.
+     */
     dorfFields?: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+
+    /** @inheritdoc */
     css?: IDorfGeneralCssClasses;
+
+    /**
+     * Rendering option which defines how many DORF wrappers should be presented inside HTML section.
+     */
     columnsNumber?: number;
 }
 
 /**
- * @whatItDoes Implementation of {@link IDorfField} for faster creation.
+ * Implementation of {@link IDorfField} for faster creation.
  *
  * @stable
  */
@@ -81,12 +93,14 @@ export class DorfField<D extends IDorfFieldDefinition<any>, M extends typeof Dor
     static get CHECKBOX() { return CHECKBOX; }
     static get NESTED() { return NESTED; }
 
+    /** @inheritdoc */
     tag: string;
 
     // TODO: do we need this?
     definition?: D;
     metadata: M;
 
+    /** @inheritdoc */
     css: IDorfFieldCssClasses | IDorfMultipleLabelsCssClasses;
 
     constructor(options: IDorfField<D, M>) {
@@ -96,13 +110,21 @@ export class DorfField<D extends IDorfFieldDefinition<any>, M extends typeof Dor
         this.css = options.css || new DorfCssClasses();
     }
 
+    /**
+     * Overrides current `DorfField` properties, with given ones.
+     *
+     * @param target state which is a target one
+     */
     updateState(target: IDorfField<D, M>) {
         this.css = new DorfCssClasses(target.css);
         this.definition = target.definition || this.definition;
         this.metadata = target.metadata || this.metadata;
     }
 
-    /** @internal */
+    /**
+     * @hidden
+     * @internal
+     */
     // TODO: generic mechanism for creating DorfTags. Static function as in Angular's makeDecorator
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:member-ordering
@@ -149,7 +171,7 @@ const DORF_FIELDS: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>
 ];
 
 /**
- * Method which returns a copy of DORF fields without nested.
+ * Method which returns a copy of DORF fields without the nested.
  *
  * @stable
  */
@@ -171,8 +193,11 @@ function getDorfFields() {
 export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata>
     implements IDorfService, IDorfNestedField {
 
+    /** @inheritdoc */
     dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    /** @inheritdoc */
     css: IDorfGeneralCssClasses;
+    /** @inheritdoc */
     columnsNumber: number;
 
     constructor() {
@@ -183,6 +208,7 @@ export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof
         this.dorfFields = getDorfFields() as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
     }
 
+    /** @inheritdoc */
     /* @Override */
     updateState(target: IDorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata>) {
         this.css = new DorfCssClasses(target.css);
@@ -228,6 +254,9 @@ export function getBuiltInFields() {
 /**
  * Helper for adding/updating a field within an existing array.
  *
+ * @param field field to be added/updated
+ * @param dorfFields array which would be modified
+ *
  * @stable
  */
 export function setFieldInArray(
@@ -244,6 +273,9 @@ export function setFieldInArray(
 
 /**
  * Reading helper.
+ *
+ * @param tag tag which is to be read
+ * @param dorfFields array where to read from
  *
  * @stable
  */

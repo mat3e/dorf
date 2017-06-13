@@ -14,12 +14,10 @@ import { DorfCheckboxMetadata } from '../fields/dorf-checkbox.metadata';
 import { DorfField } from '../fields/base/dorf-field';
 
 /**
- * @whatItDoes Object's property-field definition map, which should be defined for each domain object.
- *
- * @description
- * The most important thing, used by [mapper]{@link DorfMapper} for creating a metadata, which is used by field components.
- * This interface should be returned by `fieldDefinitions` property from the domain object.
- * Using DORF annotations ({@link DorfObject} and the related ones) automates the creation of this map.
+ * Property-field definition map, which should be defined for every Domain Object.
+ * This is used by [mapper]{@link DorfMapper} for creating a metadata, which is used by field components.
+ * This interface should be returned by `fieldDefinitions` property from the Domain Object.
+ * DORF annotations ({@link DorfObject} and the related ones) automates the creation of this map.
  *
  * @stable
  */
@@ -28,11 +26,7 @@ export interface PropertiesToDorfDefinitionsMap<DorfObj> {
 }
 
 /**
- * @whatItDoes Transpiles {@link PropertiesToDorfDefinitionsMap} into fields metadata.
- *
- * @description
- * The heart of the solution.
- * Mapper goes through predefined map and create metadata needed by field components.
+ * Transpiles {@link PropertiesToDorfDefinitionsMap} into fields metadata. The heart of the solution.
  *
  * @stable
  */
@@ -42,6 +36,10 @@ export class DorfMapper {
 
     /**
      * Main method for transpiling.
+     *
+     * @param domainObject {Object} object for which mapper is executed
+     * @param fieldDefinitions {PropertiesToDorfDefinitionsMap<DomObj>} definitions from the object
+     * @param parent {DorfNestedMetadata<any>} optional parameter, needed when mapping nested objects
      */
     mapObjectWithDefinitionsToFieldsMetadata<DomObj>(
         domainObject: DomObj,
@@ -77,7 +75,7 @@ export class DorfMapper {
 
     /**
      * Creates {@link IDorfFieldMetadata} for the particular property, identified by `propertyName`.
-     * Property comes from domain object, passed as `obj`.
+     * Property comes from Domain Object, passed as `obj`.
      */
     protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj, parent: DorfNestedMetadata<any>): IDorfFieldMetadata<any> {
         return {
@@ -90,7 +88,7 @@ export class DorfMapper {
 
     /**
      * Returns metadata constructor for a given tag.
-     * Takes into account both DORF predefined fields and custom fields, defined by a DORF consumer.
+     * Takes into account both DORF predefined fields and custom fields, defined by a DORF user.
      */
     protected getMetadataForTag(tag: string) {
         let field = this._config.getFieldForTag(tag);

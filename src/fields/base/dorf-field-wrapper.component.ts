@@ -8,14 +8,9 @@ import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfField } from './dorf-field';
 
 /**
- * @whatItDoes Group which wraps label, dorf-field and error.
- *
- * @howToUse
- * In order to use different field components (e.g. from Angular's material) this component should be one of the changed ones.
- *
- * @description
- * This component is used in default templates. It abstracts DORF group. It contains a common part for all the fields and the fields
- * themselves, by using [DorfFieldComponent abstraction]{@link DorfFieldComponent}.
+ * Group which wraps label, dorf-field and error.
+ * This component is used in default templates. It contains a common part for all the fields and the fields themselves,
+ * by using [DorfFieldComponent abstraction]{@link DorfFieldComponent}.
  *
  * @stable
  */
@@ -28,10 +23,12 @@ import { DorfField } from './dorf-field';
 export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>>
     extends AbstractDorfFieldComponent<T, M> {
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }
 
+    /** @inheritdoc */
     get errorMessage() { return this.metadata.errorMessage; }
     get errorCss() { return this.getCss('error'); }
     get fieldGeneralizationCss() { return this.getCss('fieldGeneralization'); }

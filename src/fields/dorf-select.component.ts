@@ -9,9 +9,7 @@ import { DorfField } from './base/dorf-field';
 import { DorfConfigService } from '../dorf-config.service';
 
 /**
- * @whatItDoes DORF select field which consumes {@link DorfSelectMetadata} for rendering.
- *
- * @description
+ * DORF select field which consumes {@link DorfSelectMetadata} for rendering.
  * One of the predefined DORF fields.
  *
  * @stable
@@ -23,9 +21,11 @@ import { DorfConfigService } from '../dorf-config.service';
 })
 export class DorfSelectComponent<T> extends DorfChooseComponent<T, DorfSelectMetadata<T>> implements IDorfSelectDefinition<T> {
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }
 
+    /** @inheritdoc */
     get multiple() { return this.metadata.multiple; }
 }

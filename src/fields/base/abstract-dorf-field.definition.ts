@@ -3,7 +3,7 @@ import { Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
 import { IDorfFieldCssClasses, DorfCssClasses } from '../../base/dorf-css-classes';
 
 /**
- * @whatItDoes The simplest definition, used for fields and for nested objects from Domain Object.
+ * The simplest definition, base for fields and for nested objects.
  *
  * @stable
  */
@@ -30,29 +30,26 @@ export interface IDorfDefinitionBase<T> {
 
     /**
      * Additional properties which can be defined on the fly.
-     * Each property from this object would be presented directly on [field metadata]{@link DorfFieldMetadata}.
+     * Every property from this object would be presented directly on [field metadata]{@link DorfFieldMetadata}.
      * Accessing them should be implemented separately, e.g. in [DorfMapper extension]{@link DorfMapper}.
      */
     extras?: { [propertyName: string]: any };
 }
 
 /**
- * @whatItDoes Basic definition type for a property from Domain Object.
+ * Basic definition type for a field from Domain Object.
  *
- * @howToUse
- * Each custom field should be built starting from the extension of this interface. It contains parameters to be defined for a field,
- * when using DORF.
+ * Every custom field should be built starting from the extension of this interface.
+ * It contains parameters to be defined for a field.
  *
- * ### Example
- *
- * ```
- * export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
- *   max: number;
- * }
+ * @example
  * ```
  *
- * @description
- * Specifies all the fields available in definitoin.
+ *  //
+ *  export interface IStarRatingDefinition<T> extends IDorfFieldDefinition<T> {
+ *    max: number;
+ *  }
+ * ```
  *
  * @stable
  */
@@ -78,20 +75,21 @@ export interface IDorfFieldDefinition<T> extends IDorfDefinitionBase<T> {
     onSummary?: boolean;
 
     /**
-     * Property known from `ng-model-options` from Angular 1.3.
-     * Defines time (in milliseconds) which should pass before updating a field value.
-     */
-    debounce?: number;
-
-    /**
      * Indicates if we want to immediately update a corresponding value in object.
      * Behavior is similar to `NgModel`'s one.
      */
     updateModelOnChange?: boolean;
+
+    /**
+     * Property known from `ng-model-options`, from Angular 1.3.
+     * Defines time (in milliseconds) which should pass before updating a field value in a source model.
+     * This should be specified together with `updateModelOnChange` set to true.
+     */
+    debounce?: number;
 }
 
 /**
- * @whatItDoes Common part for fields and nested objects.
+ * Common part for fields and nested objects.
  *
  * @stable
  */
@@ -102,8 +100,16 @@ export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
     private _label: string;
     private _extras: { [propertyName: string]: any };
 
+    /**
+     * HTML identifier of the element. Unique for DORF.
+     */
     abstract get tag(): string;
 
+    /**
+     * Creates a definition accordingly to an optional parameter.
+     *
+     * @param options {IDorfDefinitionBase} interface storing values to be presented in the definition
+     */
     constructor(options?: IDorfDefinitionBase<T>) {
         if (options) {
             this.order = options.order;
@@ -114,19 +120,21 @@ export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
         }
     }
 
+    /** @inheritdoc */
     get css() { return this._css; }
+    /** @inheritdoc */
     get label() { return this._label; }
+    /** @inheritdoc */
     get extras() { return this._extras; }
 }
 
 /**
- * @whatItDoes Basic class for all the definitions.
+ * Basic class for all the field definitions.
  *
- * @description
  * Stores things to be defined by a developer before creating the form field.
  * E.g. what label should be presented in the form, what is the validation rule.
  *
- * Having definition and domain object, {@link DorfMapper} is able to create [metadata]{@link DorfFieldMetadata},
+ * Having definition and Domain Object, {@link DorfMapper} is able to create [metadata]{@link DorfFieldMetadata},
  * which is used directly in DORF's reactive form.
  *
  * @stable
@@ -139,6 +147,7 @@ export abstract class DorfFieldDefinition<T> extends DorfDefinitionBase<T> imple
     private _debounce: number;
     private _updateModelOnChange: boolean;
 
+    /** @inheritdoc */
     constructor(options?: IDorfFieldDefinition<T>) {
         super(options);
 
@@ -152,10 +161,16 @@ export abstract class DorfFieldDefinition<T> extends DorfDefinitionBase<T> imple
         }
     }
 
+    /** @inheritdoc */
     get validator() { return this._validator; }
+    /** @inheritdoc */
     get asyncValidator() { return this._asyncValidator; }
+    /** @inheritdoc */
     get errorMessage() { return this._errorMessage; }
+    /** @inheritdoc */
     get onSummary() { return this._onSummary; }
+    /** @inheritdoc */
     get debounce() { return this._debounce; }
+    /** @inheritdoc */
     get updateModelOnChange() { return this._updateModelOnChange; }
 }

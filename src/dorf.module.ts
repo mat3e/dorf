@@ -13,31 +13,31 @@ export * from './fields/base/dorf-field-wrapper.component';
 export * from './base/dorf-buttons.component';
 
 /**
- * @whatItDoes Library module with all the default components.
+ * Library module with all the default components.
  *
- * @howToUse
+ * This module exports `FormsModule` and `ReactiveFormsModule` and all the predefined DORF components.
+ *
  * It may be imported by `forRoot` method and then there is a possibility to define custom fields and CSS classes.
  *
- * ### Example
- * ```
- * DorfModule.forRoot({
- *   css: {
- *     general: {
- *       form: "pure-form pure-form-aligned",
- *       group: "pure-control-group",
- *       error: "error-message"
- *     }
- *   },
- *   additionalFields: [{
- *     tag: StarRatingDefinition.TAG,
- *     definition: StarRatingDefinition,
- *     metadata: StarRatingMetadata
- *   }]
- * })],
+ * @example
  * ```
  *
- * @description
- * This module exports `FormsModule` and `ReactiveFormsModule` and all the predefined DORF components.
+ *  //
+ *  DorfModule.forRoot({
+ *    css: {
+ *      general: {
+ *        form: "pure-form pure-form-aligned",
+ *        group: "pure-control-group",
+ *        error: "error-message"
+ *      }
+ *    },
+ *    dorfFields: [{
+ *      tag: StarRatingDefinition.TAG,
+ *      definition: StarRatingDefinition,
+ *      metadata: StarRatingMetadata
+ *    }]
+ *  })],
+ * ```
  *
  * @stable
  */

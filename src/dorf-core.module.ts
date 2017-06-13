@@ -27,34 +27,35 @@ export * from './base/dorf-mapper';
 export * from './dorf-config.service';
 
 /**
- * @whatItDoes Base library module. It requires DORF components.
+ * Base library module.
  *
- * @howToUse
+ * This module exports `FormsModule` and `ReactiveFormsModule`.
+ *
+ * This version of DORF module, requires additional components, like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`.
+ * Those can be defined on their own or add through the following DORF declarations:
+ * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent, DorfGroupWrapperComponent]`.
+ *
  * It may be imported by `forRoot` method and then there is a possibility to define custom fields and CSS classes.
  *
- * ### Example
- * ```
- * DorfCoreModule.forRoot({
- *   css: {
- *     general: {
- *       form: "pure-form pure-form-aligned",
- *       group: "pure-control-group",
- *       error: "error-message"
- *     }
- *   },
- *   additionalFields: [{
- *     tag: StarRatingDefinition.TAG,
- *     definition: StarRatingDefinition,
- *     metadata: StarRatingMetadata
- *   }]
- * })],
+ * @example
  * ```
  *
- * @description
- * This module exports `FormsModule` and `ReactiveFormsModule`. This version of DORF module, requires additional components,
- * like `dorf-input`, `dorf-select`, `dorf-radio`, `dorf-checkbox`. Those can be defined on their own
- * or add through the following DORF declarations:
- * `[DorfInputComponent, DorfRadioComponent, DorfSelectComponent, DorfCheckboxComponent, DorfButtonsComponent, DorfFieldComponent, DorfFieldWrapperComponent, DorfGroupWrapperComponent]`.
+ *  //
+ *  DorfCoreModule.forRoot({
+ *    css: {
+ *      general: {
+ *        form: "pure-form pure-form-aligned",
+ *        group: "pure-control-group",
+ *        error: "error-message"
+ *      }
+ *    },
+ *    dorfFields: [{
+ *      tag: StarRatingDefinition.TAG,
+ *      definition: StarRatingDefinition,
+ *      metadata: StarRatingMetadata
+ *    }]
+ *  })],
+ * ```
  *
  * @stable
  */

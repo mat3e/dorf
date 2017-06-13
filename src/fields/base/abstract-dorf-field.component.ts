@@ -8,53 +8,52 @@ import { IDorfCommonCssClasses, DorfCssClasses } from '../../base/dorf-css-class
 import { DorfConfigService } from '../../dorf-config.service';
 
 /**
- * @whatItDoes Base for each DORF field.
- *
- * @howToUse
- * Each custom field should be defined by a `Component` which extends this one.
- * Subclass shouldn't contain annotations inside, e.g. on properties or methods.
- *
- * ### Example
- *
- * ```
- * @Component({
- *   moduleId: module.id,
- *   selector: "star",
- *   styleUrls: ["star-rating.component.css"],
- *   templateUrl: "star-rating.component.html"
- * })
- * export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRatingMetadata<T>> implements IStarRatingDefinition<T> {
- *
- *   constructor(config: DorfConfigService) {
- *     super(config);
- *   }
- *
- *   setValue(val: number) {
- *     this.formControl.setValue(val + 1);
- *   }
- *
- *   get max() { return this.metadata.max; }
- *
- *   get stars() { return new Array(this.max); }
- *   get value() { return this.formControl.value; }
- * }
- * ```
- *
- * @description
- * Custom DORF field, extending this class, should take care of using `metadata` inside HTML template.
- *
- * `@Component()` annotation should be set on the subclass level and then no more annotations inside
+ * Base for each DORF field.
+ * `@Component()` annotation should be set on the subclass level and then no more annotations should be presented
  * (e.g. no `@Input()` or `@Output()` on properties).
  * If there is no way to go without additional annotations in subclass, `metadata` should be listed directly
- * in the subclass once again, with the corresponding `@Input`s annotations.
+ * in the subclass once again, with the corresponding `@Input` annotation.
+ *
+ * @example
+ * ```
+ *
+ *  //
+ *  @Component({
+ *    moduleId: module.id,
+ *    selector: "star",
+ *    styleUrls: ["star-rating.component.css"],
+ *    templateUrl: "star-rating.component.html"
+ *  })
+ *  export class StarRatingComponent<T> extends AbstractDorfFieldComponent<T, StarRatingMetadata<T>> implements IStarRatingDefinition<T> {
+ *
+ *    constructor(config: DorfConfigService) {
+ *      super(config);
+ *    }
+ *
+ *    setValue(val: number) {
+ *      this.formControl.setValue(val + 1);
+ *    }
+ *
+ *    get max() { return this.metadata.max; }
+ *
+ *    get stars() { return new Array(this.max); }
+ *    get value() { return this.formControl.value; }
+ *  }
+ * ```
  *
  * @stable
  */
 // TODO: decorator which adds the same behavior as this class/DorfField factory method
 export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>> {
+    /**
+     * Essence, needed by DORF field.
+     */
     @Input()
     metadata: M;
 
+    /**
+     * @param config {DorfConfigService} injected [service]{@link DorfConfigService}
+     */
     constructor(public config: DorfConfigService) { }
 
     get key() { return this.metadata.key; }

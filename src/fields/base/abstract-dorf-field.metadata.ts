@@ -6,14 +6,14 @@ import { IDorfCommonCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses } f
 import { IDorfDefinitionBase, IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
 
 /**
- * @whatItDoes Defines things existing in metadata, which don't exist directly in the definition.
- * Internal stuff, used especially in  {@link DorfMapper}.
+ * Defines things existing in metadata, which don't exist directly in the definition.
+ * Internal stuff, used especially in {@link DorfMapper}.
  *
  * @stable
  */
 export interface IDorfFieldMetadata<T> {
     /**
-     * An unique identifier, property name. Used as id in DOM element.
+     * An unique identifier, property name. Used as id in HTML element.
      */
     key: string;
 
@@ -23,8 +23,8 @@ export interface IDorfFieldMetadata<T> {
     value?: T;
 
     /**
-     * Method to be defined by [mapper]{@link DorfMapper}, which helps setting a value in domain object.
-     * It is activated when `updateModelOnChange` is set to true in [definition]{@link DorfFieldDefinition}.
+     * Method to be defined by [mapper]{@link DorfMapper}, which helps setting a value in Domain Object.
+     * It is activated when `updateModelOnChange` is `true` in [definition]{@link DorfFieldDefinition}.
      */
     setDomainObjValue?: (val: T) => void;
 
@@ -40,7 +40,7 @@ export interface IDorfFieldMetadata<T> {
 }
 
 /**
- * @whatItDoes Base class for field and for the nested object.
+ * Base class for field and for the nested object.
  *
  * @stable
  */
@@ -51,6 +51,12 @@ export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> impl
     private _key: string;
     private _parentCss: IDorfGeneralCssClasses;
 
+    /**
+     * Called by {@link DorfMapper}.
+     *
+     * @param definition {IDorfDefinitionBase} extension of {@link IDorfDefinitionBase} with parameters to be propagated
+     * @param options {IDorfFieldMetadata} extension of {@link IDorfFieldMetadata}
+     */
     constructor(protected definition: D, options?: IDorfFieldMetadata<T>) {
         if (definition) {
             // tslint:disable-next-line:forin
@@ -67,24 +73,38 @@ export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> impl
         }
     }
 
+    /** @inheritdoc */
     get key() { return this._key; }
+    /** @inheritdoc */
     get value() { return this._value; }
+    /** @inheritdoc */
     get invalid() { return this._invalid; }
+    /** @inheritdoc */
     get label() { return this.definition.label; }
+    /** @inheritdoc */
     get css() { return this.definition.css; }
+    /** @inheritdoc */
     get order() { return this.definition.order; }
+    /** @inheritdoc */
     set order(newOrder: number) { this.definition.order = newOrder; }
+    /** @inheritdoc */
     get isNested() { return !!this._parentCss; }
 
+    /** @inheritdoc */
     get tag() { return this.definition.tag; }
 
+    /**
+     * Gets CSS classes, with accordance to the priorities. The closer the definition, the sooner applied.
+     *
+     * @param cssClass {string} classes to be got, e.g. `'label'` for label ones
+     */
     getCss(cssClass: string) {
         return this.definition.css[cssClass] || (this._parentCss || {})[cssClass];
     }
 }
 
 /**
- * @whatItDoes Is used directly in reactive form by the fields.
+ * Is used directly in reactive form by the fields.
  * There is no chance for creating DORF form without having metadata.
  *
  * @stable
@@ -105,9 +125,14 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
         }
     }
 
+    /** @inheritdoc */
     get errorMessage() { return this.definition.errorMessage; }
+    /** @inheritdoc */
     get onSummary() { return this.definition.onSummary; }
 
+    /**
+     * Getter with proxy. Converts metadata to `FormControl`.
+     */
     get formControl() {
         if (!this._ctrl) {
             this._ctrl = this.extractFormControl();
@@ -116,7 +141,7 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
     }
 
     /**
-     * Function for extracting FormControl (value and validators) from `FieldMetadata`.
+     * Function for extracting `FormControl` (value and validators) from `FieldMetadata`.
      */
     protected extractFormControl() {
         let ctrl = new FormControl(this._value, this.definition.validator, this.definition.asyncValidator);

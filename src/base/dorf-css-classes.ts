@@ -1,14 +1,15 @@
 import { DorfConfigService } from '../dorf-config.service';
 import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
 
-/**
- * Possible class types - from Angular's NgClass.
- */
 // TODO: objects support as in NgClass from Angular - allowing objects to be passed
+/**
+ * General type, used in DORF CSS interfaces.
+ * Classes should be passed as string values with spaces, but some definitions, like e.g. buttons, are nested within other definitions.
+ */
 export type NgDorfClassType = string | IDorfCommonCssClasses;
 
 /**
- * @whatItDoes Common part of CSS classes.
+ * Common part of CSS classes. Interfaces are not strict, so additional fields may be defined and used in DORF extensions.
  *
  * @stable
  */
@@ -20,7 +21,7 @@ export interface IDorfCommonCssClasses {
 }
 
 /**
- * @whatItDoes Represents CSS classes for DORF buttons.
+ * Represents CSS classes for DORF buttons.
  *
  * @stable
  */
@@ -42,50 +43,48 @@ export interface IDorfButtonsCssClasses extends IDorfCommonCssClasses {
 }
 
 /**
- * @whatItDoes Represents CSS classes for typical things connected with a DORF field.
+ * Represents CSS classes for typical things connected with DORF field.
+ * Should be used e.g. when including [DORF module]{@link DorfModule}.
  *
- * @howToUse
- * E.g. during adding [DORF module]{@link DorfModule}.
- *
- * ### Example
- *
- * ```
- * DorfModule.forRoot({
- *   css: {
- *     wrapper: "form-group",
- *     error: "error-message",
- *     label: "control-label",
- *     htmlField: "form-control"
- *   },
- *   dorfFields: [{
- *     tag: DorfField.CHECKBOX,
- *     css: {
- *       htmlField: "no-class",
- *       label: "checkbox-inline"
- *     }
- *   }, {
- *     tag: DorfField.RADIO,
- *     css: {
- *       htmlField: "radio-inline",
- *       label: "checkbox-inline"
- *     }
- *   }]
- * })
- * ```
- *
- * @description
- * There are different levels where CSS classes from this interface may be applied.
- * <ul>
+ * There are various places, where CSS classes from this interface may be applied.
+ * <ol>
  *  <li>General, {@link DorfConfigService} level - applicable only if no other styles defined</li>
- *  <li>Field level on the [dorfFields array]{@link DorfConfigService#dorfFields} - overrides the above classes</li>
- *  <li>Definition level - the highest priority</li>
- * </ul>
+ *  <li>Field level on the [`dorfFields` array]{@link DorfConfigService#dorfFields} - overrides the above classes</li>
+ *  <li>Definition level - the closest to the field, the highest priority</li>
+ * </ol>
+ *
+ * @example
+ * ```
+ *
+ *  //
+ *  DorfModule.forRoot({
+ *    css: {
+ *      wrapper: "form-group",
+ *      error: "error-message",
+ *      label: "control-label",
+ *      htmlField: "form-control"
+ *    },
+ *    dorfFields: [{
+ *      tag: DorfField.CHECKBOX,
+ *      css: {
+ *        htmlField: "no-class",
+ *        label: "checkbox-inline"
+ *      }
+ *    }, {
+ *      tag: DorfField.RADIO,
+ *      css: {
+ *        htmlField: "radio-inline",
+ *        label: "checkbox-inline"
+ *      }
+ *    }]
+ *  })
+ * ```
  *
  * @stable
  */
 export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     /**
-     * Classes for what groups all field elements (label, control, error).
+     * Classes for wrapper, which groups all field elements (label, control, error).
      */
     wrapper?: NgDorfClassType;
 
@@ -95,12 +94,12 @@ export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     label?: NgDorfClassType;
 
     /**
-     * Classes assigned to the [dorf-field]{@link DorfFieldComponent}, which stores one of the DORF fields at a time.
+     * Classes assigned to the [`dorf-field`]{@link DorfFieldComponent}, which stores one of the fields at a time.
      */
     fieldGeneralization?: NgDorfClassType;
 
     /**
-     * Classes assigned to the concrete field component, under [dorf-field]{@link DorfFieldComponent}.
+     * Classes assigned to the concrete field component, under [`dorf-field`]{@link DorfFieldComponent}, e.g. to `dorf-input`.
      */
     dorfField?: NgDorfClassType;
 
@@ -115,6 +114,11 @@ export interface IDorfFieldCssClasses extends IDorfCommonCssClasses {
     error?: NgDorfClassType;
 }
 
+/**
+ * Some fields, like radio and checkbox, may have 2 labels and corresponding CSS classes.
+ *
+ * @stable
+ */
 export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
     /**
      * Classes for a label which is around the field. Used especially with a checkbox or radio buttons.
@@ -123,7 +127,7 @@ export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
 }
 
 /**
- * @whatItDoes Extends {@link IDorfFieldCssClasses} to provide some additional classes and fallback, default ones for fields.
+ * Classes available in the form and the fallback classes for field (applicable if nowhere else defined).
  *
  * @stable
  */
@@ -144,48 +148,47 @@ export interface IDorfGeneralCssClasses extends IDorfMultipleLabelsCssClasses {
     legend?: NgDorfClassType;
 
     /**
-     * CSS classes for a group of DORF grouping/wrapping divs (each grouping div contains HTML field, label and error).
+     * CSS classes for a group of DORF wrapping divs (each wrapping div contains HTML field, label and error).
      * Classes assigned here are usually connected with a grid system (e.g. `'row'` class from Bootstrap).
      */
     section?: NgDorfClassType;
 }
 
 /**
- * @whatItDoes Extends {@link IDorfFieldCssClasses} to provide some additional classes and fallback, default ones for fields.
- *
- * @howToUse
+ * The most general set of classes, used for the form component and for the fallbacks.
  * Form, fieldset, section and button classes are defined just once, during adding [DORF module]{@link DorfModule}.
  *
- * ### Example
- *
+ * @example
  * ```
- * DorfModule.forRoot({
- *   css: {
- *     wrapper: "form-group",
- *     error: "error-message",
- *     label: "control-label",
- *     htmlField: "form-control",
- *     form: 'pure-form pure-form-aligned',
- *     buttons: {
- *       save: 'pure-button pure-button-primary',
- *       reset: 'hidden',
- *       group: 'pure-controls'
- *     }
- *   },
- *   dorfFields: [{
- *     tag: DorfField.CHECKBOX,
- *     css: {
- *       htmlField: "no-class",
- *       label: "checkbox-inline"
- *     }
- *   }, {
- *     tag: DorfField.RADIO,
- *     css: {
- *       htmlField: "radio-inline",
- *       label: "checkbox-inline"
- *     }
- *   }]
- * })
+ *
+ *  //
+ *  DorfModule.forRoot({
+ *    css: {
+ *      wrapper: "form-group",
+ *      error: "error-message",
+ *      label: "control-label",
+ *      htmlField: "form-control",
+ *      form: 'pure-form pure-form-aligned',
+ *      buttons: {
+ *        save: 'pure-button pure-button-primary',
+ *        reset: 'hidden',
+ *        group: 'pure-controls'
+ *      }
+ *    },
+ *    dorfFields: [{
+ *      tag: DorfField.CHECKBOX,
+ *      css: {
+ *        htmlField: "no-class",
+ *        label: "checkbox-inline"
+ *      }
+ *    }, {
+ *      tag: DorfField.RADIO,
+ *      css: {
+ *        htmlField: "radio-inline",
+ *        label: "checkbox-inline"
+ *      }
+ *    }]
+ *  })
  * ```
  *
  * @stable
@@ -198,11 +201,12 @@ export interface IDorfGeneralWithButtonsCssClasses extends IDorfGeneralCssClasse
 }
 
 /**
- * @whatItDoes Implementation of {@link IDorfCommonCssClasses} for a fast creation with an empty values.
+ * Implementation of {@link IDorfCommonCssClasses} for a fast creation with an empty values.
  *
  * @stable
  */
 export class DorfCssClasses implements IDorfCommonCssClasses {
+    /** @inheritdoc */
     [key: string]: NgDorfClassType;
 
     constructor(options?: IDorfCommonCssClasses) {

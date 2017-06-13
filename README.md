@@ -57,7 +57,7 @@ This library is about taking them to the next level by coupling with _Domain Obj
 soon
 
 ## Documentation
-[Compodoc](https://compodoc.github.io/website/) - soon
+[Generated API documentation](https://mat3e.github.io/dorf/api-doc/)
 
 ## Vision
 The aim of this library is to speed up boring things like a creation of the ordinary forms and styling them. Library is not strictly connected with any CSS framework. You can just pass the classes as `DorfConfigService` parameters. 

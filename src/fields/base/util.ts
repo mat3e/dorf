@@ -2,14 +2,15 @@ import { IDorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { DorfNestedMetadata } from './dorf-nested.metadata';
 
 /**
- * @whatItDoes Runs against {@link IDorfFieldMetadata} and returns a grouped version.
+ * Runs against {@link IDorfFieldMetadata} and returns a grouped version.
+ * Metadata in form is always grouped, depending on [the value form config]{@link DorfConfigService#columnsNumber}.
+ * By default there are no columns, so each [metadata]{@link DorfFieldMetadata} is in a single-element array.
  *
- * @howToUse
  * It is used internally by decorators and {@link DorfFieldMetadata}.
  *
- * @description
- * Metadata in form is always grouped, depending [on the value form config]{@link DorfConfigService#columnsNumber}.
- * By default there are no columns, so each [metadata]{@link DorfFieldMetadata} is in a single-element array.
+ * @param source array with multiple metadata, to be grouped
+ * @param elemsInGroup number of columns
+ * @param lastingElems optional parameter, used when recurrence occurs
  *
  * @stable
  */
@@ -59,7 +60,10 @@ export function groupMetadata(source: IDorfFieldMetadata<any>[], elemsInGroup: n
     return result;
 }
 
-/** @internal */
+/**
+ * @hidden
+ * @internal
+ */
 class GroupingUtil {
     private _group: IDorfFieldMetadata<any>[];
     private _elemsInGroup: number;

@@ -8,9 +8,7 @@ import { DorfField } from './base/dorf-field';
 import { DorfConfigService } from '../dorf-config.service';
 
 /**
- * @whatItDoes DORF input field which consumes {@link DorfInputMetadata} for rendering.
- *
- * @description
+ * DORF input field which consumes {@link DorfInputMetadata} for rendering.
  * One of the predefined DORF fields.
  *
  * @stable
@@ -22,10 +20,12 @@ import { DorfConfigService } from '../dorf-config.service';
 })
 export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInputMetadata<T>> implements IDorfInputDefinition<T> {
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }
 
+    /** @inheritdoc */
     get type() { return this.metadata.type; }
     get isRange() { return this.type === 'range' as InputType; }
     get isNumber() { return this.type === 'number' as InputType; }

@@ -5,16 +5,18 @@ import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 import { DorfConfigService } from '../../dorf-config.service';
 
 /**
- * @whatItDoes Represents base [DorfFieldComponent]{@link AbstractDorfFieldComponent} for the fields with the limited values to choose from.
+ * Represents base [DorfFieldComponent]{@link AbstractDorfFieldComponent} for the fields with the limited values to choose from.
  *
  * @stable
  */
 // tslint:disable-next-line:max-line-length
 export abstract class DorfChooseComponent<T, M extends DorfChooseMetadata<T, IDorfChooseDefinition<T>>> extends AbstractDorfFieldComponent<T, M> implements IDorfChooseDefinition<T> {
 
+    /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);
     }
 
+    /** @inheritdoc */
     get optionsToSelect() { return this.metadata.optionsToSelect; }
 }
