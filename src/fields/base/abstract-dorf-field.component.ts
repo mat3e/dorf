@@ -52,6 +52,11 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     metadata: M;
 
     /**
+     * Cache to simplify getter logic.
+     */
+    private _labelCss: string;
+
+    /**
      * @param config {DorfConfigService} injected [service]{@link DorfConfigService}
      */
     constructor(public config: DorfConfigService) { }
@@ -59,7 +64,19 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
     get key() { return this.metadata.key; }
     get label() { return this.metadata.label; }
     get htmlFieldCss() { return this.getCss('htmlField'); }
-    get labelCss() { return this.getCss('label'); }
+    get labelCss() {
+        if (!this._labelCss) {
+            this._labelCss = '';
+            if (this.config.requiredWithStar && this.metadata.isRequired) {
+                this._labelCss = 'dorf-required';
+            }
+            let labelClasses = this.getCss('label');
+            if (labelClasses) {
+                this._labelCss = `${labelClasses} ${this._labelCss}`;
+            }
+        }
+        return this._labelCss;
+    }
 
     // TODO: is there a way for `touch`? FormControl.markAsTouched is triggered on blur on elemenent with formControl directive
     get invalid() { return this.metadata.invalid; }
@@ -68,7 +85,7 @@ export abstract class AbstractDorfFieldComponent<T, M extends DorfFieldMetadata<
 
     protected getCss(cssClass: string) {
         let result = this.metadata.getCss(cssClass);
-        if (this.metadata.isNested) {
+        if (this.metadata.parentCss) {
             result = result || this.config.getCssClassForNestedTag(this.metadata.tag, cssClass);
         } else {
             result = result || this.config.getCssClassForTag(this.metadata.tag, cssClass);

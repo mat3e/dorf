@@ -55,6 +55,11 @@ export interface IDorfService {
      * Form can be rendered with multiple columns. Number of fields within the section should be specified here.
      */
     columnsNumber?: number;
+
+    /**
+     * Forces required fields to have `dorf-required` CSS class, which defines :after pseudoelement with a red star.
+     */
+    requiredWithStar?: boolean;
 }
 
 /**
@@ -70,12 +75,15 @@ export class DorfSupportingService implements IDorfService {
     css?: IDorfGeneralWithButtonsCssClasses;
     /** @inheritdoc */
     columnsNumber?: number;
+    /** @inheritdoc */
+    requiredWithStar?: boolean;
 
     constructor(options?: IDorfService) {
         if (options) {
             this.dorfFields = options.dorfFields;
             this.css = options.css;
             this.columnsNumber = options.columnsNumber;
+            this.requiredWithStar = options.requiredWithStar;
         }
     }
 }
@@ -96,6 +104,8 @@ export class DorfConfigService implements IDorfService {
     css: IDorfGeneralWithButtonsCssClasses = new DorfCssClasses();
     /** @inheritdoc */
     columnsNumber: number = 1;
+    /** @inheritdoc */
+    requiredWithStar: boolean;
 
     /**
      * Allows changing form state to disable. Should be set inside field component's constructor.
@@ -106,6 +116,7 @@ export class DorfConfigService implements IDorfService {
         if (config) {
             this.css = config.css ? new DorfCssClasses(config.css) : this.css;
             this.columnsNumber = config.columnsNumber || this.columnsNumber;
+            this.requiredWithStar = config.requiredWithStar;
 
             if (config.dorfFields) {
                 config.dorfFields.forEach((field) => {

@@ -35,7 +35,7 @@ describe('DorfMetadataBase', () => {
         expect((meta as any).foo).toEqual(VAL);
     });
 
-    it('uses "parentCss" to determine style and "isNested"', () => {
+    it('uses "parentCss" to determine style', () => {
         // GIVEN
         let CLASS = 'xyz';
         let def = new DorfSelectDefinition();
@@ -45,7 +45,7 @@ describe('DorfMetadataBase', () => {
         let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def, options);
 
         // THEN
-        expect(meta.isNested).toBeTruthy();
+        expect(meta.parentCss).toBeDefined();
         expect(meta.getCss('htmlField')).toEqual(CLASS);
     });
 

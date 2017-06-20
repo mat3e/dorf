@@ -21,7 +21,7 @@ export class ContactData implements IContactData {
 
     @DorfInput({
         label: 'E-mail', type: 'email',
-        validator: Validators.email, errorMessage: 'Only correct e-mails allowed'
+        validator: [Validators.email, Validators.required], errorMessage: 'Only correct e-mails allowed'
     })
     mail: string;
 

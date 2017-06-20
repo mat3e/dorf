@@ -18,7 +18,7 @@ import { DorfField } from './dorf-field';
     moduleId: `${module.id}`,
     selector: 'dorf-field-wrapper',
     templateUrl: './dorf-field-wrapper.component.html',
-    styles: [':host {display: flex;}']
+    styles: [':host {display: flex;}', `.dorf-required:after {content: '*'; color: red;}`]
 })
 export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>>
     extends AbstractDorfFieldComponent<T, M> {

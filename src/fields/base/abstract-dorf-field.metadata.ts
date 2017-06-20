@@ -1,6 +1,6 @@
 import 'rxjs/add/operator/debounceTime';
 
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 import { IDorfCommonCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
 import { IDorfDefinitionBase, IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
@@ -29,14 +29,15 @@ export interface IDorfFieldMetadata<T> {
     setDomainObjValue?: (val: T) => void;
 
     /**
-     * Indicates that metadata exists within the context of a group.
-     */
-    isNested?: boolean;
-
-    /**
      * When metadata is nested within the group, group is passing its CSS.
      */
     parentCss?: IDorfGeneralCssClasses;
+
+    /**
+     * Helper.
+     * Indicates that metadata is for a required field.
+     */
+    isRequired?: boolean;
 }
 
 /**
@@ -88,7 +89,7 @@ export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> impl
     /** @inheritdoc */
     set order(newOrder: number) { this.definition.order = newOrder; }
     /** @inheritdoc */
-    get isNested() { return !!this._parentCss; }
+    get parentCss() { return this._parentCss; }
 
     /** @inheritdoc */
     get tag() { return this.definition.tag; }
@@ -113,12 +114,22 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
     implements IDorfFieldMetadata<T>, IDorfFieldDefinition<T> {
 
     private _ctrl: FormControl;
+    private _isRequired: boolean;
 
     /**
      * Used rather by {@link DorfMapper}. Definition type should be always as detailed as possible (e.g. DorfSelectDefinition).
      */
     constructor(definition: D, options?: IDorfFieldMetadata<T>) {
         super(definition, options);
+
+        let val = definition.validator;
+        if (val) {
+            if (val instanceof Array) {
+                this._isRequired = val.indexOf(Validators.required) !== -1;
+            } else {
+                this._isRequired = val === Validators.required;
+            }
+        }
 
         if (options) {
             this._setDomainObjValue = definition.updateModelOnChange ? options.setDomainObjValue : this._setDomainObjValue;
@@ -129,6 +140,8 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
     get errorMessage() { return this.definition.errorMessage; }
     /** @inheritdoc */
     get onSummary() { return this.definition.onSummary; }
+    /** @inheritdoc */
+    get isRequired() { return this._isRequired; }
 
     /**
      * Getter with proxy. Converts metadata to `FormControl`.

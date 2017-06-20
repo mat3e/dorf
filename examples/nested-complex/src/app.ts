@@ -56,7 +56,7 @@ export class App {
                 label: 'col-sm-12 col-lg-2 col-form-label',
                 fieldGeneralization: 'col-sm-12 col-lg-10',
                 htmlField: 'form-control',
-                error: 'form-control-feedback',
+                error: 'form-control-feedback col-sm-12',
                 buttons: {
                     save: 'btn btn-primary',
                     reset: 'hidden'
@@ -85,7 +85,8 @@ export class App {
                     fieldset: 'fieldset'
                 }
             }],
-            columnsNumber: 2
+            columnsNumber: 2,
+            requiredWithStar: true
         })
     ],
     declarations: [

@@ -49,8 +49,8 @@ export interface IDorfButtonsCssClasses extends IDorfCommonCssClasses {
  * There are various places, where CSS classes from this interface may be applied.
  * <ol>
  *  <li>General, {@link DorfConfigService} level - applicable only if no other styles defined</li>
- *  <li>Field level on the [`dorfFields` array]{@link DorfConfigService#dorfFields} - overrides the above classes</li>
- *  <li>Definition level - the closest to the field, the highest priority</li>
+ *  <li>Field level within the `dorfFields` array from {@link DorfConfigService}
+ *  <li>Definition level - the closest to the field (the highest priority)</li>
  * </ol>
  *
  * @example
@@ -127,7 +127,7 @@ export interface IDorfMultipleLabelsCssClasses extends IDorfFieldCssClasses {
 }
 
 /**
- * Classes available in the form and the fallback classes for field (applicable if nowhere else defined).
+ * Classes for the form (like fieldset, legend elements) and the fallback classes for fields (applicable if nowhere else defined).
  *
  * @stable
  */

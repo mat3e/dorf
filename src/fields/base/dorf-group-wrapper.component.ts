@@ -40,7 +40,7 @@ export class DorfGroupWrapperComponent<T> implements OnChanges {
 
     protected getCss(cssClass: string) {
         let result = this.meta.getCss(cssClass);
-        if (this.meta.isNested) {
+        if (this.meta.parentCss) {
             result = result || this.config.getCssClassForNestedTag(this.meta.tag, cssClass);
         } else {
             result = result || this.config.getCssClassForTag(this.meta.tag, cssClass);
