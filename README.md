@@ -2,11 +2,10 @@
 
 # Domain Object Reactive Forms
 
-### Model-driven forms within the model! [[example]](http://embed.plnkr.co/fhEfqD/)
+### Model-driven forms within the model! 
+[**example**](http://embed.plnkr.co/fhEfqD/)
 
-Angular's [Reactive Forms](https://angular.io/docs/ts/latest/cookbook/dynamic-form.html) (a.k.a. _Dynamic_ or _Model-driven Forms_) are great.
-
-This library is about taking them to the next level by coupling with _Domain Objects_.
+Angular's _Reactive Forms_ (a.k.a. _Model-driven Forms_) are great. Then, the dynamic generation of such forms is the next evolution step (sometimes called _Dynamic Forms_). This library is about taking those things to yet another level by coupling forms with _Domain Objects_.
 
 ## Want to create a form for an object?
 1. Add some annotations to the object.

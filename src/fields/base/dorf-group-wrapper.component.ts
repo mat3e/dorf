@@ -15,9 +15,19 @@ import { DorfNestedMetadata } from './dorf-nested.metadata';
  */
 // TODO: reconsider using DorfForm annotation here
 @Component({
-    moduleId: `${module.id}`,
     selector: 'dorf-group-wrapper',
-    templateUrl: './dorf-group-wrapper.component.html'
+    template: `
+    <fieldset [ngClass]="fieldsetCss">
+        <label [ngClass]="legendCss">{{meta.label}}</label>
+        <ng-container *ngFor="let group of groupedFieldsMetadata">
+            <section *ngIf="!group.isGroupingNested" [ngClass]="sectionCss">
+                <dorf-field-wrapper *ngFor="let fm of group" [metadata]="fm" [ngClass]="fm.getCss('wrapper') || config.getCssClassForNestedTag(fm.tag, 'wrapper')">
+                </dorf-field-wrapper>
+            </section>
+            <dorf-group-wrapper *ngIf="group.isGroupingNested" [group]="group"></dorf-group-wrapper>
+        </ng-container>
+    </fieldset>
+    `
 })
 export class DorfGroupWrapperComponent<T> implements OnChanges {
     /**

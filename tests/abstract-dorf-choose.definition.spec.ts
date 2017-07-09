@@ -59,12 +59,12 @@ describe('DorfChooseDefinition', () => {
         asyncOpts.subscribe(null, null, () => { done(); });
 
         let def: DorfChooseDefinition<number> = new DorfSelectDefinition<number>();
-        expect(def['_optionsToSelect']).toBeUndefined();
-        expect(def['_asyncOptionsToSelect']).toBeUndefined();
+        expect((def as any)._optionsToSelect).toBeUndefined();
+        expect((def as any)._asyncOptionsToSelect).toBeUndefined();
 
         // WHEN
         def.asyncOptionsToSelect = asyncOpts;
-        expect(def['_optionsToSelect']).toBeNull();
+        expect((def as any)._optionsToSelect).toBeUndefined();
 
         // THEN
         expect(def.optionsToSelect).toEqual(opts);

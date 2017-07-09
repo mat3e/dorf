@@ -4,7 +4,7 @@ import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
 import { IDorfRadioDefinition } from './dorf-radio.definition';
 import { DorfRadioMetadata } from './dorf-radio.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';
-import { DorfField } from './base/dorf-field';
+import { RADIO } from './base/dorf-field';
 
 import { DorfConfigService } from '../dorf-config.service';
 
@@ -15,11 +15,14 @@ import { DorfConfigService } from '../dorf-config.service';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
-    selector: DorfField.RADIO,
-    templateUrl: './dorf-radio.component.html'
+    selector: RADIO,
+    template: `
+    <label *ngFor="let opt of optionsToSelect; let idx = index" [ngClass]="innerLabelCss">
+        <input type="radio" [value]="opt.key" id="{{key}}-{{idx}}" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss"> {{opt.value}}
+    </label>
+    `
 })
-export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetadata<T>> implements IDorfRadioDefinition<T> {
+export class DorfRadioComponent<T> extends DorfChooseComponent<T, DorfRadioMetadata<T>> {
     /** @inheritdoc */
     constructor(config: DorfConfigService) {
         super(config);

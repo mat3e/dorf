@@ -1,5 +1,5 @@
 import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dorf-choose.definition';
-import { DorfField } from './base/dorf-field';
+import { SELECT } from './base/dorf-field';
 
 /**
  * Represents constructor parameter for {@link DorfSelectDefinition}.
@@ -29,7 +29,7 @@ export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements 
         super(options);
 
         if (options) {
-            this._multiple = options.multiple;
+            this._multiple = options.multiple || false;
         }
     }
 
@@ -37,5 +37,5 @@ export class DorfSelectDefinition<T> extends DorfChooseDefinition<T> implements 
     get multiple() { return this._multiple; }
 
     /** @inheritdoc */
-    get tag() { return DorfField.SELECT; }
+    get tag() { return SELECT; }
 }

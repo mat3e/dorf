@@ -5,7 +5,7 @@ import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
 import { ICheckboxMapping, IDorfCheckboxDefinition } from './dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from './dorf-checkbox.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
-import { DorfField } from './base/dorf-field';
+import { CHECKBOX } from './base/dorf-field';
 
 import { DorfConfigService } from '../dorf-config.service';
 
@@ -16,12 +16,16 @@ import { DorfConfigService } from '../dorf-config.service';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
-    selector: DorfField.CHECKBOX,
-    templateUrl: './dorf-checkbox.component.html'
+    selector: CHECKBOX,
+    template: `
+    <label [attr.for]="key" [ngClass]="innerLabelCss">
+        <input #view [id]="key" [ngClass]="htmlFieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{innerLabel}}
+    </label>
+    <input [name]="key" [formControl]="formControl" type="hidden" />
+    `
 })
 // tslint:disable-next-line:max-line-length
-export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, DorfCheckboxMetadata<T>> implements IDorfCheckboxDefinition<T>, OnChanges {
+export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, DorfCheckboxMetadata<T>> implements OnChanges {
 
     /**
      * True/false value which is seen by the end user.

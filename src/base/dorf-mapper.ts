@@ -1,6 +1,6 @@
 import { DorfConfigService } from '../dorf-config.service';
 
-import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
+import { IDorfDefinitionBase, DorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
 import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { DorfNestedMetadata } from '../fields/base/dorf-nested.metadata';
 import { DorfInputDefinition } from '../fields/dorf-input.definition';
@@ -44,7 +44,7 @@ export class DorfMapper {
     mapObjectWithDefinitionsToFieldsMetadata<DomObj>(
         domainObject: DomObj,
         fieldDefinitions: PropertiesToDorfDefinitionsMap<DomObj>,
-        parent: DorfNestedMetadata<any> = undefined
+        parent?: DorfNestedMetadata<any>
     ): IDorfFieldMetadata<any>[] {
 
         let fields: DorfFieldMetadata<any, IDorfDefinitionBase<any>>[] = [];
@@ -53,7 +53,7 @@ export class DorfMapper {
         // tslint:disable-next-line:forin
         for (let key in fieldDefinitions) {
 
-            let definition = fieldDefinitions[key];
+            let definition = fieldDefinitions[key] as DorfDefinitionBase<any>;
             let metaOptions = this.getMetadataOptions(key, domainObject, parent);
 
             let metadata = new (this.getMetadataForTag(definition.tag))(definition, metaOptions);
@@ -70,14 +70,14 @@ export class DorfMapper {
             fields.push(metadata);
         }
 
-        return fields.sort((a, b) => a.order - b.order);
+        return fields.sort((a: any, b: any) => a.order - b.order);
     }
 
     /**
      * Creates {@link IDorfFieldMetadata} for the particular property, identified by `propertyName`.
      * Property comes from Domain Object, passed as `obj`.
      */
-    protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj, parent: DorfNestedMetadata<any>): IDorfFieldMetadata<any> {
+    protected getMetadataOptions<DomObj>(propertyName: string, obj: DomObj, parent?: DorfNestedMetadata<any>): IDorfFieldMetadata<any> {
         return {
             key: propertyName,
             value: obj[propertyName],

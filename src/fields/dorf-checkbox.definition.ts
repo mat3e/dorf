@@ -1,7 +1,7 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
 import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-field.definition';
-import { DorfField } from './base/dorf-field';
+import { CHECKBOX } from './base/dorf-field';
 
 /**
  * Represents true and false values for checkbox. Should be used when we don't want standard boolean values for the object's property.
@@ -68,8 +68,8 @@ export interface IDorfCheckboxDefinition<T> extends IDorfFieldDefinition<T> {
  */
 export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements IDorfCheckboxDefinition<T> {
 
-    private _mapping: ICheckboxMapping<T>;
-    private _innerLabel: string;
+    private _mapping?: ICheckboxMapping<T>;
+    private _innerLabel?: string;
 
     /** @inheritdoc */
     constructor(options?: IDorfCheckboxDefinition<T>) {
@@ -87,5 +87,5 @@ export class DorfCheckboxDefinition<T> extends DorfFieldDefinition<T> implements
     get innerLabel() { return this._innerLabel; }
 
     /** @inheritdoc */
-    get tag() { return DorfField.CHECKBOX; }
+    get tag() { return CHECKBOX; }
 }

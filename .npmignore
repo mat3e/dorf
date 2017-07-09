@@ -10,10 +10,12 @@ node_modules/**/*
 
 !.npmignore
 !index.d.ts
+!index.metadata.json
 !index.js
 !package.json
 !README.md
 
-!src/**/*.d.ts
 !src/**/*.js
+!src/**/*.d.ts
 !src/**/*.html
+!src/**/*.metadata.json

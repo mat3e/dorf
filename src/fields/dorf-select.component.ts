@@ -4,7 +4,7 @@ import { IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 import { IDorfSelectDefinition } from './dorf-select.definition';
 import { DorfSelectMetadata } from './dorf-select.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';
-import { DorfField } from './base/dorf-field';
+import { SELECT } from './base/dorf-field';
 
 import { DorfConfigService } from '../dorf-config.service';
 
@@ -15,11 +15,17 @@ import { DorfConfigService } from '../dorf-config.service';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
-    selector: DorfField.SELECT,
-    templateUrl: './dorf-select.component.html'
+    selector: SELECT,
+    template: `
+    <select *ngIf="!multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss">
+        <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
+    </select>
+    <select *ngIf="multiple" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" multiple>
+        <option *ngFor="let opt of optionsToSelect" [value]="opt.key">{{opt.value}}</option>
+    </select>
+    `
 })
-export class DorfSelectComponent<T> extends DorfChooseComponent<T, DorfSelectMetadata<T>> implements IDorfSelectDefinition<T> {
+export class DorfSelectComponent<T> extends DorfChooseComponent<T, DorfSelectMetadata<T>> {
 
     /** @inheritdoc */
     constructor(config: DorfConfigService) {

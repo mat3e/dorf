@@ -10,7 +10,7 @@ import { DorfConfigService } from '../../dorf-config.service';
  * @stable
  */
 // tslint:disable-next-line:max-line-length
-export abstract class DorfChooseComponent<T, M extends DorfChooseMetadata<T, IDorfChooseDefinition<T>>> extends AbstractDorfFieldComponent<T, M> implements IDorfChooseDefinition<T> {
+export abstract class DorfChooseComponent<T, M extends DorfChooseMetadata<T, IDorfChooseDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
 
     /** @inheritdoc */
     constructor(config: DorfConfigService) {

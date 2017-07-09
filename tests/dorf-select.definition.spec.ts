@@ -1,4 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
+import { SELECT } from '../src/fields/base/dorf-field';
 import { DorfSelectDefinition } from './../src/fields/dorf-select.definition';
 
 describe('DorfSelectDefinition', () => {
@@ -7,7 +7,7 @@ describe('DorfSelectDefinition', () => {
         let selectDef = new DorfSelectDefinition();
 
         // THEN
-        expect(selectDef.tag).toEqual(DorfField.SELECT);
+        expect(selectDef.tag).toEqual(SELECT);
         expect(selectDef.multiple).toBeFalsy();
     });
 });

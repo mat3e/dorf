@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 
-import { DorfFieldsModule } from './dorf-fields.module';
+import { CONFIG_INTERFACE, configFactory, DorfFieldsModule } from './dorf-fields.module';
 
 import { DorfButtonsComponent } from './base/dorf-buttons.component';
 import { IDorfService, DorfSupportingService } from './dorf-config.service';
 import { DorfFieldWrapperComponent } from './fields/base/dorf-field-wrapper.component';
 import { DorfGroupWrapperComponent } from './fields/base/dorf-group-wrapper.component';
+
+export { CONFIG_INTERFACE, configFactory } from './dorf-fields.module';
 
 export * from './fields/base/dorf-group-wrapper.component';
 export * from './fields/base/dorf-field-wrapper.component';
@@ -60,7 +62,8 @@ export class DorfModule {
         return {
             ngModule: DorfModule,
             providers: [
-                { provide: DorfSupportingService, useValue: new DorfSupportingService(config) }
+                { provide: CONFIG_INTERFACE, useValue: config },
+                { provide: DorfSupportingService, useFactory: configFactory, deps: [CONFIG_INTERFACE] }
             ]
         };
     }

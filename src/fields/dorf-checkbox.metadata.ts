@@ -7,11 +7,11 @@ import { IDorfFieldMetadata, DorfFieldMetadata } from './base/abstract-dorf-fiel
  * @stable
  */
 export class DorfCheckboxMetadata<T> extends DorfFieldMetadata<T, IDorfCheckboxDefinition<T>> implements IDorfCheckboxDefinition<T> {
-    private _valueBeforeMapping: T;
+    private _valueBeforeMapping?: T;
 
     /** @inheritdoc */
-    constructor(definition: IDorfCheckboxDefinition<T> = new DorfCheckboxDefinition<T>(), options?: IDorfFieldMetadata<T>) {
-        super(definition, options);
+    constructor(definition: IDorfCheckboxDefinition<T>, options?: IDorfFieldMetadata<T>) {
+        super(definition || new DorfCheckboxDefinition<T>(), options);
 
         if (options) {
             this._valueBeforeMapping = options.value;

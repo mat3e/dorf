@@ -1,0 +1,13 @@
+<article class="container">
+  <h2>Person in form: {{activeIndex >= 0 ? activePerson.fullname : "new person"}}</h2>
+  <app-person-details [domainObject]="activePerson" (createUpdate)=onCreateUpdate($event)></app-person-details>
+  <hr/>
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let p of people; let i = index;">
+        <td>{{p.fullname}}</td>
+        <td><button (click)=onClick(i) class="btn btn-secondary">edit</button></td>
+      </tr>
+    </tbody>
+  </table>
+</article>

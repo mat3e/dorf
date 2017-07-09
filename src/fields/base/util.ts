@@ -88,12 +88,12 @@ class GroupingUtil {
         return this._group;
     }
 
-    restoreFromElems(elems: IDorfFieldMetadata<any>[]): IDorfFieldMetadata<any>[] {
+    restoreFromElems(elems: IDorfFieldMetadata<any>[]): IDorfFieldMetadata<any>[] | null {
         GroupingUtil.assertCanSetGroup(elems, this._elemsInGroup);
 
         this.restart();
 
-        let result: IDorfFieldMetadata<any>[] = null;
+        let result: IDorfFieldMetadata<any>[] | null = null;
         for (let elem of elems) {
             result = this.fillWithElem(elem);
         }
@@ -101,11 +101,11 @@ class GroupingUtil {
         return result;
     }
 
-    fillWithElem(elem: IDorfFieldMetadata<any>): IDorfFieldMetadata<any>[] {
+    fillWithElem(elem: IDorfFieldMetadata<any>): IDorfFieldMetadata<any>[] | null {
         this._group.splice(this._index, 0, elem);
         ++this._index;
 
-        let result: IDorfFieldMetadata<any>[] = null;
+        let result: IDorfFieldMetadata<any>[] | null = null;
         if (this._group.length === this._elemsInGroup) {
             result = this._group;
             this.restart();

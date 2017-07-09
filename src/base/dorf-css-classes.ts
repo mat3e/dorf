@@ -6,7 +6,7 @@ import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definiti
  * General type, used in DORF CSS interfaces.
  * Classes should be passed as string values with spaces, but some definitions, like e.g. buttons, are nested within other definitions.
  */
-export type NgDorfClassType = string | IDorfCommonCssClasses;
+export type NgDorfClassType = string | IDorfCommonCssClasses | undefined;
 
 /**
  * Common part of CSS classes. Interfaces are not strict, so additional fields may be defined and used in DORF extensions.
@@ -210,22 +210,22 @@ export class DorfCssClasses implements IDorfCommonCssClasses {
     [key: string]: NgDorfClassType;
 
     constructor(options?: IDorfCommonCssClasses) {
-        let populateOptions = (opts: IDorfCommonCssClasses, target: IDorfCommonCssClasses) => {
-            for (let cls in opts) {
-                if (!target.hasOwnProperty(cls)) {
-                    let val = opts[cls];
-                    if (typeof val === 'string') {
-                        target[cls] = val;
-                    } else {
-                        target[cls] = {};
-                        populateOptions(val, target[cls] as IDorfCommonCssClasses);
+        let populateOptions = (target: IDorfCommonCssClasses, opts?: IDorfCommonCssClasses) => {
+            if (opts) {
+                for (let cls in opts) {
+                    if (!target.hasOwnProperty(cls)) {
+                        let val = opts[cls];
+                        if (typeof val === 'string') {
+                            target[cls] = val;
+                        } else {
+                            target[cls] = {};
+                            populateOptions(target[cls] as IDorfCommonCssClasses, val);
+                        }
                     }
                 }
             }
         }
 
-        if (options) {
-            populateOptions(options, this);
-        }
+        populateOptions(this, options);
     }
 }

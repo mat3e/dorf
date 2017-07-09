@@ -10,9 +10,13 @@ import { DorfConfigService } from '../dorf-config.service';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
     selector: 'dorf-buttons',
-    templateUrl: './dorf-buttons.component.html'
+    template: `
+    <section [ngClass]="config.css.buttons?.group">
+        <button (click)="submit()" [ngClass]="config.css.buttons?.save" [disabled]="!form || !form.valid">Save</button>
+        <button (click)="reset()" [ngClass]="config.css.buttons?.reset">Reset</button>
+    </section>
+    `
 })
 export class DorfButtonsComponent {
 

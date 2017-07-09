@@ -1,4 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
+import { NESTED } from '../src/fields/base/dorf-field';
 import { DorfNestedDefinition } from './../src/fields/base/dorf-nested.definition';
 
 describe('DorfSelectDefinition', () => {
@@ -7,7 +7,7 @@ describe('DorfSelectDefinition', () => {
         let def = new DorfNestedDefinition();
 
         // THEN
-        expect(def.tag).toEqual(DorfField.NESTED);
+        expect(def.tag).toEqual(NESTED);
         expect(def.columnsNumber).toEqual(2);
     });
 });

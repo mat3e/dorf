@@ -21,8 +21,8 @@ export class DorfNestedMetadata<T> extends DorfMetadataBase<T, IDorfNestedDefini
     /**
      * Used by {@link DorfMapper}.
      */
-    constructor(definition: IDorfNestedDefinition<T> = new DorfNestedDefinition<T>(), options?: IDorfFieldMetadata<T>) {
-        super(definition, options);
+    constructor(definition: IDorfNestedDefinition<T>, options?: IDorfFieldMetadata<T>) {
+        super(definition || new DorfNestedDefinition<T>(), options);
     }
 
     /**

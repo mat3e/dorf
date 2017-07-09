@@ -1,4 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
+import { CHECKBOX } from '../src/fields/base/dorf-field';
 import { DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.definition';
 
 describe('DorfCheckboxDefinition', () => {
@@ -7,7 +7,7 @@ describe('DorfCheckboxDefinition', () => {
         let def = new DorfCheckboxDefinition();
 
         // THEN
-        expect(def.tag).toEqual(DorfField.CHECKBOX);
+        expect(def.tag).toEqual(CHECKBOX);
         expect(def.mapping).toBeUndefined();
         expect(def.innerLabel).toBeUndefined();
     });

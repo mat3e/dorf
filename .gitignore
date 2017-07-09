@@ -18,6 +18,8 @@
 
 /**/*.js
 /**/*.js.map
+/**/*.map.js
+/**/*.metadata.json
 /**/*.d.ts
 !config/**/*.js
 !examples/**/*.config.js

@@ -1,4 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
+import { RADIO } from '../src/fields/base/dorf-field';
 import { DorfRadioDefinition } from './../src/fields/dorf-radio.definition';
 
 describe('DorfRadioDefinition', () => {
@@ -8,6 +8,6 @@ describe('DorfRadioDefinition', () => {
         let radioDef = new DorfRadioDefinition();
 
         // THEN
-        expect(radioDef.tag).toEqual(DorfField.RADIO);
+        expect(radioDef.tag).toEqual(RADIO);
     });
 });

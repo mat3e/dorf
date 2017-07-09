@@ -8,7 +8,7 @@ import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 import { DorfMetadataBase, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
-import { DorfField } from '../src/fields/base/dorf-field';
+import { SELECT } from '../src/fields/base/dorf-field';
 
 describe('DorfMetadataBase', () => {
     it('gets the values from options and definition', () => {
@@ -19,7 +19,7 @@ describe('DorfMetadataBase', () => {
         let meta: DorfMetadataBase<any, IDorfDefinitionBase<any>> = new DorfSelectMetadata(def, { key: 'abc' });
 
         // THEN
-        expect(meta.tag).toEqual(DorfField.SELECT);
+        expect(meta.tag).toEqual(SELECT);
         expect(meta.key).toEqual('abc');
     });
 
@@ -96,9 +96,9 @@ describe('DorfFieldMetadata', () => {
             = new DorfSelectMetadata(def2, { key: 'ccc', setDomainObjValue: setter });
 
         // THEN
-        expect(meta1['_setDomainObjValue']).toEqual(setter);
+        expect((meta1 as any)._setDomainObjValue).toEqual(setter);
         // without `updateModelOnChange` here should be a noop setter
-        expect(meta2['_setDomainObjValue']).not.toEqual(setter);
+        expect((meta2 as any)._setDomainObjValue).not.toEqual(setter);
     });
 
     it('generates formControl and caches the value', () => {

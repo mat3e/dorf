@@ -94,8 +94,9 @@ export function DorfObject() {
             }, updateDefinition: {
                 value: (fieldName: string, def: IDorfDefinitionBase<any>) => {
                     let oldDef = this.fieldDefinitions[fieldName];
-                    if (oldDef instanceof DorfChooseDefinition) {
-                        oldDef.asyncOptionsToSelect = (def as IDorfChooseDefinition<any>).asyncOptionsToSelect;
+                    let newDef = def as IDorfChooseDefinition<any>;
+                    if (oldDef instanceof DorfChooseDefinition && newDef.asyncOptionsToSelect) {
+                        oldDef.asyncOptionsToSelect = newDef.asyncOptionsToSelect;
                     }
                 }
             }

@@ -94,11 +94,11 @@ export interface IDorfFieldDefinition<T> extends IDorfDefinitionBase<T> {
  * @stable
  */
 export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
-    public order: number;
+    public order?: number;
 
-    private _css: IDorfFieldCssClasses = new DorfCssClasses();
-    private _label: string;
-    private _extras: { [propertyName: string]: any };
+    private _css?: IDorfFieldCssClasses = new DorfCssClasses();
+    private _label?: string;
+    private _extras?: { [propertyName: string]: any };
 
     /**
      * HTML identifier of the element. Unique for DORF.
@@ -141,11 +141,11 @@ export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
  */
 export abstract class DorfFieldDefinition<T> extends DorfDefinitionBase<T> implements IDorfFieldDefinition<T> {
     private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
-    private _asyncValidator: AsyncValidatorFn | AsyncValidatorFn[] = null;
-    private _errorMessage: string;
-    private _onSummary: boolean;
-    private _debounce: number;
-    private _updateModelOnChange: boolean;
+    private _asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
+    private _errorMessage?: string;
+    private _onSummary?: boolean;
+    private _debounce?: number;
+    private _updateModelOnChange?: boolean;
 
     /** @inheritdoc */
     constructor(options?: IDorfFieldDefinition<T>) {

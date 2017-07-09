@@ -51,8 +51,8 @@ export interface IDorfChooseDefinition<T> extends IDorfFieldDefinition<T> {
  */
 export abstract class DorfChooseDefinition<T> extends DorfFieldDefinition<T> implements IDorfChooseDefinition<T> {
 
-    private _optionsToSelect: OptionType<T>[];
-    private _asyncOptionsToSelect: Promise<OptionType<T>[]> | Observable<OptionType<T>[]>;
+    private _optionsToSelect?: OptionType<T>[];
+    private _asyncOptionsToSelect?: Promise<OptionType<T>[]> | Observable<OptionType<T>[]>;
 
     /** @inheritdoc */
     constructor(options?: IDorfChooseDefinition<T>) {
@@ -78,7 +78,7 @@ export abstract class DorfChooseDefinition<T> extends DorfFieldDefinition<T> imp
 
     /** @inheritdoc */
     set asyncOptionsToSelect(asyncOpts: Promise<OptionType<T>[]> | Observable<OptionType<T>[]>) {
-        this._optionsToSelect = null;
+        this._optionsToSelect = undefined;
         this._asyncOptionsToSelect = asyncOpts;
     }
 }

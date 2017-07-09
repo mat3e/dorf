@@ -19,7 +19,7 @@ describe('DorfFieldDefinition', () => {
         // THEN
         expect(def1.validator).toEqual(Validators.nullValidator);
         expect(def2.validator).toEqual(Validators.nullValidator);
-        expect(def1.asyncValidator).toBeNull();
-        expect(def2.asyncValidator).toBeNull();
+        expect(def1.asyncValidator).toBeUndefined();
+        expect(def2.asyncValidator).toBeUndefined();
     });
 });

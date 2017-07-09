@@ -9,8 +9,8 @@ import { IDorfFieldMetadata, DorfFieldMetadata } from './base/abstract-dorf-fiel
 export class DorfInputMetadata<T> extends DorfFieldMetadata<T, IDorfInputDefinition<T>> implements IDorfInputDefinition<T> {
 
     /** @inheritdoc */
-    constructor(definition: IDorfInputDefinition<T> = new DorfInputDefinition<T>(), options?: IDorfFieldMetadata<T>) {
-        super(definition, options);
+    constructor(definition: IDorfInputDefinition<T>, options?: IDorfFieldMetadata<T>) {
+        super(definition || new DorfInputDefinition<T>(), options);
     }
 
     /** @inheritdoc */

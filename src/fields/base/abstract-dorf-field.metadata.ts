@@ -3,7 +3,7 @@ import 'rxjs/add/operator/debounceTime';
 import { FormControl, Validators } from '@angular/forms';
 
 import { IDorfCommonCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
-import { IDorfDefinitionBase, IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { IDorfDefinitionBase, DorfDefinitionBase, IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
 
 /**
  * Defines things existing in metadata, which don't exist directly in the definition.
@@ -46,24 +46,25 @@ export interface IDorfFieldMetadata<T> {
  * @stable
  */
 export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> implements IDorfFieldMetadata<T>, IDorfDefinitionBase<T> {
-    protected _value: T;
-    protected _invalid: boolean;
+    protected _value?: T;
+    protected _invalid?: boolean;
 
     private _key: string;
-    private _parentCss: IDorfGeneralCssClasses;
+    private _parentCss?: IDorfGeneralCssClasses;
 
     /**
      * Called by {@link DorfMapper}.
      *
-     * @param definition {IDorfDefinitionBase} extension of {@link IDorfDefinitionBase} with parameters to be propagated
-     * @param options {IDorfFieldMetadata} extension of {@link IDorfFieldMetadata}
+     * @param definition extension of {@link IDorfDefinitionBase} with parameters to be propagated
+     * @param options extension of {@link IDorfFieldMetadata}
      */
     constructor(protected definition: D, options?: IDorfFieldMetadata<T>) {
-        if (definition) {
+        if (definition.extras) {
             // tslint:disable-next-line:forin
             for (let prop in definition.extras) {
+                let value = definition.extras[prop];
                 Object.defineProperty(this, prop, {
-                    get: () => definition.extras[prop]
+                    get: () => value
                 });
             }
         }
@@ -85,24 +86,30 @@ export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> impl
     /** @inheritdoc */
     get css() { return this.definition.css; }
     /** @inheritdoc */
-    get order() { return this.definition.order; }
+    get order(): number | undefined { return this.definition.order; }
     /** @inheritdoc */
-    set order(newOrder: number) { this.definition.order = newOrder; }
+    set order(newOrder: number | undefined) { this.definition.order = newOrder; }
     /** @inheritdoc */
     get parentCss() { return this._parentCss; }
 
     /** @inheritdoc */
-    get tag() { return this.definition.tag; }
+    get tag() { return (this.definition as DorfDefinitionBase<T>).tag; }
 
     /**
      * Gets CSS classes, with accordance to the priorities. The closer the definition, the sooner applied.
      *
-     * @param cssClass {string} classes to be got, e.g. `'label'` for label ones
+     * @param cssClass classes to be got, e.g. `'label'` for label ones
      */
     getCss(cssClass: string) {
-        return this.definition.css[cssClass] || (this._parentCss || {})[cssClass];
+        return (this.definition.css || {})[cssClass] || (this._parentCss || {})[cssClass];
     }
 }
+
+/**
+ * Class for generic types handling.
+ * @see [GitHub issue]{@link https://github.com/Microsoft/TypeScript/issues/16985}
+ */
+export declare class AnyMetadata extends DorfMetadataBase<any, IDorfDefinitionBase<any>> { };
 
 /**
  * Is used directly in reactive form by the fields.
@@ -132,7 +139,8 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
         }
 
         if (options) {
-            this._setDomainObjValue = definition.updateModelOnChange ? options.setDomainObjValue : this._setDomainObjValue;
+            this._setDomainObjValue
+                = definition.updateModelOnChange && options.setDomainObjValue ? options.setDomainObjValue : this._setDomainObjValue;
         }
     }
 

@@ -6,12 +6,12 @@ import {
 } from '../../base/dorf-css-classes';
 import { IDorfService } from '../../dorf-config.service';
 
-import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
+import { IDorfDefinitionBase, DorfDefinitionBase } from './abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../dorf-input.definition';
 import { DorfRadioDefinition } from '../dorf-radio.definition';
 import { DorfSelectDefinition } from '../dorf-select.definition';
 import { DorfCheckboxDefinition } from '../dorf-checkbox.definition';
-import { DorfMetadataBase, DorfFieldMetadata } from './abstract-dorf-field.metadata';
+import { AnyMetadata } from './abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../dorf-input.metadata';
 import { DorfRadioMetadata } from '../dorf-radio.metadata';
 import { DorfSelectMetadata } from '../dorf-select.metadata';
@@ -22,30 +22,30 @@ import { DorfNestedMetadata } from './dorf-nested.metadata';
 /**
  * Unique id for input.
  */
-const INPUT: string = 'dorf-input';
+export const INPUT: string = 'dorf-input';
 /**
  * Unique id for radio.
  */
-const RADIO: string = 'dorf-radio';
+export const RADIO: string = 'dorf-radio';
 /**
  * Unique id for select.
  */
-const SELECT: string = 'dorf-select';
+export const SELECT: string = 'dorf-select';
 /**
  * Unique id for checkbox.
  */
-const CHECKBOX: string = 'dorf-checkbox';
+export const CHECKBOX: string = 'dorf-checkbox';
 /**
  * Identifier for a nested object.
  */
-const NESTED: string = 'dorf-nested-object';
+export const NESTED: string = 'dorf-nested-object';
 
 /**
  * Represents a field in a [mapper]{@link DorfMapper}-friendly form. Defined for all DORF tags.
  *
  * @stable
  */
-export interface IDorfField<D extends IDorfFieldDefinition<any>, M extends typeof DorfMetadataBase> {
+export interface IDorfField<D extends typeof DorfDefinitionBase, M extends typeof AnyMetadata> {
     /**
      * Unique field identifier. Should be used as Component's selector.
      */
@@ -66,11 +66,11 @@ export interface IDorfField<D extends IDorfFieldDefinition<any>, M extends typeo
  *
  * @stable
  */
-export interface IDorfNestedField extends IDorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata> {
+export interface IDorfNestedField extends IDorfField<typeof DorfNestedDefinition, typeof DorfNestedMetadata> {
     /**
      * Nested group may contain e.g. CSS styles specified for internal fields.
      */
-    dorfFields?: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    dorfFields?: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
 
     /** @inheritdoc */
     css?: IDorfGeneralCssClasses;
@@ -86,28 +86,28 @@ export interface IDorfNestedField extends IDorfField<DorfNestedDefinition<any>, 
  *
  * @stable
  */
-export class DorfField<D extends IDorfFieldDefinition<any>, M extends typeof DorfMetadataBase> implements IDorfField<D, M> {
-    static get INPUT() { return INPUT; }
-    static get RADIO() { return RADIO; }
-    static get SELECT() { return SELECT; }
-    static get CHECKBOX() { return CHECKBOX; }
-    static get NESTED() { return NESTED; }
+export class DorfField<D extends typeof DorfDefinitionBase, M extends typeof AnyMetadata> implements IDorfField<D, M> {
+    static INPUT: string = INPUT;
+    static RADIO: string = RADIO;
+    static SELECT: string = SELECT;
+    static CHECKBOX: string = CHECKBOX;
+    static NESTED: string = NESTED;
 
     /** @inheritdoc */
     tag: string;
 
     // TODO: do we need this?
     definition?: D;
-    metadata: M;
+    metadata?: M;
 
     /** @inheritdoc */
-    css: IDorfFieldCssClasses | IDorfMultipleLabelsCssClasses;
+    css?: IDorfFieldCssClasses | IDorfMultipleLabelsCssClasses;
 
     constructor(options: IDorfField<D, M>) {
         this.tag = options.tag;
         this.definition = options.definition;
         this.metadata = options.metadata;
-        this.css = options.css || new DorfCssClasses();
+        this.css = options.css;
     }
 
     /**
@@ -128,12 +128,12 @@ export class DorfField<D extends IDorfFieldDefinition<any>, M extends typeof Dor
     // TODO: generic mechanism for creating DorfTags. Static function as in Angular's makeDecorator
     // tslint:disable-next-line:max-line-length
     // tslint:disable-next-line:member-ordering
-    static createNewTag(tagName: string, options: IDorfFieldDefinition<any>): DorfField<IDorfFieldDefinition<any>, typeof DorfFieldMetadata> {
+    static createNewTag(tagName: string, options: IDorfDefinitionBase<any>): DorfField<typeof DorfDefinitionBase, typeof AnyMetadata> {
         return new DorfField({
-            tag: tagName,
+            tag: tagName/*,
             definition: null,
             metadata: null,
-            css: null
+            css: null*/
         });
     }
 }
@@ -143,30 +143,30 @@ export class DorfField<D extends IDorfFieldDefinition<any>, M extends typeof Dor
  *
  * @stable
  */
-const DORF_FIELDS: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[] = [
+const DORF_FIELDS: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[] = [
     new DorfField({
         tag: INPUT,
         definition: DorfInputDefinition,
         metadata: DorfInputMetadata,
-        css: {}
+        css: new DorfCssClasses()
     }),
     new DorfField({
         tag: RADIO,
         definition: DorfRadioDefinition,
         metadata: DorfRadioMetadata,
-        css: {} as IDorfMultipleLabelsCssClasses
+        css: new DorfCssClasses() as IDorfMultipleLabelsCssClasses
     }),
     new DorfField({
         tag: SELECT,
         definition: DorfSelectDefinition,
         metadata: DorfSelectMetadata,
-        css: {}
+        css: new DorfCssClasses()
     }),
     new DorfField({
         tag: CHECKBOX,
         definition: DorfCheckboxDefinition,
         metadata: DorfCheckboxMetadata,
-        css: {} as IDorfMultipleLabelsCssClasses
+        css: new DorfCssClasses() as IDorfMultipleLabelsCssClasses
     })
 ];
 
@@ -176,7 +176,7 @@ const DORF_FIELDS: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>
  * @stable
  */
 function getDorfFields() {
-    let result: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[] = [];
+    let result: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[] = [];
 
     DORF_FIELDS.forEach((field) => {
         result.push(new DorfField(field));
@@ -190,11 +190,11 @@ function getDorfFields() {
  *
  * @stable
  */
-export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata>
+export class DorfNestedField extends DorfField<typeof DorfNestedDefinition, typeof DorfNestedMetadata>
     implements IDorfService, IDorfNestedField {
 
     /** @inheritdoc */
-    dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    dorfFields: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
     /** @inheritdoc */
     css: IDorfGeneralCssClasses;
     /** @inheritdoc */
@@ -202,15 +202,14 @@ export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof
 
     constructor() {
         super({ tag: NESTED });
-        this.definition = new DorfNestedDefinition();
+        this.definition = DorfNestedDefinition;
         this.metadata = DorfNestedMetadata;
         this.css = new DorfCssClasses();
-        this.dorfFields = getDorfFields() as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+        this.dorfFields = getDorfFields() as DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
     }
 
     /** @inheritdoc */
-    /* @Override */
-    updateState(target: IDorfField<DorfNestedDefinition<any>, typeof DorfNestedMetadata>) {
+    updateState(target: IDorfField<typeof DorfNestedDefinition, typeof DorfNestedMetadata>) {
         this.css = new DorfCssClasses(target.css);
         this.definition = target.definition || this.definition;
         this.metadata = target.metadata || this.metadata;
@@ -218,7 +217,7 @@ export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof
 
         let fields = (target as any).dorfFields;
         if (fields) {
-            fields.forEach((field: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>) => {
+            fields.forEach((field: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>) => {
                 setFieldInArray(field, this.dorfFields);
             });
         }
@@ -230,7 +229,7 @@ export class DorfNestedField extends DorfField<DorfNestedDefinition<any>, typeof
  *
  * @stable
  */
-const BUILT_IN_FIELDS: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[] = DORF_FIELDS.concat(new DorfNestedField());
+const BUILT_IN_FIELDS: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[] = DORF_FIELDS.concat(new DorfNestedField());
 
 /**
  * Method which returns a copy of all the possible fields.
@@ -238,7 +237,7 @@ const BUILT_IN_FIELDS: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataB
  * @stable
  */
 export function getBuiltInFields() {
-    let result: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[] = [];
+    let result: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[] = [];
 
     BUILT_IN_FIELDS.forEach((field) => {
         if (field instanceof DorfNestedField) {
@@ -260,10 +259,10 @@ export function getBuiltInFields() {
  * @stable
  */
 export function setFieldInArray(
-    field: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>,
-    dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[] = []
+    field: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>,
+    dorfFields: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[] = []
 ) {
-    let fieldToReplace = getFieldForTagFromArray(field.tag, dorfFields) as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>;
+    let fieldToReplace = getFieldForTagFromArray(field.tag, dorfFields) as DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>;
     if (fieldToReplace) {
         fieldToReplace.updateState(field);
     } else {
@@ -281,7 +280,7 @@ export function setFieldInArray(
  */
 export function getFieldForTagFromArray(
     tag: string,
-    dorfFields: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]
+    dorfFields: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[]
 ) {
     for (let currField of dorfFields) {
         if (currField.tag === tag) {

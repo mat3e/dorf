@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { InputType, IDorfInputDefinition } from './dorf-input.definition';
 import { DorfInputMetadata } from './dorf-input.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
-import { DorfField } from './base/dorf-field';
+import { INPUT } from './base/dorf-field';
 
 import { DorfConfigService } from '../dorf-config.service';
 
@@ -14,11 +14,14 @@ import { DorfConfigService } from '../dorf-config.service';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
-    selector: DorfField.INPUT,
-    templateUrl: './dorf-input.component.html'
+    selector: INPUT,
+    template: `
+    <input *ngIf="isRange" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="range" />
+    <input *ngIf="isNumber" [id]="key" [name]="key" [formControl]="formControl" [ngClass]="htmlFieldCss" type="number" />
+    <input *ngIf="isOtherType" [id]="key" [name]="key" [type]="type" [formControl]="formControl" [ngClass]="htmlFieldCss" />
+    `
 })
-export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInputMetadata<T>> implements IDorfInputDefinition<T> {
+export class DorfInputComponent<T> extends AbstractDorfFieldComponent<T, DorfInputMetadata<T>> {
 
     /** @inheritdoc */
     constructor(config: DorfConfigService) {

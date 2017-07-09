@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 
-import { DorfCoreModule } from './dorf-core.module';
+import { CONFIG_INTERFACE, configFactory, DorfCoreModule } from './dorf-core.module';
 
 import { IDorfService, DorfSupportingService } from './dorf-config.service';
 
@@ -10,6 +10,8 @@ import { DorfRadioComponent } from './fields/dorf-radio.component';
 import { DorfSelectComponent } from './fields/dorf-select.component';
 import { DorfCheckboxComponent } from './fields/dorf-checkbox.component';
 import { DorfFieldComponent } from './fields/base/dorf-field.component';
+
+export { CONFIG_INTERFACE, configFactory } from './dorf-core.module';
 
 export * from './fields/dorf-checkbox.definition';
 export * from './fields/dorf-checkbox.metadata';
@@ -85,7 +87,8 @@ export class DorfFieldsModule {
         return {
             ngModule: DorfFieldsModule,
             providers: [
-                { provide: DorfSupportingService, useValue: new DorfSupportingService(config) }
+                { provide: CONFIG_INTERFACE, useValue: config },
+                { provide: DorfSupportingService, useFactory: configFactory, deps: [CONFIG_INTERFACE] }
             ]
         };
     }

@@ -5,9 +5,9 @@ import { DorfConfigService } from '../dorf-config.service';
 import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../base/dorf-mapper';
 
 import { groupMetadata } from '../fields/base/util';
-import { IDorfFieldDefinition, DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { DorfDefinitionBase, DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
 import { DorfNestedMetadata } from '../fields/base/dorf-nested.metadata';
-import { IDorfFieldMetadata, DorfFieldMetadata, DorfMetadataBase } from '../fields/base/abstract-dorf-field.metadata';
+import { IDorfFieldMetadata, DorfFieldMetadata, AnyMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { IDorfField, DorfField } from '../fields/base/dorf-field';
 
 /**
@@ -113,7 +113,7 @@ export interface IDorfFormOptions {
      * Additional fields represented as tags (array of selectors) or `DorfFields` or a simple piece of HTML,
      * which should be used within a particular form (inside `dorf-field` template).
      */
-    additionalTags?: string | string[] | IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    additionalTags?: string | string[] | IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
 
     /**
      * Indicates if there should be a fieldset around all the fields or not.
@@ -279,7 +279,7 @@ function parseOptionsToTemplate(options?: IDorfFormOptions): string {
  * @internal
  */
 // tslint:disable-next-line:max-line-length
-function parseAdditionalTags(additionalTags?: string | string[] | IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]): string {
+function parseAdditionalTags(additionalTags?: string | string[] | IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[]): string {
     let result = '';
 
     if (additionalTags) {
@@ -321,7 +321,7 @@ function parseNgClassForCss(css: string) {
  * @hidden
  * @internal
  */
-function isStringArray(obj: string | string[] | IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]): obj is string[] {
+function isStringArray(obj: string | string[] | IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[]): obj is string[] {
     return obj instanceof Array && typeof obj[0] === 'string';
 }
 
@@ -373,9 +373,9 @@ function createFormGroup(metadata: IDorfFieldMetadata<any>[], disabled?: boolean
 
         if (meta instanceof DorfFieldMetadata) {
             control = meta.formControl;
-        } else if (meta instanceof DorfNestedMetadata) {
+        } else {
             // disabled below, so no parameter passing
-            control = createFormGroup(meta.nestedFieldsMetadata);
+            control = createFormGroup((meta as DorfNestedMetadata<any>).nestedFieldsMetadata);
         }
 
         if (disabled) {

@@ -3,6 +3,7 @@ import { Injectable, Optional } from '@angular/core';
 import { IDorfCommonCssClasses, IDorfGeneralWithButtonsCssClasses, DorfCssClasses } from './base/dorf-css-classes';
 
 import {
+    NESTED,
     IDorfField,
     DorfField,
     IDorfNestedField,
@@ -11,8 +12,8 @@ import {
     getFieldForTagFromArray,
     getBuiltInFields
 } from './fields/base/dorf-field';
-import { IDorfFieldDefinition } from './fields/base/abstract-dorf-field.definition';
-import { DorfMetadataBase } from './fields/base/abstract-dorf-field.metadata';
+import { DorfDefinitionBase } from './fields/base/abstract-dorf-field.definition';
+import { AnyMetadata } from './fields/base/abstract-dorf-field.metadata';
 
 /**
  * It is a base for {@link DorfModule} configuration.
@@ -44,7 +45,7 @@ export interface IDorfService {
     /**
      * List of supproted fields defined by {@link DorfFieldDefinition}, {@link DorfFieldMetadata}, css and tags.
      */
-    dorfFields?: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[];
+    dorfFields?: (IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata> | IDorfNestedField)[];
 
     /**
      * General and field-specific CSS classes.
@@ -70,7 +71,7 @@ export interface IDorfService {
  */
 export class DorfSupportingService implements IDorfService {
     /** @inheritdoc */
-    dorfFields?: (IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase> | IDorfNestedField)[];
+    dorfFields?: (IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata> | IDorfNestedField)[];
     /** @inheritdoc */
     css?: IDorfGeneralWithButtonsCssClasses;
     /** @inheritdoc */
@@ -98,8 +99,8 @@ export class DorfSupportingService implements IDorfService {
 @Injectable()
 export class DorfConfigService implements IDorfService {
     /** @inheritdoc */
-    dorfFields: DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[]
-    = getBuiltInFields() as DorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>[];
+    dorfFields: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[]
+    = getBuiltInFields() as DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
     /** @inheritdoc */
     css: IDorfGeneralWithButtonsCssClasses = new DorfCssClasses();
     /** @inheritdoc */
@@ -116,7 +117,7 @@ export class DorfConfigService implements IDorfService {
         if (config) {
             this.css = config.css ? new DorfCssClasses(config.css) : this.css;
             this.columnsNumber = config.columnsNumber || this.columnsNumber;
-            this.requiredWithStar = config.requiredWithStar;
+            this.requiredWithStar = config.requiredWithStar || false;
 
             if (config.dorfFields) {
                 config.dorfFields.forEach((field) => {
@@ -139,9 +140,10 @@ export class DorfConfigService implements IDorfService {
      * </ol>
      */
     getCssClassForNestedTag(tag: string, cssClass: string) {
-        let nested = this.getFieldForTag(DorfField.NESTED) as DorfNestedField;
-        let tagCssInNested = nested.dorfFields.find((field) => field.tag === tag).css;
-        return tagCssInNested[cssClass] || nested.css[cssClass] || this.getCssClassForTag(tag, cssClass);
+        let nested = this.getFieldForTag(NESTED) as DorfNestedField;
+        let tagInNested = nested.dorfFields.find((field) => field.tag === tag);
+        let cssFromNested = tagInNested && tagInNested.css && tagInNested.css[cssClass] ? tagInNested.css[cssClass] : nested.css[cssClass];
+        return cssFromNested || this.getCssClassForTag(tag, cssClass);
     }
 
     /**
@@ -157,14 +159,16 @@ export class DorfConfigService implements IDorfService {
      * </ol>
      */
     getCssClassForTag(tag: string, cssClass: string) {
-        return this.getFieldForTag(tag).css[cssClass] || this.css[cssClass];
+        let fieldGot = this.getFieldForTag(tag);
+        let result = fieldGot && fieldGot.css && fieldGot.css[cssClass] ? fieldGot.css[cssClass] : this.css[cssClass];
+        return result;
     }
 
     /**
      * Method for overriding existing DORF field or for adding a totally new one.
      */
     // TODO: verify possibility of overriding metadata and definition
-    setField(field: IDorfField<IDorfFieldDefinition<any>, typeof DorfMetadataBase>) {
+    setField(field: IDorfField<typeof DorfDefinitionBase, typeof AnyMetadata>) {
         setFieldInArray(field, this.dorfFields);
     }
 

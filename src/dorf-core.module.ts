@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IDorfService, DorfConfigService, DorfSupportingService } from './dorf-config.service';
@@ -25,6 +25,20 @@ export * from './fields/base/dorf-nested.metadata';
 
 export * from './base/dorf-mapper';
 export * from './dorf-config.service';
+
+/**
+ * Token which allows injecting an interface to the factory.
+ */
+export const CONFIG_INTERFACE = new InjectionToken<string>('config-interface');
+
+/**
+ * Factory method for creating DORF config.
+ *
+ * @param config interface injected thanks to InjectionToken
+ */
+export function configFactory(config: IDorfService): DorfSupportingService {
+    return new DorfSupportingService(config);
+}
 
 /**
  * Base library module.
@@ -72,7 +86,8 @@ export class DorfCoreModule {
         return {
             ngModule: DorfCoreModule,
             providers: [
-                { provide: DorfSupportingService, useValue: new DorfSupportingService(config) }
+                { provide: CONFIG_INTERFACE, useValue: config },
+                { provide: DorfSupportingService, useFactory: configFactory, deps: [CONFIG_INTERFACE] }
             ]
         };
     }

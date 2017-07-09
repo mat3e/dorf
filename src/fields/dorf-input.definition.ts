@@ -1,5 +1,5 @@
 import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-field.definition';
-import { DorfField } from './base/dorf-field';
+import { INPUT } from './base/dorf-field';
 
 /**
  * Represents all the possible input types.
@@ -39,5 +39,5 @@ export class DorfInputDefinition<T> extends DorfFieldDefinition<T> implements ID
     get type() { return this._type; }
 
     /** @inheritdoc */
-    get tag() { return DorfField.INPUT; }
+    get tag() { return INPUT; }
 }

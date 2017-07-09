@@ -2,8 +2,8 @@ import { DorfCssClasses } from '../src/base/dorf-css-classes';
 import { DorfConfigService } from '../src/dorf-config.service';
 
 import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
-import { DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
-import { IDorfField, DorfField, DorfNestedField, getBuiltInFields } from '../src/fields/base/dorf-field';
+import { DorfFieldMetadata, AnyMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
+import { INPUT, RADIO, NESTED, IDorfField, DorfField, DorfNestedField, getBuiltInFields } from '../src/fields/base/dorf-field';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
@@ -25,7 +25,7 @@ describe('DorfConfigService', () => {
         let service = new DorfConfigService();
 
         // WHEN
-        let result = service.getFieldForTag(DorfField.INPUT);
+        let result = service.getFieldForTag(INPUT);
 
         // THEN
         expect(result).toEqual(getBuiltInFields()[0]);
@@ -36,11 +36,11 @@ describe('DorfConfigService', () => {
         let service = new DorfConfigService();
 
         let replacement = {
-            tag: DorfField.INPUT,
+            tag: INPUT,
             css: {
                 htmlField: 'changed-class'
             }
-        } as DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>;
+        } as DorfField<typeof DorfFieldDefinition, typeof AnyMetadata>;
         expect(service.dorfFields[0].css.htmlField).toBeUndefined();
 
         // WHEN
@@ -58,7 +58,7 @@ describe('DorfConfigService', () => {
             css: {
                 htmlField: 'test'
             }
-        } as DorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>;
+        } as DorfField<typeof DorfFieldDefinition, typeof AnyMetadata>;
 
         // WHEN
         service.setField(newField);
@@ -72,7 +72,7 @@ describe('DorfConfigService', () => {
         let i = 1;
         let name = 'class';
         class TestMeta<T> extends DorfFieldMetadata<T, DorfFieldDefinition<T>> { /**/ }
-        let customDorfKinds: IDorfField<typeof DorfFieldDefinition, typeof DorfFieldMetadata>[] = [{
+        let customDorfKinds: IDorfField<typeof DorfFieldDefinition, typeof AnyMetadata>[] = [{
             tag: 'test',
             definition: DorfFieldDefinition,
             metadata: TestMeta,
@@ -128,7 +128,7 @@ describe('DorfConfigService', () => {
 
     describe('getCssClassForTag', () => {
         // GIVEN
-        let tag = DorfField.RADIO;
+        let tag = RADIO;
         let expected1 = 'from field in config';
         let expected2 = 'from config';
         let cfg1 = new DorfConfigService({
@@ -167,12 +167,12 @@ describe('DorfConfigService', () => {
         // GIVEN
         let mockedResultFromFunction = 'TEST';
 
-        let tag = DorfField.RADIO;
+        let tag = RADIO;
         let expected1 = 'from field in group';
         let expected2 = 'from group';
         let cfg1 = new DorfConfigService({
             dorfFields: [{
-                tag: DorfField.NESTED,
+                tag: NESTED,
                 css: {
                     htmlField: expected2
                 },
@@ -186,7 +186,7 @@ describe('DorfConfigService', () => {
         });
         let cfg2 = new DorfConfigService({
             dorfFields: [{
-                tag: DorfField.NESTED,
+                tag: NESTED,
                 css: {
                     htmlField: expected2
                 }

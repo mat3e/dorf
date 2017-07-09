@@ -5,7 +5,7 @@ import { IDorfCommonCssClasses } from '../../base/dorf-css-classes';
 import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
-import { DorfField } from './dorf-field';
+import { INPUT, RADIO, SELECT, CHECKBOX, DorfField } from './dorf-field';
 
 /**
  * Component which switch between all built-in DORF fields.
@@ -25,9 +25,16 @@ import { DorfField } from './dorf-field';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
     selector: 'dorf-field',
-    templateUrl: './dorf-field.component.html'
+    template: `
+    <dorf-input *ngIf="isDorfInput" [metadata]="metadata" [ngClass]="dorfFieldCss"></dorf-input>
+    <dorf-radio *ngIf="isDorfRadio" [metadata]="metadata" [ngClass]="dorfFieldCss"></dorf-radio>
+    <dorf-select *ngIf="isDorfSelect" [metadata]="metadata" [ngClass]="dorfFieldCss"></dorf-select>
+    <dorf-checkbox *ngIf="isDorfCheckbox" [metadata]="metadata" [ngClass]="dorfFieldCss"></dorf-checkbox>
+
+    <!-- Fields defined by the user. -->
+    <ng-content></ng-content>
+    `
 })
 export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>> extends AbstractDorfFieldComponent<T, M> {
 
@@ -38,9 +45,9 @@ export class DorfFieldComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefi
 
     get dorfFieldCss() { return this.getCss('dorfField'); }
 
-    get isDorfInput() { return this.isDorfTag(DorfField.INPUT); }
-    get isDorfRadio() { return this.isDorfTag(DorfField.RADIO); }
-    get isDorfSelect() { return this.isDorfTag(DorfField.SELECT); }
-    get isDorfCheckbox() { return this.isDorfTag(DorfField.CHECKBOX); }
+    get isDorfInput() { return this.isDorfTag(INPUT); }
+    get isDorfRadio() { return this.isDorfTag(RADIO); }
+    get isDorfSelect() { return this.isDorfTag(SELECT); }
+    get isDorfCheckbox() { return this.isDorfTag(CHECKBOX); }
     protected isDorfTag(tag: string) { return this.metadata.tag === tag; }
 }

@@ -15,9 +15,14 @@ import { DorfField } from './dorf-field';
  * @stable
  */
 @Component({
-    moduleId: `${module.id}`,
     selector: 'dorf-field-wrapper',
-    templateUrl: './dorf-field-wrapper.component.html',
+    template: `
+    <label *ngIf="label" [attr.for]="key" [ngClass]="labelCss">{{label}}</label>
+    <dorf-field [metadata]="metadata" [ngClass]="fieldGeneralizationCss">
+        <ng-content></ng-content>
+    </dorf-field>
+    <div *ngIf="invalid && errorMessage" [ngClass]="errorCss">{{errorMessage}}</div>
+    `,
     styles: [':host {display: flex;}', `.dorf-required:after {content: '*'; color: red;}`]
 })
 export class DorfFieldWrapperComponent<T, M extends DorfFieldMetadata<T, IDorfFieldDefinition<T>>>

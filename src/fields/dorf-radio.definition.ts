@@ -1,7 +1,7 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
 import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dorf-choose.definition';
-import { DorfField } from './base/dorf-field';
+import { RADIO } from './base/dorf-field';
 
 /**
  * Represents constructor parameter for {@link DorfRadioDefinition}.
@@ -28,5 +28,5 @@ export class DorfRadioDefinition<T> extends DorfChooseDefinition<T> implements I
     }
 
     /** @inheritdoc */
-    get tag() { return DorfField.RADIO; }
+    get tag() { return RADIO; }
 }

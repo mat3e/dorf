@@ -1,4 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
+import { INPUT } from '../src/fields/base/dorf-field';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 
 describe('DorfInputDefinition', () => {
@@ -7,7 +7,7 @@ describe('DorfInputDefinition', () => {
         let inputDef = new DorfInputDefinition();
 
         // THEN
-        expect(inputDef.tag).toEqual(DorfField.INPUT);
+        expect(inputDef.tag).toEqual(INPUT);
         expect(inputDef.type).toEqual('text');
     });
 

@@ -1,5 +1,5 @@
 import { IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
-import { DorfField } from './dorf-field';
+import { NESTED } from './dorf-field';
 import { IDorfDefinitionBase, DorfDefinitionBase } from './abstract-dorf-field.definition';
 
 /**
@@ -29,7 +29,7 @@ export interface IDorfNestedDefinition<T> extends IDorfDefinitionBase<T> {
  * @stable
  */
 export class DorfNestedDefinition<T> extends DorfDefinitionBase<T> implements IDorfNestedDefinition<T> {
-    private _transparentFlow: boolean;
+    private _transparentFlow?: boolean;
     private _columnsNumber: number = 2;
 
     constructor(options?: IDorfNestedDefinition<T>) {
@@ -42,7 +42,7 @@ export class DorfNestedDefinition<T> extends DorfDefinitionBase<T> implements ID
     }
 
     /** @inheritdoc */
-    get tag() { return DorfField.NESTED; }
+    get tag() { return NESTED; }
 
     /** @inheritdoc */
     get transparentFlow() { return this._transparentFlow; }

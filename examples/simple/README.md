@@ -1,9 +1,28 @@
-# DORF - simple form
-Example of fast form creation in DORF.
+# Simple
 
-1. _Person_ is `DorfDomainObject` with `FieldDefinitions` assigned to all the fields. 
-2. In the example reactive form works for both adding and updating. Two-way communication (for and from the form) is presented in the example.
-3. For the _Name_ field there is a special updating flag. This field is updated immediately on the _Person_.
-4. For the _Surname_ there is also `debounce` parameter which delays an updating.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
 
-This is a base for all other exaples.
+## Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Code scaffolding
+
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+
+## Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Before running the tests make sure you are serving the app via `ng serve`.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
