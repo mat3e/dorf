@@ -1,4 +1,4 @@
-## QuickStart - part I
+# QuickStart - part I
 DORF (Domain Object Reactive Forms) is a library for Angular, which speeds up the creation of _Dynamic Forms_. 
 
 ## Introduction
