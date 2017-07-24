@@ -52,11 +52,11 @@ Angular's _Reactive Forms_ (a.k.a. _Model-driven Forms_) are great. Then, the dy
     ```
 3. You are done! **Really!** Enjoy your _Reactive Form_.
 
-## Detailed step-by-step tutorial
-soon
+## Detailed tutorials
+[QuickStart - part I(https://mat3e.github.io/dorf/tutorial/quickstart-1.html)
 
 ## Documentation
-[Generated API documentation](https://mat3e.github.io/dorf/api-doc/)
+[Generated API documentation](https://mat3e.github.io/dorf/api/)
 
 ## Vision
 The aim of this library is to speed up boring things like a creation of the ordinary forms and styling them. Library is not strictly connected with any CSS framework. You can just pass the classes as `DorfConfigService` parameters. 

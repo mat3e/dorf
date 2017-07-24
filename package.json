@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "decorator",
@@ -24,7 +24,7 @@
   "scripts": {
     "patch": "npm run build && npm test && npm version patch",
     "test": "karma start config/karma/conf.js",
-    "api-doc": "node_modules/.bin/typedoc --theme default --experimentalDecorators --mode file --target \"es6\" --module \"commonjs\" --name \"DORF Documentation\" --excludeNotExported --excludePrivate --out api-doc src",
+    "api-doc": "node_modules/.bin/typedoc --theme default --experimentalDecorators --mode file --target \"es6\" --module \"commonjs\" --name \"DORF Documentation\" --excludeNotExported --excludePrivate --out docs/api src",
     "build": "ngc",
     "build-all": "npm run build && npm run build-examples",
     "build-examples": "npm run build-old-examples && npm run build-new-examples",
