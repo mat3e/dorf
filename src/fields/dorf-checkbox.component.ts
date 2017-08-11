@@ -22,7 +22,8 @@ import { DorfConfigService } from '../dorf-config.service';
         <input #view [id]="key" [ngClass]="htmlFieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{innerLabel}}
     </label>
     <input [name]="key" [formControl]="formControl" type="hidden" />
-    `
+    `,
+    styles: [`.dorf-required:after {content: '*'; color: red;}`]
 })
 // tslint:disable-next-line:max-line-length
 export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, DorfCheckboxMetadata<T>> implements OnChanges {
@@ -31,6 +32,8 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
      * True/false value which is seen by the end user.
      */
     checkboxValue: boolean;
+
+    private _innerLabelCss: string;
 
     /** @inheritdoc */
     constructor(config: DorfConfigService) {
@@ -61,5 +64,17 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
      * Checkbox has a label around it, which is independent from the label from wrapper.
      */
     get innerLabel() { return this.metadata.innerLabel; }
-    get innerLabelCss() { return this.getCss('innerLabel'); }
+    get innerLabelCss() {
+        if (!this._innerLabelCss) {
+            this._innerLabelCss = '';
+            if (this.config.requiredWithStar && this.metadata.isRequired) {
+                this._innerLabelCss = 'dorf-required';
+            }
+            let labelClasses = this.getCss('innerLabel');
+            if (labelClasses) {
+                this._innerLabelCss = `${labelClasses} ${this._innerLabelCss}`;
+            }
+        }
+        return this._innerLabelCss;
+    }
 }
