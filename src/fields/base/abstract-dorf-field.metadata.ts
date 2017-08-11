@@ -132,9 +132,9 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
         let val = definition.validator;
         if (val) {
             if (val instanceof Array) {
-                this._isRequired = val.indexOf(Validators.required) !== -1;
+                this._isRequired = val.indexOf(Validators.required) !== -1 || val.indexOf(Validators.requiredTrue) !== -1;
             } else {
-                this._isRequired = val === Validators.required;
+                this._isRequired = val === Validators.required || val === Validators.requiredTrue;
             }
         }
 
