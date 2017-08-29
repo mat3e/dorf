@@ -54,7 +54,7 @@ Angular's _Reactive Forms_ (a.k.a. _Model-driven Forms_) are great. Then, the dy
 
 ## Detailed tutorials
 * [QuickStart - part I](https://mat3e.github.io/dorf/tutorial/quickstart-1.html)
-* [soon] QuickStart - part II
+* [QuickStart - part II](https://mat3e.github.io/dorf/tutorial/quickstart-2.html)
 * [[wiki] QuickStart - full](https://github.com/mat3e/dorf/wiki/QuickStart)
 
 ## Documentation
