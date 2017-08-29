@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>DORF QuickStart - part II</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body id="preview">
+  <h1><a id="Creating_Angular_Dynamic_Form_with_DORF_part_II_0"></a>Creating Angular Dynamic Form with DORF (part II)</h1>
+  <p><a href="quickstart-1.html">First part of the tutorial</a> was a good introduction to <a href="https://www.npmjs.com/package/dorf">DORF</a>,
+    which resulted in the following app (more or less): <a href="http://embed.plnkr.co/TV4H5K/">http://embed.plnkr.co/TV4H5K/</a>.</p>
+  <h2><a id="Stepbystep_3"></a>Step-by-step</h2>
+  <p>Main problems identified <a href="quickstart-1.html">in the first part</a>:</p>
+  <ol>
+    <li>There are no indicators on the required fields; in our case all the fields are required, but anyway…</li>
+    <li>There are 2 buttons visible and just the first one is doing something</li>
+    <li>First button is <code>'Save'</code> instead of <code>'Submit'</code></li>
+    <li><code>update</code> function is not the perfect way of acting with DORF Object</li>
+  </ol>
+  <h3><a id="Required_fields_10"></a>Required fields</h3>
+  <p>Putting a characteristic red star after the label of the required field is really trivial in DORF. All you need is <code>requiredWithStar</code>    set to <code>true</code> somewhere inside <code>DorfModule.forRoot</code> method in <code>app.module</code>.</p>
+  <h3><a id="Styling_buttons_13"></a>Styling buttons</h3>
+  <p>Currently we are having 2 buttons and one of them is not needed. Also, they are ugly. The solution for this - once again
+    - is a modification of <code>DorfModule.forRoot</code> method. The end result can look like this:</p>
+  <pre><code class="language-typescript">DorfModule.forRoot({
+  css: {
+    section: <span class="hljs-string">'row'</span>,
+    wrapper: <span class="hljs-string">'form-group col-12 row'</span>,
+    label: <span class="hljs-string">'col-2 col-form-label'</span>,
+    fieldGeneralization: <span class="hljs-string">'col-10'</span>,
+    htmlField: <span class="hljs-string">'form-control'</span>,
+    buttons: {
+      save: <span class="hljs-string">'btn btn-primary'</span>,
+      reset: <span class="hljs-string">'hidden-xs-up'</span>
+    }
+  },
+  dorfFields: [{
+    tag: DorfField.CHECKBOX,
+    css: {
+      wrapper: <span class="hljs-string">'checkbox col-12 row'</span>,
+      htmlField: <span class="hljs-string">'checkbox'</span>
+    }
+  }],
+  requiredWithStar: <span class="hljs-literal">true</span>
+})
+</code></pre>
+  <p>Styles are taken directly from Bootstrap.</p>
+  <h3><a id="Changing_the_buttons_41"></a>Changing the buttons</h3>
+  <p>Time for something harder. In the current version of DORF, there are no mechanisms for customizing button text. But we
+    can still achieve our goal by:</p>
+  <ol>
+    <li>Overriding DORF component(s)</li>
+    <li>Talking with DORF in a different way</li>
+  </ol>
+  <p>Let’s take a look at the first option.</p>
+  <h4><a id="Overriding_DORF_components_48"></a>Overriding DORF components</h4>
+  <p>DORF is written in a modular way. Dependencies are presented below:<br>
+    <img src="https://mat3e.github.io/dorf/tutorial/dorfmodules.PNG" alt="DORF modules"></p>
+  <p>There are 3 main modules:</p>
+  <ol>
+    <li><code>DorfCoreModule</code> - an essence, which exports the configuration, <code>ReactiveFormsModule</code> from Angular
+      and abstract TypeScript classes, used later by the fields.</li>
+    <li><code>DorfFieldsModule</code> - module which collects field-related stuff: <em>input</em>, <em>select</em>, <em>radio</em>,
+      <em>checkbox</em> and the <em>field generalization</em>. The idea behind one module for all the field components is
+      simple - it should allow an easy switch. E.g. it is doable to define components with DORF-like selectors which use
+      e.g. <em>Angular Material</em> behind the scenes. Then, a new module containing them should be used on top of <code>DorfCoreModule</code>.
+      Sooner or later DORF should be improved to allow even an easier way for overriding the default fields.</li>
+    <li><code>DorfModule</code> - final module, which uses the previous ones and adds wrappers and buttons.</li>
+  </ol>
+  <p>As written above, <code>DorfModule</code> stores buttons component. Let’s take a deeper look at this:<br>
+    <img src="https://mat3e.github.io/dorf/tutorial/dorfmodule.PNG" alt="The structure of DorfModule"></p>
+  <p>What needs to be done is similar to what happened in <code>definition-extras</code> example from the official DORF repository.
+    <code>DorfButtonsComponent</code> has HTML template which is the source of our problem. And the solution is to create
+    a new component, e.g. <code>src/app/ext/custom-buttons-component.ts</code>:</p>
+  <pre><code class="language-typescript">import { Component } from '@angular/core';
+import { DorfButtonsComponent } from 'dorf';
+
+@Component({
+  selector: 'dorf-buttons',
+  template: `
+  &lt;section [ngClass]="config.css.buttons?.group"&gt;
+    &lt;button (click)="submit()" [ngClass]="config.css.buttons?.save" [disabled]="!form || !form.valid"&gt;Submit&lt;/button&gt;
+  &lt;/section&gt;
+  `
+})
+export class CustomButtonsComponent extends DorfButtonsComponent { }
+</code></pre>
+  <p>HTML was modified to match our requirements. We even removed unneeded “Reset” button. Hints:</p>
+  <ul>
+    <li>The selector has to match the original</li>
+    <li>It may be useful to extend the original component</li>
+  </ul>
+  <p>New component should be registered in the module:</p>
+  <pre><code class="language-typescript"><span class="hljs-keyword">import</span> { BrowserModule } from <span class="hljs-string">'@angular/platform-browser'</span>;
+<span class="hljs-keyword">import</span> { NgModule } from <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> { FormsModule } from <span class="hljs-string">'@angular/forms'</span>;
+<span class="hljs-keyword">import</span> { HttpModule } from <span class="hljs-string">'@angular/http'</span>;
+
+<span class="hljs-keyword">import</span> { 
+  DorfFieldsModule,
+  DorfField,
+  DorfFieldWrapperComponent,
+  DorfGroupWrapperComponent
+} from <span class="hljs-string">'dorf'</span>;
+
+<span class="hljs-keyword">import</span> { CustomButtonsComponent } from <span class="hljs-string">'./ext/custom-buttons-component'</span>;
+
+<span class="hljs-keyword">import</span> { UserFormComponent } from <span class="hljs-string">'./user/user-form.component'</span>;
+<span class="hljs-keyword">import</span> { AppComponent } from <span class="hljs-string">'./app.component'</span>;
+
+@NgModule({
+  declarations: [
+    UserFormComponent,
+    AppComponent,
+    CustomButtonsComponent,
+    DorfFieldWrapperComponent,
+    DorfGroupWrapperComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    DorfFieldsModule.forRoot({
+      css: {
+        section: <span class="hljs-string">'row'</span>,
+        wrapper: <span class="hljs-string">'form-group col-12 row'</span>,
+        label: <span class="hljs-string">'col-2 col-form-label'</span>,
+        fieldGeneralization: <span class="hljs-string">'col-10'</span>,
+        htmlField: <span class="hljs-string">'form-control'</span>,
+        buttons: {
+          save: <span class="hljs-string">'btn btn-primary'</span>
+        }
+      },
+      dorfFields: [{
+        tag: DorfField.CHECKBOX,
+        css: {
+          wrapper: <span class="hljs-string">'checkbox col-12 row'</span>,
+          htmlField: <span class="hljs-string">'checkbox'</span>
+        }
+      }],
+      requiredWithStar: <span class="hljs-literal">true</span>
+    })
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule { }
+</code></pre>
+  <p>Note that we switched from <code>DorfModule</code> to <code>DorfFieldsModule</code>, so it was needed to register <code>DorfFieldWrapperComponent</code>    and <code>DorfGroupWrapperComponent</code> “manually”.</p>
+  <p>The end result for this part is available <a href="http://embed.plnkr.co/38WWfdqRICzB4zlzmKon/">here</a>.</p>
+  <h4><a id="Talking_with_DORF_in_a_different_way_142"></a>Talking with DORF in a different way</h4>
+  <p>Overriding DORF pieces is a powerful technique, but it is too much in our case. Let’s undo the last changes and modify
+    <code>DorfForm</code> decorator on <code>UserFormComponent</code>:</p>
+  <pre><code class="language-typescript">@DorfForm({
+  renderWithoutButtons: <span class="hljs-literal">true</span>
+})
+</code></pre>
+  <p>Then, let’s add <code>&lt;button class=&quot;btn btn-primary&quot;&gt;Submit&lt;/button&gt;</code> manually to the template
+    of <code>AppComponent</code>.</p>
+  <h3><a id="A_better_way_of_acting_with_DORF_Object_152"></a>A better way of acting with DORF Object</h3>
+  <p>What if I told you that you can use DORF and enjoy the <code>[(ngModel)]</code>-like experience? Let’s start the modification
+    with removing the <code>update</code> function from our model. Then, for every field we want an immediate updating, we
+    have to add <code>updateModelOnChange: true</code> option:</p>
+  <pre><code class="language-typescript">@DorfObject()
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> User {
+  @DorfInput({
+    label: <span class="hljs-string">'Username'</span>,
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'input'</span> as InputType,
+    validator: Validators.required,
+    updateModelOnChange: <span class="hljs-literal">true</span>
+  })
+  <span class="hljs-keyword">private</span> _login: <span class="hljs-built_in">string</span>;
+
+  @DorfInput({
+    label: <span class="hljs-string">'Password'</span>,
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'password'</span> as InputType,
+    validator: Validators.required,
+    updateModelOnChange: <span class="hljs-literal">true</span>
+  })
+  <span class="hljs-keyword">private</span> _password: <span class="hljs-built_in">string</span>;
+
+  @DorfCheckbox({
+    innerLabel: <span class="hljs-string">'I accept the terms and conditions'</span>,
+    validator: Validators.requiredTrue,
+    updateModelOnChange: <span class="hljs-literal">true</span>
+  })
+  <span class="hljs-keyword">private</span> _acceptance: <span class="hljs-built_in">boolean</span>;
+
+  <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(options?: IUser) </span>{
+    <span class="hljs-keyword">if</span> (options) {
+      <span class="hljs-keyword">this</span>._login = options._login;
+      <span class="hljs-keyword">this</span>._password = options._password;
+      <span class="hljs-keyword">this</span>._acceptance = options._acceptance;
+    }
+  }
+
+  <span class="hljs-keyword">get</span> login() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._login; }
+  <span class="hljs-keyword">get</span> password() { <span class="hljs-keyword">return</span> btoa(<span class="hljs-keyword">this</span>._password); }
+  <span class="hljs-keyword">get</span> acceptance() { <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>._acceptance; }
+
+  <span class="hljs-keyword">get</span> basicAuth() {
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>._login &amp;&amp; <span class="hljs-keyword">this</span>._password) {
+      <span class="hljs-keyword">return</span> btoa(`${<span class="hljs-keyword">this</span>._login}:${<span class="hljs-keyword">this</span>._password}`);
+    }
+  }
+}
+</code></pre>
+  <p>Bonus: you can specify <code>debounce</code> parameter, to delay an update. It expects a number of milliseconds as a value.
+    It is similar to one of <code>ngModelOptions</code> parameter from <a href="https://docs.angularjs.org/api/ng/directive/ngModelOptions">Angular 1.3</a>.</p>
+  <p>That’s it. Having such updating, it is possible to consume user directly in <code>AppComponent</code>.</p>
+  <h3><a id="Recap_204"></a>Recap</h3>
+  <p>We fulfilled all the requirements from the previous part and extended our DORF knowledge:</p>
+  <ul>
+    <li><code>DorfModule.forRoot</code> method allows not only assigning CSS classes to fields, but also to buttons; it also
+      has additional parameters, e.g. for setting a red star on the required fields</li>
+    <li>DORF is modular and its components can be overridden pretty easily</li>
+    <li>DORF allows for <code>[(ngModel)]</code>-like updating. Behind the scenes, immediate updating uses events, so it is a
+      reactive way, not a two-way binding</li>
+  </ul>
+  <p>Finished app is presented here: <a href="http://embed.plnkr.co/0LqHQa/">http://embed.plnkr.co/0LqHQa/</a>.</p>
+  <h2><a id="The_future_212"></a>The future</h2>
+  <p>DORF is still under the development, but its code already allows for handling plenty of use cases and scenarios, which
+    are not yet presented in tutorials.</p>
+  <h3><a id="Planned_tutorials_215"></a>Planned tutorials</h3>
+  <ul>
+    <li>Advanced options and further overriding of DORF components</li>
+    <li>Nested objects and a column layout</li>
+    <li>Adding custom fields</li>
+    <li>Testing DORF</li>
+  </ul>
+
+  <a href="https://github.com/mat3e/dorf"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+</body>
+
+</html>
