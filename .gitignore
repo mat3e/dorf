@@ -11,6 +11,7 @@
 !index.ts
 !package.json
 !README.md
+!LICENSE
 !.travis.yml
 !tsconfig.json
 !tslint.json
