@@ -19,3 +19,4 @@ node_modules/**/*
 !src/**/*.d.ts
 !src/**/*.html
 !src/**/*.metadata.json
+!src/**/*.ngsummary.json
