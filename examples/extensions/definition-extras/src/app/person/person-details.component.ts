@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { IDorfForm, DorfForm, DorfMapper, DorfObjectInput, DorfConfigService } from 'dorf';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { DorfConfigService, DorfForm, DorfObjectInput, IDorfForm } from 'dorf';
 
 import { IPerson, Person } from './model';
 
@@ -11,7 +11,6 @@ import { IPerson, Person } from './model';
  */
 @DorfForm()
 @Component({
-    moduleId: module.id,
     selector: 'app-person-details'
 })
 export class PersonDetailsComponent implements IDorfForm {
@@ -21,7 +20,7 @@ export class PersonDetailsComponent implements IDorfForm {
     constructor(public config: DorfConfigService) { }
 
     onDorfSubmit() {
-        let result = this['form'].value as IPerson;
+        const result = this['form'].value as IPerson;
 
         console.log(result);
         this.createUpdate.emit(result);

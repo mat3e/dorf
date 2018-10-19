@@ -1,6 +1,6 @@
 import { PropertiesToDorfDefinitionsMap } from './dorf-mapper';
 import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
-import { IDorfChooseDefinition, DorfChooseDefinition } from '../fields/base/abstract-dorf-choose.definition';
+import { DorfChooseDefinition, IDorfChooseDefinition } from '../fields/base/abstract-dorf-choose.definition';
 
 /**
  * Base class which may define Domain Object. Enfoces the existence of field definitions.

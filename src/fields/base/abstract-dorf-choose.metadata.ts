@@ -1,5 +1,5 @@
-import { OptionType, IDorfChooseDefinition } from './abstract-dorf-choose.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from './abstract-dorf-field.metadata';
+import { IDorfChooseDefinition } from './abstract-dorf-choose.definition';
+import { DorfFieldMetadata, IDorfFieldMetadata } from './abstract-dorf-field.metadata';
 
 /**
  * Represents base {@link DorfFieldMetadata} for the fields with the limited values to choose from.

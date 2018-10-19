@@ -1,14 +1,14 @@
 import { Input } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 import { DorfConfigService } from '../dorf-config.service';
-import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../base/dorf-mapper';
+import { DorfMapper } from '../base/dorf-mapper';
 
 import { groupMetadata } from '../fields/base/util';
-import { DorfDefinitionBase, DorfFieldDefinition } from '../fields/base/abstract-dorf-field.definition';
+import { DorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
 import { DorfNestedMetadata } from '../fields/base/dorf-nested.metadata';
-import { IDorfFieldMetadata, DorfFieldMetadata, AnyMetadata } from '../fields/base/abstract-dorf-field.metadata';
-import { IDorfField, DorfField } from '../fields/base/dorf-field';
+import { AnyMetadata, DorfFieldMetadata, IDorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
+import { IDorfField } from '../fields/base/dorf-field';
 
 /**
  * Optional interface for reminding about form properties.

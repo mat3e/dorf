@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CONFIG_INTERFACE, configFactory, DorfFieldsModule } from './dorf-fields.module';
 
 import { DorfButtonsComponent } from './base/dorf-buttons.component';
-import { IDorfService, DorfSupportingService } from './dorf-config.service';
+import { DorfSupportingService, IDorfService } from './dorf-config.service';
 import { DorfFieldWrapperComponent } from './fields/base/dorf-field-wrapper.component';
 import { DorfGroupWrapperComponent } from './fields/base/dorf-group-wrapper.component';
 

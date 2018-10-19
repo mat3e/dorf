@@ -1,6 +1,6 @@
-import { Validators, ValidatorFn, AsyncValidatorFn } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn, Validators } from '@angular/forms';
 
-import { IDorfFieldCssClasses, DorfCssClasses } from '../../base/dorf-css-classes';
+import { DorfCssClasses, IDorfFieldCssClasses } from '../../base/dorf-css-classes';
 
 /**
  * The simplest definition, base for fields and for nested objects.

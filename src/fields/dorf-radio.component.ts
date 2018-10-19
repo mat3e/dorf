@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-
-import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
-import { IDorfRadioDefinition } from './dorf-radio.definition';
 import { DorfRadioMetadata } from './dorf-radio.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';
 import { RADIO } from './base/dorf-field';

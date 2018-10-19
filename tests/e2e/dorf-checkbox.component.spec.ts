@@ -1,14 +1,14 @@
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
 import { CHECKBOX } from '../../src/fields/base/dorf-field';
-import { ICheckboxMapping, IDorfCheckboxDefinition, DorfCheckboxDefinition } from '../../src/fields/dorf-checkbox.definition';
+import { DorfCheckboxDefinition, IDorfCheckboxDefinition } from '../../src/fields/dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from '../../src/fields/dorf-checkbox.metadata';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 
@@ -45,7 +45,7 @@ describe('DorfCheckboxComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DorfCheckboxComponent);
+        fixture = TestBed.createComponent(DorfCheckboxComponent) as ComponentFixture<DorfCheckboxComponent<boolean | number>>;
         SUT = fixture.componentInstance;
         changeComponent();
     });

@@ -2,11 +2,8 @@ import { DorfCssClasses } from '../src/base/dorf-css-classes';
 import { DorfConfigService } from '../src/dorf-config.service';
 
 import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
-import { DorfFieldMetadata, AnyMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
-import { INPUT, RADIO, NESTED, IDorfField, DorfField, DorfNestedField, getBuiltInFields } from '../src/fields/base/dorf-field';
-import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
-import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';
-import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
+import { AnyMetadata, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
+import { DorfField, getBuiltInFields, IDorfField, INPUT, NESTED, RADIO } from '../src/fields/base/dorf-field';
 
 describe('DorfConfigService', () => {
     it('should have default values', () => {
@@ -150,7 +147,7 @@ describe('DorfConfigService', () => {
         let runs: any[] = [
             ['returns class from field if defined', cfg1, expected1],
             ['returns class from config if no other classes', cfg2, expected2]
-        ]
+        ];
 
         runs.forEach((run) => {
             it(run[0], () => {
@@ -197,7 +194,7 @@ describe('DorfConfigService', () => {
             ['returns class from configured field in group if defined', cfg1, expected1],
             ['returns class from group if no field in group defined', cfg2, expected2],
             ['returns class from "getCssClassForTag" if nothing defined in group', cfg3, mockedResultFromFunction]
-        ]
+        ];
 
         runs.forEach((run) => {
             it(run[0], () => {

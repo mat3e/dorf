@@ -1,4 +1,4 @@
-[![Maintenance](https://img.shields.io/maintenance/no/2018.svg)]() [![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf) [![Build Status](https://travis-ci.org/mat3e/dorf.svg?branch=master)](https://travis-ci.org/mat3e/dorf)
+[![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf) [![Build Status](https://travis-ci.org/mat3e/dorf.svg?branch=master)](https://travis-ci.org/mat3e/dorf)
 
 # Domain Object Reactive Forms
 Project is outdated. Feel free to fork or raise an issue to overtake the project. If I had Angular at work, I'd probably come back to the maintenance of this.
@@ -77,4 +77,4 @@ Future plans include:
  - [Simple example](http://embed.plnkr.co/6H2jto/)
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
  - [New field example](http://embed.plnkr.co/q4EEDa/)
- - [3.0.0 example](http://embed.plnkr.co/fhEfqD/)
+ - [General example](http://embed.plnkr.co/fhEfqD/)

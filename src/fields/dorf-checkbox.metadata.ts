@@ -1,5 +1,5 @@
-import { ICheckboxMapping, IDorfCheckboxDefinition, DorfCheckboxDefinition } from './dorf-checkbox.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from './base/abstract-dorf-field.metadata';
+import { DorfCheckboxDefinition, IDorfCheckboxDefinition } from './dorf-checkbox.definition';
+import { DorfFieldMetadata, IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 
 /**
  * Represents a [metadata]{@link DorfFieldMetadata} for the checkbox field.

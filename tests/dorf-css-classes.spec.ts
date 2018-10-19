@@ -1,4 +1,4 @@
-import { IDorfFieldCssClasses, DorfCssClasses } from '../src/base/dorf-css-classes';
+import { DorfCssClasses } from '../src/base/dorf-css-classes';
 
 describe('DorfCssClasses', () => {
     it('allows creating objects without key restrictions', () => {

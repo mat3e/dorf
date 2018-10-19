@@ -1,5 +1,5 @@
 import { groupMetadata } from '../../src/fields/base/util';
-import { IDorfFieldMetadata, DorfMetadataBase } from '../../src/fields/base/abstract-dorf-field.metadata';
+import { DorfMetadataBase, IDorfFieldMetadata } from '../../src/fields/base/abstract-dorf-field.metadata';
 import { IDorfNestedDefinition } from '../../src/fields/base/dorf-nested.definition';
 import { DorfNestedMetadata } from '../../src/fields/base/dorf-nested.metadata';
 import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
@@ -81,7 +81,7 @@ describe('groupMetadata', () => {
                 for (let row of result) {
                     let flattenRow = row.map((e) => e.key);
                     flattenResultKeys = flattenResultKeys.concat(flattenRow);
-                };
+                }
 
                 // THEN
                 expect(result.length).toEqual(sample.rows);
@@ -172,7 +172,7 @@ describe('groupMetadata', () => {
                 for (let row of result) {
                     let flattenRow = row.map((e) => e.key);
                     flattenResultKeys = flattenResultKeys.concat(flattenRow);
-                };
+                }
 
                 // THEN
                 expect(result.length).toEqual(sample.rows);
@@ -209,7 +209,7 @@ describe('groupMetadata', () => {
                         new DorfInputMetadata(def, { key: 'd' }),
                         new DorfInputMetadata(def, { key: 'e' }),
                         new DorfInputMetadata(def, { key: 'f' })
-                    ] // 4 rows with 3 columns
+                    ]; // 4 rows with 3 columns
 
                     return [
                         new DorfInputMetadata(def, { key: '1' }),
@@ -248,7 +248,7 @@ describe('groupMetadata', () => {
                         breakingIndexes.push(i);
                         flattenResultKeys.push(null);
                     }
-                };
+                }
 
                 // THEN
                 expect(result.length).toEqual(sample.rows);
@@ -280,7 +280,7 @@ describe('groupMetadata', () => {
             new DorfInputMetadata(def, { key: 'd' }),
             new DorfInputMetadata(def, { key: 'e' }),
             new DorfInputMetadata(def, { key: 'f' })
-        ]
+        ];
 
         sample.source = [
             new DorfInputMetadata(def, { key: '1' }),
@@ -304,7 +304,7 @@ describe('groupMetadata', () => {
                 breakingIndexes.push(i);
                 flattenResultKeys.push(null);
             }
-        };
+        }
 
         // THEN
         expect(result.length).toEqual(sample.rows);

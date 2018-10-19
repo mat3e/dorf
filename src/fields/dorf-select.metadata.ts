@@ -1,4 +1,4 @@
-import { IDorfSelectDefinition, DorfSelectDefinition } from './dorf-select.definition';
+import { DorfSelectDefinition, IDorfSelectDefinition } from './dorf-select.definition';
 import { IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 import { DorfChooseMetadata } from './base/abstract-dorf-choose.metadata';
 

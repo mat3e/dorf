@@ -7,8 +7,8 @@ import { DorfDomainObject } from '../../src/base/abstract-dorf.model'
 import { PropertiesToDorfDefinitionsMap } from '../../src/base/dorf-mapper';
 import { DorfInputDefinition } from '../../src/fields/dorf-input.definition';
 
-import { DorfObject, DorfInput } from '../../src/decorators/dorf-object.decorator';
-import { IDorfForm, DorfForm, DorfObjectInput } from '../../src/decorators/dorf-form.decorator';
+import { DorfInput, DorfObject } from '../../src/decorators/dorf-object.decorator';
+import { DorfForm, DorfObjectInput, IDorfForm } from '../../src/decorators/dorf-form.decorator';
 
 /**
  * Plain old DorfDomainObject.

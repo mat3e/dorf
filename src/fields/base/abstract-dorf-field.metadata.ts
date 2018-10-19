@@ -2,8 +2,8 @@ import 'rxjs/add/operator/debounceTime';
 
 import { FormControl, Validators } from '@angular/forms';
 
-import { IDorfCommonCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
-import { IDorfDefinitionBase, DorfDefinitionBase, IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
+import { DorfDefinitionBase, DorfFieldDefinition, IDorfDefinitionBase, IDorfFieldDefinition } from './abstract-dorf-field.definition';
 
 /**
  * Defines things existing in metadata, which don't exist directly in the definition.
@@ -109,7 +109,7 @@ export abstract class DorfMetadataBase<T, D extends IDorfDefinitionBase<T>> impl
  * Class for generic types handling.
  * @see [GitHub issue]{@link https://github.com/Microsoft/TypeScript/issues/16985}
  */
-export declare class AnyMetadata extends DorfMetadataBase<any, IDorfDefinitionBase<any>> { };
+export declare class AnyMetadata extends DorfMetadataBase<any, IDorfDefinitionBase<any>> { }
 
 /**
  * Is used directly in reactive form by the fields.

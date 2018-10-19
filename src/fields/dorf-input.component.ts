@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { InputType, IDorfInputDefinition } from './dorf-input.definition';
+import { InputType } from './dorf-input.definition';
 import { DorfInputMetadata } from './dorf-input.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
 import { INPUT } from './base/dorf-field';

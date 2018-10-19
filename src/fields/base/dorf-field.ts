@@ -1,12 +1,7 @@
-import {
-    IDorfFieldCssClasses,
-    IDorfMultipleLabelsCssClasses,
-    IDorfGeneralCssClasses,
-    DorfCssClasses
-} from '../../base/dorf-css-classes';
+import { DorfCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses, IDorfMultipleLabelsCssClasses } from '../../base/dorf-css-classes';
 import { IDorfService } from '../../dorf-config.service';
 
-import { IDorfDefinitionBase, DorfDefinitionBase } from './abstract-dorf-field.definition';
+import { DorfDefinitionBase, IDorfDefinitionBase } from './abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../dorf-input.definition';
 import { DorfRadioDefinition } from '../dorf-radio.definition';
 import { DorfSelectDefinition } from '../dorf-select.definition';

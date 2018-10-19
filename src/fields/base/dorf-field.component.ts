@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-import { IDorfCommonCssClasses } from '../../base/dorf-css-classes';
 import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
-import { INPUT, RADIO, SELECT, CHECKBOX, DorfField } from './dorf-field';
+import { CHECKBOX, INPUT, RADIO, SELECT } from './dorf-field';
 
 /**
  * Component which switch between all built-in DORF fields.

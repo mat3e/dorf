@@ -10,7 +10,7 @@ import { DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
 import { DorfSelectMetadata } from '../../src/fields/dorf-select.metadata';
 import { DorfFieldDefinition } from '../../src/fields/base/abstract-dorf-field.definition';
 
-import { PropertiesToDorfDefinitionsMap, DorfMapper } from '../../src/base/dorf-mapper';
+import { DorfMapper, PropertiesToDorfDefinitionsMap } from '../../src/base/dorf-mapper';
 
 describe('DorfMapper', () => {
 

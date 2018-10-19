@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 import {
-    IDorfField,
-    DorfConfigService,
-    IDorfFieldDefinition,
-    IDorfFieldMetadata,
-    DorfFieldDefinition,
-    DorfFieldMetadata,
-    AbstractDorfFieldComponent
+  AbstractDorfFieldComponent,
+  DorfConfigService,
+  DorfFieldDefinition,
+  DorfFieldMetadata,
+  IDorfField,
+  IDorfFieldDefinition,
+  IDorfFieldMetadata
 } from 'dorf';
 
 const TAG = 'star-rating';
@@ -46,7 +45,6 @@ export class StarRatingMetadata extends DorfFieldMetadata<number, StarRatingDefi
 }
 
 @Component({
-    moduleId: module.id,
     selector: TAG,
     styleUrls: ['star-rating.component.css'],
     templateUrl: 'star-rating.component.html'

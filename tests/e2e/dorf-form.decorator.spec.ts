@@ -1,10 +1,10 @@
-import { DebugElement, Component } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Person1, Person2, Person1DetailComponent, Person2DetailComponent } from '../util/classes'
+import { Person1, Person1DetailComponent, Person2, Person2DetailComponent } from '../util/classes'
 
 import { DorfButtonsComponent } from '../../src/base/dorf-buttons.component';
 import { DorfFieldComponent } from '../../src/fields/base/dorf-field.component';
@@ -17,8 +17,6 @@ import { DorfInputComponent } from '../../src/fields/dorf-input.component';
 import { DorfMapper } from '../../src/base/dorf-mapper';
 
 import { DorfConfigService, DorfSupportingService } from '../../src/dorf-config.service';
-
-import { DorfForm } from '../../src/decorators/dorf-form.decorator';
 
 // TODO: tests for custom config and mapper, test for fieldDefinitions from 2 sources
 describe('DorfForm', () => {
@@ -93,7 +91,7 @@ describe('DorfForm', () => {
             expect((SUT1 as any).dorfObjectInForm).toEqual('domainObject');
             expect(SUT1[(SUT1 as any).dorfObjectInForm]).toBe(SUT1.domainObject);
 
-            expect(SUT1.config).toBeDefined()
+            expect(SUT1.config).toBeDefined();
             expect(SUT1.config.css.form).toEqual('sut');
 
             expect((SUT1 as any).mapper).toBeDefined();
@@ -130,7 +128,7 @@ describe('DorfForm', () => {
             expect((SUT2 as any).dorfObjectInForm).toEqual('domainObject');
             expect(SUT2[(SUT2 as any).dorfObjectInForm]).toBe(SUT2.domainObject);
 
-            expect(SUT2.config).toBeDefined()
+            expect(SUT2.config).toBeDefined();
             expect(SUT2.config.css.form).toEqual('sut');
 
             expect((SUT2 as any).mapper).toBeDefined();

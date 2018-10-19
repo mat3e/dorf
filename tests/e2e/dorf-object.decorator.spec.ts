@@ -1,7 +1,7 @@
-import { IDorfInputDefinition, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
-import { IDorfSelectDefinition, DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
+import { DorfInputDefinition, IDorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfSelectDefinition, IDorfSelectDefinition } from '../../src/fields/dorf-select.definition';
 
-import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio } from '../../src/decorators/dorf-object.decorator';
+import { DorfCheckbox, DorfInput, DorfObject, DorfRadio, DorfSelect } from '../../src/decorators/dorf-object.decorator';
 
 describe('DorfObject', () => {
 
@@ -24,7 +24,7 @@ describe('DorfInput', () => {
         type: 'text',
         label: 'Name',
         updateModelOnChange: true
-    }
+    };
 
     @DorfObject()
     class TestDomainObject {
@@ -52,7 +52,7 @@ describe('DorfSelect', () => {
         optionsToSelect: [{ key: 1, value: 'red' }, { key: 2, value: 'green' }, { key: 3, value: 'blue' }],
         label: 'Favourite color',
         updateModelOnChange: true
-    }
+    };
 
     @DorfObject()
     class TestDomainObject {

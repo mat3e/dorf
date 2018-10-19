@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
-import { isPromise, isObservable } from '../../base/lang-util';
-import { IDorfFieldDefinition, DorfFieldDefinition } from './abstract-dorf-field.definition';
+import { isObservable, isPromise } from '../../base/lang-util';
+import { DorfFieldDefinition, IDorfFieldDefinition } from './abstract-dorf-field.definition';
 
 /**
  * Represents a type that can be assigned to options of a field.

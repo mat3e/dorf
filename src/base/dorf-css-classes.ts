@@ -1,5 +1,4 @@
 import { DorfConfigService } from '../dorf-config.service';
-import { IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
 
 // TODO: objects support as in NgClass from Angular - allowing objects to be passed
 /**
@@ -224,7 +223,7 @@ export class DorfCssClasses implements IDorfCommonCssClasses {
                     }
                 }
             }
-        }
+        };
 
         populateOptions(this, options);
     }

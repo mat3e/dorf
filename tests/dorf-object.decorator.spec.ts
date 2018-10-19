@@ -1,4 +1,4 @@
-import { DorfObject, DorfInput, DorfSelect, DorfCheckbox, DorfRadio, DorfNestedObject } from '../src/decorators/dorf-object.decorator';
+import { DorfCheckbox, DorfInput, DorfNestedObject, DorfObject, DorfRadio, DorfSelect } from '../src/decorators/dorf-object.decorator';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';

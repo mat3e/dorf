@@ -1,4 +1,4 @@
-import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-field.definition';
+import { DorfFieldDefinition, IDorfFieldDefinition } from './base/abstract-dorf-field.definition';
 import { INPUT } from './base/dorf-field';
 
 /**

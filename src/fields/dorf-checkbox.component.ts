@@ -1,8 +1,4 @@
 import { Component, OnChanges } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
-import { IDorfCommonCssClasses } from '../base/dorf-css-classes';
-import { ICheckboxMapping, IDorfCheckboxDefinition } from './dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from './dorf-checkbox.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
 import { CHECKBOX } from './base/dorf-field';
