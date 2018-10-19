@@ -1,7 +1,9 @@
 [![npm version](https://img.shields.io/npm/v/dorf.svg)](https://www.npmjs.com/package/dorf) [![Build Status](https://travis-ci.org/mat3e/dorf.svg?branch=master)](https://travis-ci.org/mat3e/dorf)
 
 # Domain Object Reactive Forms
-Project is outdated. Feel free to fork or raise an issue to overtake the project. If I had Angular at work, I'd probably come back to the maintenance of this.
+Version 4 for Angular 5+.
+
+I'm maintaining this library in my free time. But since my son was born in 2017, I have little to no free time :)
 
 ### Model-driven forms within the model! 
 [**example**](http://embed.plnkr.co/fhEfqD/)

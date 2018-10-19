@@ -1,4 +1,4 @@
-import 'rxjs/add/operator/debounceTime';
+import { debounceTime } from 'rxjs/operators';
 
 import { FormControl, Validators } from '@angular/forms';
 
@@ -169,7 +169,7 @@ export abstract class DorfFieldMetadata<T, D extends IDorfFieldDefinition<T>> ex
 
         let delay = this.definition.debounce;
         if (delay && delay > 0) {
-            ctrl.valueChanges.debounceTime(delay).subscribe((value: T) => {
+            ctrl.valueChanges.pipe(debounceTime(delay)).subscribe((value: T) => {
                 this._setDomainObjValue(value);
                 this._invalid = this.formControl.dirty && this.formControl.invalid;
             });

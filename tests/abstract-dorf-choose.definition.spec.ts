@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/of';
+import { Observable, of } from 'rxjs';
 
 import { DorfChooseDefinition, OptionType } from '../src/fields/base/abstract-dorf-choose.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
@@ -31,7 +30,7 @@ describe('DorfChooseDefinition', () => {
             key: 3,
             value: '3'
         }];
-        let asyncOpts: Observable<OptionType<number>[]> = Observable.of(opts);
+        let asyncOpts: Observable<OptionType<number>[]> = of(opts);
 
         // WHEN
         let def: DorfChooseDefinition<number> = new DorfSelectDefinition<number>({
@@ -55,7 +54,7 @@ describe('DorfChooseDefinition', () => {
             key: 3,
             value: '3'
         }];
-        let asyncOpts: Observable<OptionType<number>[]> = Observable.of(opts);
+        let asyncOpts: Observable<OptionType<number>[]> = of(opts);
         asyncOpts.subscribe(null, null, () => { done(); });
 
         let def: DorfChooseDefinition<number> = new DorfSelectDefinition<number>();

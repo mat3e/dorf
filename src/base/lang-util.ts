@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 // TODO: methods copied from Angular core/src/util/lang.ts; cannot reuse them because of 'ɵ' sign in export
 

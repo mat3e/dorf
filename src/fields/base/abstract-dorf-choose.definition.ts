@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { fromPromise } from 'rxjs/observable/fromPromise';
+import { Observable } from 'rxjs';
+import { from } from 'rxjs';
 
 import { isObservable, isPromise } from '../../base/lang-util';
 import { DorfFieldDefinition, IDorfFieldDefinition } from './abstract-dorf-field.definition';
@@ -66,7 +66,7 @@ export abstract class DorfChooseDefinition<T> extends DorfFieldDefinition<T> imp
     /** @inheritdoc */
     get optionsToSelect() {
         if (!this._optionsToSelect) {
-            let obs = isPromise(this._asyncOptionsToSelect) ? fromPromise(this._asyncOptionsToSelect) : this._asyncOptionsToSelect;
+            let obs = isPromise(this._asyncOptionsToSelect) ? from(this._asyncOptionsToSelect) : this._asyncOptionsToSelect;
             if (!(isObservable(obs))) {
                 throw new Error(`Expected 'asyncOptionsToSelect' to be Promise or Observable when no 'optionsToSelect' specified`);
             }

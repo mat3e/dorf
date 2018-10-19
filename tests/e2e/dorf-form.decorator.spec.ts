@@ -20,10 +20,6 @@ import { DorfConfigService, DorfSupportingService } from '../../src/dorf-config.
 
 // TODO: tests for custom config and mapper, test for fieldDefinitions from 2 sources
 describe('DorfForm', () => {
-
-    // TODO: like in Angular - #9100
-    const Reflect = (window as any).Reflect;
-
     let SUT1: Person1DetailComponent;
     let SUT2: Person2DetailComponent;
 
@@ -36,7 +32,7 @@ describe('DorfForm', () => {
 
     beforeEach(async(() => {
         let dorfConfigService = new DorfConfigService(new DorfSupportingService({
-            css: { form: 'sut' }
+            css: {form: 'sut'}
         }));
 
         TestBed.configureTestingModule({
@@ -53,7 +49,7 @@ describe('DorfForm', () => {
                 Person1DetailComponent,
                 Person2DetailComponent
             ],
-            providers: [{ provide: DorfConfigService, useValue: dorfConfigService }]
+            providers: [{provide: DorfConfigService, useValue: dorfConfigService}]
         }).compileComponents();
     }));
 
@@ -108,8 +104,8 @@ describe('DorfForm', () => {
 
             expect((SUT1 as any).ngOnChanges).toBeDefined();
 
-            expect(Reflect.getMetadata('annotations', SUT1.constructor).length).toEqual(1);
-            expect(Reflect.getMetadata('annotations', SUT1.constructor)[0].template).toBeDefined();
+            expect(SUT1.constructor['__annotations__'].length).toEqual(1);
+            expect(SUT1.constructor['__annotations__'][0].template).toBeDefined();
 
             // template
             fixture1.detectChanges();
@@ -147,8 +143,8 @@ describe('DorfForm', () => {
 
             expect((SUT2 as any).ngOnChanges).toBeDefined();
 
-            expect(Reflect.getMetadata('annotations', SUT2.constructor).length).toEqual(1);
-            expect(Reflect.getMetadata('annotations', SUT2.constructor)[0].template).toBeDefined();
+            expect(SUT2.constructor['__annotations__'].length).toEqual(1);
+            expect(SUT2.constructor['__annotations__'][0].template).toBeDefined();
 
             // template
             fixture2.detectChanges();

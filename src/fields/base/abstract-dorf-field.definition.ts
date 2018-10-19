@@ -1,4 +1,4 @@
-import { AsyncValidatorFn, ValidatorFn, Validators } from '@angular/forms';
+import { AsyncValidatorFn, ValidatorFn, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
 import { DorfCssClasses, IDorfFieldCssClasses } from '../../base/dorf-css-classes';
 
@@ -56,13 +56,15 @@ export interface IDorfDefinitionBase<T> {
 export interface IDorfFieldDefinition<T> extends IDorfDefinitionBase<T> {
     /**
      * Value checker.
+     * TODO: figure out a proper type after Angular changes
      */
-    validator?: ValidatorFn | ValidatorFn[];
+    validator?: any;
 
     /**
      * Asynchronous value checker.
+     * TODO: figure out a proper type after Angular changes
      */
-    asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
+    asyncValidator?: any;
 
     /**
      * Message which should be displayed when validation returns errors.
@@ -140,8 +142,8 @@ export abstract class DorfDefinitionBase<T> implements IDorfDefinitionBase<T> {
  * @stable
  */
 export abstract class DorfFieldDefinition<T> extends DorfDefinitionBase<T> implements IDorfFieldDefinition<T> {
-    private _validator: ValidatorFn | ValidatorFn[] = Validators.nullValidator;
-    private _asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[];
+    private _validator: any = Validators.nullValidator;
+    private _asyncValidator?: any;
     private _errorMessage?: string;
     private _onSummary?: boolean;
     private _debounce?: number;
