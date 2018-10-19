@@ -1,5 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
-import { InputType, DorfInputDefinition } from '../src/fields/dorf-input.definition';
+import { DorfInputDefinition, InputType } from '../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 
 describe('DorfInputMetadata', () => {

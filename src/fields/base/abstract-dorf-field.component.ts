@@ -1,10 +1,7 @@
 import { Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
 
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
-import { DorfNestedMetadata } from './dorf-nested.metadata';
 import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
-import { IDorfCommonCssClasses, DorfCssClasses } from '../../base/dorf-css-classes';
 import { DorfConfigService } from '../../dorf-config.service';
 
 /**

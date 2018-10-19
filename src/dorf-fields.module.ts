@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CONFIG_INTERFACE, configFactory, DorfCoreModule } from './dorf-core.module';
 
-import { IDorfService, DorfSupportingService } from './dorf-config.service';
+import { DorfSupportingService, IDorfService } from './dorf-config.service';
 
 import { DorfInputComponent } from './fields/dorf-input.component';
 import { DorfRadioComponent } from './fields/dorf-radio.component';

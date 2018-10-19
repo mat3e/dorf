@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
 import { RADIO } from '../../src/fields/base/dorf-field';
@@ -51,7 +51,7 @@ describe('DorfRadioComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DorfRadioComponent);
+        fixture = TestBed.createComponent(DorfRadioComponent) as ComponentFixture<DorfRadioComponent<string>>;
 
         SUT = fixture.componentInstance;
 

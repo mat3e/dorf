@@ -1,5 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
-import { DorfNestedDefinition } from './../src/fields/base/dorf-nested.definition';
+import { DorfNestedDefinition } from '../src/fields/base/dorf-nested.definition';
 import { DorfNestedMetadata } from '../src/fields/base/dorf-nested.metadata';
 
 describe('DorfSelectMetadata', () => {

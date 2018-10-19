@@ -1,4 +1,4 @@
-import { OptionType, IDorfChooseDefinition } from '../src/fields/base/abstract-dorf-choose.definition';
+import { IDorfChooseDefinition, OptionType } from '../src/fields/base/abstract-dorf-choose.definition';
 import { DorfChooseMetadata } from '../src/fields/base/abstract-dorf-choose.metadata';
 import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
 import { DorfRadioMetadata } from '../src/fields/dorf-radio.metadata';

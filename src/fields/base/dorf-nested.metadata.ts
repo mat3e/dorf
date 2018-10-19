@@ -1,9 +1,6 @@
-import { FormGroup } from '@angular/forms';
-
-import { IDorfCommonCssClasses, IDorfFieldCssClasses } from '../../base/dorf-css-classes';
 import { PropertiesToDorfDefinitionsMap } from '../../base/dorf-mapper';
-import { IDorfNestedDefinition, DorfNestedDefinition } from './dorf-nested.definition';
-import { IDorfFieldMetadata, DorfMetadataBase } from './abstract-dorf-field.metadata';
+import { DorfNestedDefinition, IDorfNestedDefinition } from './dorf-nested.definition';
+import { DorfMetadataBase, IDorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { DorfDomainObject } from '../../dorf-core.module';
 
 /**

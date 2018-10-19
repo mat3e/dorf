@@ -1,4 +1,4 @@
-import { OptionType, IDorfChooseDefinition } from './abstract-dorf-choose.definition';
+import { IDorfChooseDefinition } from './abstract-dorf-choose.definition';
 import { DorfChooseMetadata } from './abstract-dorf-choose.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
 

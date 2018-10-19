@@ -1,6 +1,6 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
-import { IDorfFieldDefinition, DorfFieldDefinition } from './base/abstract-dorf-field.definition';
+import { DorfFieldDefinition, IDorfFieldDefinition } from './base/abstract-dorf-field.definition';
 import { CHECKBOX } from './base/dorf-field';
 
 /**

@@ -1,7 +1,5 @@
 import { Validators } from '@angular/forms';
 
-import { DorfCssClasses } from '../src/base/dorf-css-classes';
-
 import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';

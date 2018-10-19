@@ -1,8 +1,6 @@
-import { Input, Component, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 import { DorfConfigService } from '../../dorf-config.service';
-
-import { IDorfCommonCssClasses } from '../../base/dorf-css-classes';
 
 import { groupMetadata } from './util';
 import { IDorfFieldMetadata } from './abstract-dorf-field.metadata';

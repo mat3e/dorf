@@ -1,6 +1,6 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
-import { IDorfChooseDefinition, DorfChooseDefinition } from './base/abstract-dorf-choose.definition';
+import { DorfChooseDefinition, IDorfChooseDefinition } from './base/abstract-dorf-choose.definition';
 import { RADIO } from './base/dorf-field';
 
 /**

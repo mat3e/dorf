@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { DorfInputComponent, DorfConfigService } from 'dorf'
 
 @Component({
-    moduleId: module.id,
     selector: 'dorf-input',
     templateUrl: 'dorf-input.component.html'
 })

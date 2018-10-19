@@ -1,6 +1,6 @@
 import { IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
 import { NESTED } from './dorf-field';
-import { IDorfDefinitionBase, DorfDefinitionBase } from './abstract-dorf-field.definition';
+import { DorfDefinitionBase, IDorfDefinitionBase } from './abstract-dorf-field.definition';
 
 /**
  * Definition type for the nested DORF object.

@@ -1,5 +1,4 @@
-import { DorfField } from '../src/fields/base/dorf-field';
-import { ICheckboxMapping, DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.definition';
+import { DorfCheckboxDefinition, ICheckboxMapping } from '../src/fields/dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from '../src/fields/dorf-checkbox.metadata';
 
 describe('DorfCheckboxMetadata', () => {

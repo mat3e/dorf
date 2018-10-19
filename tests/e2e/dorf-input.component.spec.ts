@@ -1,14 +1,14 @@
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
 import { INPUT } from '../../src/fields/base/dorf-field';
-import { InputType, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputDefinition, InputType } from '../../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
 import { DorfInputComponent } from '../../src/fields/dorf-input.component';
 
@@ -49,7 +49,7 @@ describe('DorfInputComponent', () => {
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DorfInputComponent);
+        fixture = TestBed.createComponent(DorfInputComponent) as ComponentFixture<DorfInputComponent<number>>;
 
         SUT = fixture.componentInstance;
 

@@ -1,11 +1,9 @@
-import { FormControl, Validators } from '@angular/forms';
-
-import { DorfCssClasses } from '../src/base/dorf-css-classes';
+import { FormControl } from '@angular/forms';
 
 import { IDorfDefinitionBase, IDorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
-import { DorfMetadataBase, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
+import { DorfFieldMetadata, DorfMetadataBase } from '../src/fields/base/abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
 import { SELECT } from '../src/fields/base/dorf-field';
@@ -66,7 +64,7 @@ describe('DorfMetadataBase', () => {
         // THEN
         expect(meta.getCss('htmlField')).toEqual(CLASS1);
     });
-})
+});
 
 describe('DorfFieldMetadata', () => {
     it('should get values from the definition', () => {

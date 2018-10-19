@@ -1,17 +1,8 @@
 import { DorfConfigService } from '../dorf-config.service';
 
-import { IDorfDefinitionBase, DorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
-import { IDorfFieldMetadata, DorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
+import { DorfDefinitionBase, IDorfDefinitionBase } from '../fields/base/abstract-dorf-field.definition';
+import { DorfFieldMetadata, IDorfFieldMetadata } from '../fields/base/abstract-dorf-field.metadata';
 import { DorfNestedMetadata } from '../fields/base/dorf-nested.metadata';
-import { DorfInputDefinition } from '../fields/dorf-input.definition';
-import { DorfInputMetadata } from '../fields/dorf-input.metadata';
-import { DorfRadioDefinition } from '../fields/dorf-radio.definition';
-import { DorfRadioMetadata } from '../fields/dorf-radio.metadata';
-import { DorfSelectDefinition } from '../fields/dorf-select.definition';
-import { DorfSelectMetadata } from '../fields/dorf-select.metadata';
-import { DorfCheckboxDefinition } from '../fields/dorf-checkbox.definition';
-import { DorfCheckboxMetadata } from '../fields/dorf-checkbox.metadata';
-import { DorfField } from '../fields/base/dorf-field';
 
 /**
  * Property-field definition map, which should be defined for every Domain Object.

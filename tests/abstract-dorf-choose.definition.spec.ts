@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { OptionType, DorfChooseDefinition } from '../src/fields/base/abstract-dorf-choose.definition';
+import { DorfChooseDefinition, OptionType } from '../src/fields/base/abstract-dorf-choose.definition';
 import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 
 describe('DorfChooseDefinition', () => {
@@ -13,7 +13,7 @@ describe('DorfChooseDefinition', () => {
         let def: DorfChooseDefinition<any> = new DorfSelectDefinition<any>();
         let getterUsage = () => {
             return def.optionsToSelect;
-        }
+        };
 
         // THEN
         expect(getterUsage).toThrowError(msg);

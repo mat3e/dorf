@@ -1,16 +1,16 @@
 import { Injectable, Optional } from '@angular/core';
 
-import { IDorfCommonCssClasses, IDorfGeneralWithButtonsCssClasses, DorfCssClasses } from './base/dorf-css-classes';
+import { DorfCssClasses, IDorfGeneralWithButtonsCssClasses } from './base/dorf-css-classes';
 
 import {
-    NESTED,
-    IDorfField,
     DorfField,
-    IDorfNestedField,
     DorfNestedField,
-    setFieldInArray,
+    getBuiltInFields,
     getFieldForTagFromArray,
-    getBuiltInFields
+    IDorfField,
+    IDorfNestedField,
+    NESTED,
+    setFieldInArray
 } from './fields/base/dorf-field';
 import { DorfDefinitionBase } from './fields/base/abstract-dorf-field.definition';
 import { AnyMetadata } from './fields/base/abstract-dorf-field.metadata';

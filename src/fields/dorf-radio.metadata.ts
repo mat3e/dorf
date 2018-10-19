@@ -1,4 +1,4 @@
-import { IDorfRadioDefinition, DorfRadioDefinition } from './dorf-radio.definition';
+import { DorfRadioDefinition, IDorfRadioDefinition } from './dorf-radio.definition';
 import { IDorfFieldMetadata } from './base/abstract-dorf-field.metadata';
 import { DorfChooseMetadata } from './base/abstract-dorf-choose.metadata';
 

@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { NgModule, ModuleWithProviders, InjectionToken } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IDorfService, DorfConfigService, DorfSupportingService } from './dorf-config.service';
+import { DorfConfigService, DorfSupportingService, IDorfService } from './dorf-config.service';
 
 /*
 Typescript files which should be exported.

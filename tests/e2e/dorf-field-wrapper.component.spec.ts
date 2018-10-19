@@ -1,14 +1,13 @@
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { DorfField } from '../../src/fields/base/dorf-field';
-import { InputType, DorfInputDefinition } from '../../src/fields/dorf-input.definition';
+import { DorfInputDefinition, InputType } from '../../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';
 import { DorfSelectComponent } from '../../src/fields/dorf-select.component';
@@ -53,7 +52,7 @@ describe('DorfFieldWrapperComponent', () => {
         let inputDef: DorfInputDefinition<number>;
         let inputMeta: DorfInputMetadata<number>;
 
-        fixture = TestBed.createComponent(DorfFieldWrapperComponent);
+        fixture = TestBed.createComponent(DorfFieldWrapperComponent) as ComponentFixture<typeof SUT>;
 
         SUT = fixture.componentInstance;
 
