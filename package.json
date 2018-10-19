@@ -1,6 +1,6 @@
 {
   "name": "dorf",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0",
   "description": "Domain Object Reactive Forms for Angular and TypeScript",
   "keywords": [
     "decorator",

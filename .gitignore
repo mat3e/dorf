@@ -21,6 +21,7 @@
 /**/*.js
 /**/*.js.map
 /**/*.map.js
+/**/*.ngsummary.json
 /**/*.metadata.json
 /**/*.d.ts
 !docs/**/*.js
