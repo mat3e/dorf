@@ -1,5 +1,5 @@
-import { NESTED } from '../src/fields/base/dorf-field';
-import { DorfNestedDefinition } from './../src/fields/base/dorf-nested.definition';
+import { NESTED } from '../src/fields/base/constants';
+import { DorfNestedDefinition } from '../src/fields/base/dorf-nested.definition';
 
 describe('DorfSelectDefinition', () => {
     it('should have values for "columnsNumber" and "tag" properties', () => {

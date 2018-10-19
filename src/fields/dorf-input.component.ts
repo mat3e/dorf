@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { InputType } from './dorf-input.definition';
 import { DorfInputMetadata } from './dorf-input.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
-import { INPUT } from './base/dorf-field';
+import { INPUT } from './base/constants';
 
 import { DorfConfigService } from '../dorf-config.service';
 

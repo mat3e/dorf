@@ -1,5 +1,5 @@
-import { SELECT } from '../src/fields/base/dorf-field';
-import { DorfSelectDefinition } from './../src/fields/dorf-select.definition';
+import { SELECT } from '../src/fields/base/constants';
+import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 
 describe('DorfSelectDefinition', () => {
     it('should have values for "multiple" and "tag" properties', () => {

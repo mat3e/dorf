@@ -1,7 +1,7 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
 import { DorfFieldDefinition, IDorfFieldDefinition } from './base/abstract-dorf-field.definition';
-import { CHECKBOX } from './base/dorf-field';
+import { CHECKBOX } from './base/constants';
 
 /**
  * Represents true and false values for checkbox. Should be used when we don't want standard boolean values for the object's property.

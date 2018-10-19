@@ -7,7 +7,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { INPUT } from '../../src/fields/base/dorf-field';
+import { INPUT } from '../../src/fields/base/constants';
 import { DorfInputDefinition, InputType } from '../../src/fields/dorf-input.definition';
 import { DorfInputMetadata } from '../../src/fields/dorf-input.metadata';
 import { DorfInputComponent } from '../../src/fields/dorf-input.component';

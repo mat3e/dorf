@@ -1,6 +1,7 @@
 import { DorfCssClasses, IDorfFieldCssClasses, IDorfGeneralCssClasses, IDorfMultipleLabelsCssClasses } from '../../base/dorf-css-classes';
 import { IDorfService } from '../../dorf-config.service';
 
+import { CHECKBOX, INPUT, NESTED, RADIO, SELECT } from './constants';
 import { DorfDefinitionBase, IDorfDefinitionBase } from './abstract-dorf-field.definition';
 import { DorfInputDefinition } from '../dorf-input.definition';
 import { DorfRadioDefinition } from '../dorf-radio.definition';
@@ -13,27 +14,6 @@ import { DorfSelectMetadata } from '../dorf-select.metadata';
 import { DorfCheckboxMetadata } from '../dorf-checkbox.metadata';
 import { DorfNestedDefinition } from './dorf-nested.definition';
 import { DorfNestedMetadata } from './dorf-nested.metadata';
-
-/**
- * Unique id for input.
- */
-export const INPUT: string = 'dorf-input';
-/**
- * Unique id for radio.
- */
-export const RADIO: string = 'dorf-radio';
-/**
- * Unique id for select.
- */
-export const SELECT: string = 'dorf-select';
-/**
- * Unique id for checkbox.
- */
-export const CHECKBOX: string = 'dorf-checkbox';
-/**
- * Identifier for a nested object.
- */
-export const NESTED: string = 'dorf-nested-object';
 
 /**
  * Represents a field in a [mapper]{@link DorfMapper}-friendly form. Defined for all DORF tags.
@@ -196,7 +176,7 @@ export class DorfNestedField extends DorfField<typeof DorfNestedDefinition, type
     columnsNumber: number;
 
     constructor() {
-        super({ tag: NESTED });
+        super({tag: NESTED});
         this.definition = DorfNestedDefinition;
         this.metadata = DorfNestedMetadata;
         this.css = new DorfCssClasses();

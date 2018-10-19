@@ -1,7 +1,7 @@
 import { IDorfMultipleLabelsCssClasses } from '../base/dorf-css-classes';
 
 import { DorfChooseDefinition, IDorfChooseDefinition } from './base/abstract-dorf-choose.definition';
-import { RADIO } from './base/dorf-field';
+import { RADIO } from './base/constants';
 
 /**
  * Represents constructor parameter for {@link DorfRadioDefinition}.

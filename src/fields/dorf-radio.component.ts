@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DorfRadioMetadata } from './dorf-radio.metadata';
 import { DorfChooseComponent } from './base/abstract-dorf-choose.component';
-import { RADIO } from './base/dorf-field';
+import { RADIO } from './base/constants';
 
 import { DorfConfigService } from '../dorf-config.service';
 

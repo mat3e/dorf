@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { SELECT } from '../../src/fields/base/dorf-field';
+import { SELECT } from '../../src/fields/base/constants';
 import { OptionType } from '../../src/fields/base/abstract-dorf-choose.definition';
 import { DorfSelectDefinition } from '../../src/fields/dorf-select.definition';
 import { DorfSelectMetadata } from '../../src/fields/dorf-select.metadata';
@@ -49,7 +49,7 @@ describe('DorfSelectComponent', () => {
         TestBed.configureTestingModule({
             imports: [ReactiveFormsModule],
             declarations: [DorfSelectComponent],
-            providers: [{ provide: DorfConfigService, useValue: dorfConfigServiceStub }]
+            providers: [{provide: DorfConfigService, useValue: dorfConfigServiceStub}]
         }).compileComponents();
     }));
 

@@ -1,5 +1,5 @@
 import { DorfFieldDefinition, IDorfFieldDefinition } from './base/abstract-dorf-field.definition';
-import { INPUT } from './base/dorf-field';
+import { INPUT } from './base/constants';
 
 /**
  * Represents all the possible input types.

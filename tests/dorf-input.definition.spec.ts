@@ -1,4 +1,4 @@
-import { INPUT } from '../src/fields/base/dorf-field';
+import { INPUT } from '../src/fields/base/constants';
 import { DorfInputDefinition } from '../src/fields/dorf-input.definition';
 
 describe('DorfInputDefinition', () => {
