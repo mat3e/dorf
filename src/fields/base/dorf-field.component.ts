@@ -4,7 +4,7 @@ import { DorfConfigService } from '../../dorf-config.service';
 import { IDorfFieldDefinition } from './abstract-dorf-field.definition';
 import { DorfFieldMetadata } from './abstract-dorf-field.metadata';
 import { AbstractDorfFieldComponent } from './abstract-dorf-field.component';
-import { CHECKBOX, INPUT, RADIO, SELECT } from './dorf-field';
+import { CHECKBOX, INPUT, RADIO, SELECT } from './constants';
 
 /**
  * Component which switch between all built-in DORF fields.

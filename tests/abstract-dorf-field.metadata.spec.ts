@@ -6,7 +6,7 @@ import { DorfSelectDefinition } from '../src/fields/dorf-select.definition';
 import { DorfFieldMetadata, DorfMetadataBase } from '../src/fields/base/abstract-dorf-field.metadata';
 import { DorfInputMetadata } from '../src/fields/dorf-input.metadata';
 import { DorfSelectMetadata } from '../src/fields/dorf-select.metadata';
-import { SELECT } from '../src/fields/base/dorf-field';
+import { SELECT } from '../src/fields/base/constants';
 
 describe('DorfMetadataBase', () => {
     it('gets the values from options and definition', () => {

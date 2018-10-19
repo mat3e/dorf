@@ -3,7 +3,8 @@ import { DorfConfigService } from '../src/dorf-config.service';
 
 import { DorfFieldDefinition } from '../src/fields/base/abstract-dorf-field.definition';
 import { AnyMetadata, DorfFieldMetadata } from '../src/fields/base/abstract-dorf-field.metadata';
-import { DorfField, getBuiltInFields, IDorfField, INPUT, NESTED, RADIO } from '../src/fields/base/dorf-field';
+import { DorfField, getBuiltInFields, IDorfField } from '../src/fields/base/dorf-field';
+import { INPUT, NESTED, RADIO } from '../src/fields/base/constants';
 
 describe('DorfConfigService', () => {
     it('should have default values', () => {

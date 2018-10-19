@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { RADIO } from '../../src/fields/base/dorf-field';
+import { RADIO } from '../../src/fields/base/constants';
 import { OptionType } from '../../src/fields/base/abstract-dorf-choose.definition';
 import { DorfRadioDefinition } from '../../src/fields/dorf-radio.definition';
 import { DorfRadioMetadata } from '../../src/fields/dorf-radio.metadata';

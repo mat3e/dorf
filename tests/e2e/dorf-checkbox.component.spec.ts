@@ -7,7 +7,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { newEvent } from '../util/events';
 
 import { DorfConfigService } from '../../src/dorf-config.service';
-import { CHECKBOX } from '../../src/fields/base/dorf-field';
+import { CHECKBOX } from '../../src/fields/base/constants';
 import { DorfCheckboxDefinition, IDorfCheckboxDefinition } from '../../src/fields/dorf-checkbox.definition';
 import { DorfCheckboxMetadata } from '../../src/fields/dorf-checkbox.metadata';
 import { DorfCheckboxComponent } from '../../src/fields/dorf-checkbox.component';

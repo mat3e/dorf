@@ -1,4 +1,4 @@
-import { CHECKBOX } from '../src/fields/base/dorf-field';
+import { CHECKBOX } from '../src/fields/base/constants';
 import { DorfCheckboxDefinition } from '../src/fields/dorf-checkbox.definition';
 
 describe('DorfCheckboxDefinition', () => {

@@ -2,6 +2,7 @@ import { Injectable, Optional } from '@angular/core';
 
 import { DorfCssClasses, IDorfGeneralWithButtonsCssClasses } from './base/dorf-css-classes';
 
+import { NESTED } from './fields/base/constants';
 import {
     DorfField,
     DorfNestedField,
@@ -9,7 +10,6 @@ import {
     getFieldForTagFromArray,
     IDorfField,
     IDorfNestedField,
-    NESTED,
     setFieldInArray
 } from './fields/base/dorf-field';
 import { DorfDefinitionBase } from './fields/base/abstract-dorf-field.definition';
@@ -100,7 +100,7 @@ export class DorfSupportingService implements IDorfService {
 export class DorfConfigService implements IDorfService {
     /** @inheritdoc */
     dorfFields: DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[]
-    = getBuiltInFields() as DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
+        = getBuiltInFields() as DorfField<typeof DorfDefinitionBase, typeof AnyMetadata>[];
     /** @inheritdoc */
     css: IDorfGeneralWithButtonsCssClasses = new DorfCssClasses();
     /** @inheritdoc */
@@ -113,7 +113,7 @@ export class DorfConfigService implements IDorfService {
      */
     isDisabled: boolean = false;
 
-    constructor( @Optional() config?: DorfSupportingService) {
+    constructor(@Optional() config?: DorfSupportingService) {
         if (config) {
             this.css = config.css ? new DorfCssClasses(config.css) : this.css;
             this.columnsNumber = config.columnsNumber || this.columnsNumber;
@@ -160,8 +160,7 @@ export class DorfConfigService implements IDorfService {
      */
     getCssClassForTag(tag: string, cssClass: string) {
         let fieldGot = this.getFieldForTag(tag);
-        let result = fieldGot && fieldGot.css && fieldGot.css[cssClass] ? fieldGot.css[cssClass] : this.css[cssClass];
-        return result;
+        return fieldGot && fieldGot.css && fieldGot.css[cssClass] ? fieldGot.css[cssClass] : this.css[cssClass];
     }
 
     /**

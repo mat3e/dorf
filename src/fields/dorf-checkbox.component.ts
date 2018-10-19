@@ -1,7 +1,7 @@
 import { Component, OnChanges } from '@angular/core';
 import { DorfCheckboxMetadata } from './dorf-checkbox.metadata';
 import { AbstractDorfFieldComponent } from './base/abstract-dorf-field.component';
-import { CHECKBOX } from './base/dorf-field';
+import { CHECKBOX } from './base/constants';
 
 import { DorfConfigService } from '../dorf-config.service';
 
@@ -14,12 +14,16 @@ import { DorfConfigService } from '../dorf-config.service';
 @Component({
     selector: CHECKBOX,
     template: `
-    <label [attr.for]="key" [ngClass]="innerLabelCss">
-        <input #view [id]="key" [ngClass]="htmlFieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox" [disabled]="config.isDisabled" /> {{innerLabel}}
-    </label>
-    <input [name]="key" [formControl]="formControl" type="hidden" />
+        <label [attr.for]="key" [ngClass]="innerLabelCss">
+            <input #view [id]="key" [ngClass]="htmlFieldCss" (change)="setValue(view.checked)" [checked]="checkboxValue" type="checkbox"
+                   [disabled]="config.isDisabled" /> {{innerLabel}}
+        </label>
+        <input [name]="key" [formControl]="formControl" type="hidden" />
     `,
-    styles: [`.dorf-required:after {content: '*'; color: red;}`]
+    styles: [`.dorf-required:after {
+        content: '*';
+        color: red;
+    }`]
 })
 // tslint:disable-next-line:max-line-length
 export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, DorfCheckboxMetadata<T>> implements OnChanges {
@@ -59,7 +63,10 @@ export class DorfCheckboxComponent<T> extends AbstractDorfFieldComponent<T, Dorf
     /**
      * Checkbox has a label around it, which is independent from the label from wrapper.
      */
-    get innerLabel() { return this.metadata.innerLabel; }
+    get innerLabel() {
+        return this.metadata.innerLabel;
+    }
+
     get innerLabelCss() {
         if (!this._innerLabelCss) {
             this._innerLabelCss = '';

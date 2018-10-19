@@ -1,5 +1,5 @@
 import { IDorfGeneralCssClasses } from '../../base/dorf-css-classes';
-import { NESTED } from './dorf-field';
+import { NESTED } from './constants';
 import { DorfDefinitionBase, IDorfDefinitionBase } from './abstract-dorf-field.definition';
 
 /**

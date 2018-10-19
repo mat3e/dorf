@@ -1,5 +1,5 @@
-import { RADIO } from '../src/fields/base/dorf-field';
-import { DorfRadioDefinition } from './../src/fields/dorf-radio.definition';
+import { RADIO } from '../src/fields/base/constants';
+import { DorfRadioDefinition } from '../src/fields/dorf-radio.definition';
 
 describe('DorfRadioDefinition', () => {
 

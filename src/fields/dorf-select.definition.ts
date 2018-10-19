@@ -1,5 +1,5 @@
 import { DorfChooseDefinition, IDorfChooseDefinition } from './base/abstract-dorf-choose.definition';
-import { SELECT } from './base/dorf-field';
+import { SELECT } from './base/constants';
 
 /**
  * Represents constructor parameter for {@link DorfSelectDefinition}.
