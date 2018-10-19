@@ -90,10 +90,14 @@ export class Person2 {
 export class Person1DetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person1;
 
-    constructor(public config: DorfConfigService) { }
+    constructor(public config: DorfConfigService) {
+    }
 
-    onDorfSubmit() { }
-    onDorfReset() { }
+    onDorfSubmit() {
+    }
+
+    onDorfReset() {
+    }
 }
 
 /**
@@ -109,5 +113,18 @@ export class Person1DetailComponent implements IDorfForm {
 export class Person2DetailComponent implements IDorfForm {
     @DorfObjectInput() domainObject: Person2;
 
-    constructor(public config: DorfConfigService) { }
+    constructor(public config: DorfConfigService) {
+    }
+}
+
+/**
+ * No DorfObjectInput.
+ */
+@DorfForm()
+@Component({
+    selector: 'test-test'
+})
+export class TestClass {
+    constructor(public config: DorfConfigService) {
+    }
 }

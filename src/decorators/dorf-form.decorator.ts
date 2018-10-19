@@ -212,22 +212,14 @@ export function DorfForm(options?: IDorfFormOptions) {
             }
         });
 
-        let annotations = (window as any).Reflect.getMetadata('annotations', targetConstructor) as any[];
-        if (annotations && annotations.length) {
-            let components = annotations.filter((annotation: any) => {
-                return annotation.__proto__ && annotation.__proto__.toString() === '@Component';
-            });
-            let noTemplateExists = components.every((component: any) => {
-                return !component.template && !component.templateUrl;
-            });
-            if (noTemplateExists && components[0]) {
-                components[0].template = `
+        let component = targetConstructor['__annotations__'][0] as any;
+        if (!component.template && !component.templateUrl) {
+            component.template = `
                 <form [ngClass]="config.css.form">
                     ${parseOptionsToTemplate(options)}
                     <ng-content></ng-content>
                 </form>
                 `;
-            }
         }
     };
 }
