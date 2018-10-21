@@ -6,7 +6,7 @@ Version 4 for Angular 5+.
 I'm maintaining this library in my free time. But since my son was born in 2017, I have little to no free time :)
 
 ### Model-driven forms within the model! 
-[**example**](http://embed.plnkr.co/fhEfqD/)
+[**example**](https://stackblitz.com/edit/angular-dorf-example)
 
 Angular's _Reactive Forms_ (a.k.a. _Model-driven Forms_) are great. Then, the dynamic generation of such forms is the next evolution step (sometimes called _Dynamic Forms_). This library is about taking those things to yet another level by coupling forms with _Domain Objects_.
 
@@ -79,4 +79,4 @@ Future plans include:
  - [Simple example](http://embed.plnkr.co/6H2jto/)
  - [Disabled form](http://embed.plnkr.co/a6Z4pb/)
  - [New field example](http://embed.plnkr.co/q4EEDa/)
- - [General example](http://embed.plnkr.co/fhEfqD/)
+ - [General example](https://stackblitz.com/edit/angular-dorf-example)
